@@ -1,0 +1,36 @@
+__pycache__/
+*.pyc
+.ipynb_checkpoints/
+
+# Logs
+*.log
+logs/
+runs/
+wandb/
+
+# Medical image data
+data/
+datasets/
+TNMammo/
+VinDr/
+MammosighTR/
+physionet.org/
+*.jpg
+*.jpeg
+*.png
+*.dcm
+
+# Outputs / checkpoints
+outputs/
+outputs_phaseA/
+checkpoints/
+*.pth
+*.pt
+*.ckpt
+*.h5
+*.pkl
+
+# Sensitive CSVs
+*with_paths*.csv
+*paths*.csv
+*patient*.csv
