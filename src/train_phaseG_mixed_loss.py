@@ -34,17 +34,17 @@ def parse_args():
     parser.add_argument(
         "--tn-split-csv",
         type=str,
-        default="/media/hongcat/HONGCAT/BC/code/1dieuchoae/outputs_phaseA/splits_seed42/all_splits_with_paths.csv",
+        default="data/splits/all_splits_with_paths.csv",
     )
     parser.add_argument(
         "--vindr-split-csv",
         type=str,
-        default="/media/hongcat/HONGCAT/BC/code/1dieuchoae/outputs_phaseA/phaseE_vindr/vindr_png_4view_density_split_seed42_clean.csv",
+        default="data/splits/vindr_4view_density_split.csv",
     )
     parser.add_argument(
         "--out-dir",
         type=str,
-        default="/media/hongcat/HONGCAT/BC/code/1dieuchoae/outputs_phaseA",
+        default="outputs",
     )
 
     parser.add_argument(
