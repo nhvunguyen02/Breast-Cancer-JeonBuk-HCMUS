@@ -64,5 +64,13 @@ def parse_args():
         type=float,
         default=1e-4,
     )
+    parser.add_argument(
+        "--preprocess",
+        type=str,
+        default="none",
+        choices=["none", "brm"],
+        help="none = raw resize + ImageNet norm; brm = BRM stage0 "
+             "(crop-to-breast + pectoral removal) before resize.",
+    )
 
     return parser.parse_args()

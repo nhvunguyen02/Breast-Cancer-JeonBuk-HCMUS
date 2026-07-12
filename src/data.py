@@ -2,6 +2,7 @@
 
 from pathlib import Path
 
+import numpy as np
 import pandas as pd
 import torch
 from torch.utils.data import Dataset, WeightedRandomSampler
@@ -9,6 +10,28 @@ from torchvision import transforms
 from PIL import Image
 
 from constants import LABEL2IDX, VIEW_NAMES
+
+# view column -> (view code, breast side) for BRM preprocessing.
+VIEW_META = {
+    "left_cc": ("CC", "L"),
+    "left_mlo": ("MLO", "L"),
+    "right_cc": ("CC", "R"),
+    "right_mlo": ("MLO", "R"),
+}
+
+
+def _brm_to_rgb(pil_img, view, side):
+    """Run BRM stage0 preprocessing on a PIL image and return an RGB PIL image."""
+    from preprocess import preprocess_view
+
+    gray = np.asarray(pil_img.convert("L"), dtype=np.float32)
+    out = preprocess_view(gray, view=view, side=side)
+
+    fg = out[out > 0]
+    hi = float(np.percentile(fg, 99.5)) if fg.size else float(out.max())
+    hi = hi if hi > 0 else 1.0
+    arr8 = np.clip(out / hi, 0.0, 1.0) * 255.0
+    return Image.fromarray(arr8.astype(np.uint8), mode="L").convert("RGB")
 
 
 def find_col(df, candidates):
@@ -74,10 +97,11 @@ def standardize_split_df(csv_path, source_name):
 
 
 class MultiViewDataset(Dataset):
-    def __init__(self, df, img_size=224, train=False):
+    def __init__(self, df, img_size=224, train=False, preprocess="none"):
         self.df = df.reset_index(drop=True)
         self.img_size = img_size
         self.train = train
+        self.preprocess = preprocess  # "none" (raw resize) or "brm" (crop+pectoral)
 
         self.normalize = transforms.Normalize(
             mean=[0.485, 0.456, 0.406],
@@ -107,7 +131,12 @@ class MultiViewDataset(Dataset):
         imgs = []
         for view in VIEW_NAMES:
             p = row[f"{view}_path_final"]
-            img = Image.open(p).convert("RGB")
+            img = Image.open(p)
+            if self.preprocess == "brm":
+                view_code, side = VIEW_META[view]
+                img = _brm_to_rgb(img, view_code, side)
+            else:
+                img = img.convert("RGB")
             if self.train:
                 img = self.train_tf(img)
             else:
