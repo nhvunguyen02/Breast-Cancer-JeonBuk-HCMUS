@@ -91,5 +91,13 @@ def parse_args():
         help="Weight of the attention-suppression loss (penalizes activation "
              "energy outside the breast mask). 0 = off.",
     )
+    parser.add_argument(
+        "--fusion",
+        type=str,
+        default="mean",
+        choices=["mean", "gated"],
+        help="How to combine the 4 views: 'mean' averages per-view logits; "
+             "'gated' learns a gated-attention weight per view.",
+    )
 
     return parser.parse_args()

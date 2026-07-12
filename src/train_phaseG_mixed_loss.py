@@ -51,6 +51,7 @@ def main():
     pp_tag = args.preprocess + ("pec" if (args.preprocess == "brm" and args.brm_pectoral) else "")
     pp_tag += "_mp" if args.masked_pool else ""
     pp_tag += f"_att{args.attn_loss_weight}" if args.attn_loss_weight > 0 else ""
+    pp_tag += f"_{args.fusion}" if args.fusion != "mean" else ""
     phase_dir = out_dir / "phaseG_mixed_loss" / f"densenet121_mean_tnratio{args.tn_domain_ratio}_{loss_tag}_pp{pp_tag}_seed{args.seed}"
     phase_dir.mkdir(parents=True, exist_ok=True)
 
@@ -137,9 +138,10 @@ def main():
     print(f"Valid batches: {len(valid_loader)}", flush=True)
     print(f"Test batches: {len(test_loader)}", flush=True)
 
-    model = DenseNet121MeanFusion(num_classes=4, masked_pool=args.masked_pool).to(device)
+    model = DenseNet121MeanFusion(num_classes=4, masked_pool=args.masked_pool, fusion=args.fusion).to(device)
     if args.masked_pool:
         print("Masked global average pooling: ON (breast-region features only)", flush=True)
+    print(f"View fusion: {args.fusion}", flush=True)
 
     total_params, trainable_params = count_params(model)
     model_size_mb = save_model_size_mb(model, phase_dir / "temp_model_size.pt")
