@@ -29,7 +29,7 @@ import torch
 from constants import LABEL2IDX  # noqa: F401  (kept for parity / downstream use)
 from utils import seed_everything, count_params, save_model_size_mb, append_benchmark
 from data import standardize_split_df, MultiViewDataset, make_domain_balanced_sampler
-from models import DenseNet121MeanFusion
+from models import MultiViewModel
 from losses import compute_class_weights, build_criterion
 from engine import run_one_epoch, evaluate_test
 
@@ -52,7 +52,7 @@ def main():
     pp_tag += "_mp" if args.masked_pool else ""
     pp_tag += f"_att{args.attn_loss_weight}" if args.attn_loss_weight > 0 else ""
     pp_tag += f"_{args.fusion}" if args.fusion != "mean" else ""
-    phase_dir = out_dir / "phaseG_mixed_loss" / f"densenet121_mean_tnratio{args.tn_domain_ratio}_{loss_tag}_pp{pp_tag}_seed{args.seed}"
+    phase_dir = out_dir / "phaseG_mixed_loss" / f"{args.backbone}_{args.fusion}_tnratio{args.tn_domain_ratio}_{loss_tag}_pp{pp_tag}_seed{args.seed}"
     phase_dir.mkdir(parents=True, exist_ok=True)
 
     print("Phase G Mixed TN + VinDr Loss Training", flush=True)
@@ -138,7 +138,8 @@ def main():
     print(f"Valid batches: {len(valid_loader)}", flush=True)
     print(f"Test batches: {len(test_loader)}", flush=True)
 
-    model = DenseNet121MeanFusion(num_classes=4, masked_pool=args.masked_pool, fusion=args.fusion).to(device)
+    model = MultiViewModel(num_classes=4, backbone=args.backbone, masked_pool=args.masked_pool, fusion=args.fusion).to(device)
+    print(f"Backbone: {args.backbone}", flush=True)
     if args.masked_pool:
         print("Masked global average pooling: ON (breast-region features only)", flush=True)
     print(f"View fusion: {args.fusion}", flush=True)
@@ -230,7 +231,7 @@ def main():
             torch.save(
                 {
                     "epoch": epoch,
-                    "model_name": "densenet121",
+                    "model_name": args.backbone,
                     "fusion": "mean",
                     "model_state_dict": model.state_dict(),
                     "optimizer_state_dict": optimizer.state_dict(),
@@ -297,9 +298,9 @@ def main():
     per_class_df.to_csv(phase_dir / "per_class_accuracy.csv", index=False)
 
     benchmark_row = {
-        "experiment": f"phaseG_mixed_TN_VinDr_densenet121_mean_tnratio{args.tn_domain_ratio}_{loss_tag}_seed{args.seed}",
-        "model": "densenet121",
-        "fusion": "mean_4_views",
+        "experiment": f"phaseG_mixed_TN_VinDr_{args.backbone}_{args.fusion}_tnratio{args.tn_domain_ratio}_{loss_tag}_pp{pp_tag}_seed{args.seed}",
+        "model": args.backbone,
+        "fusion": f"{args.fusion}_4_views",
         "input": f"JPEG_or_PNG_resize_{args.img_size}",
         "preprocessing": ("brm_cropbreast_inmaskP2P98norm_resize_imagenet_norm"
                           if args.preprocess == "brm"

@@ -1,4 +1,4 @@
-"""Model definitions."""
+"""Model definitions: a multi-view classifier with a selectable backbone."""
 
 import torch
 import torch.nn as nn
@@ -11,38 +11,66 @@ _MEAN0 = 0.485
 _STD0 = 0.229
 
 
-class DenseNet121MeanFusion(nn.Module):
-    def __init__(self, num_classes=4, masked_pool=False, mask_thresh=0.02,
-                 fusion="mean", attn_dim=128):
-        """4-view DenseNet121 with a shared backbone.
+def build_backbone(name):
+    """Return (feature_extractor, feat_dim, needs_relu) for a torchvision backbone.
 
-        masked_pool: pool the conv features only over the breast region (derived
-        from the input: background is zeroed by preprocessing) instead of a plain
-        global average pool.
+    feature_extractor maps [N, 3, H, W] -> spatial feature maps [N, C, h, w].
+    needs_relu: whether a ReLU must be applied to the feature maps (DenseNet
+    applies it in its own forward; EfficientNet/ResNet features are already
+    activated)."""
+    name = name.lower()
+    if name == "densenet121":
+        m = models.densenet121(weights="IMAGENET1K_V1")
+        return m.features, m.classifier.in_features, True
+    if name == "densenet169":
+        m = models.densenet169(weights="IMAGENET1K_V1")
+        return m.features, m.classifier.in_features, True
+    if name == "efficientnet_b0":
+        m = models.efficientnet_b0(weights="IMAGENET1K_V1")
+        return m.features, m.classifier[1].in_features, False
+    if name == "efficientnet_b3":
+        m = models.efficientnet_b3(weights="IMAGENET1K_V1")
+        return m.features, m.classifier[1].in_features, False
+    if name == "efficientnet_b5":
+        m = models.efficientnet_b5(weights="IMAGENET1K_V1")
+        return m.features, m.classifier[1].in_features, False
+    if name == "resnet50":
+        m = models.resnet50(weights="IMAGENET1K_V1")
+        return nn.Sequential(*list(m.children())[:-2]), m.fc.in_features, False
+    raise ValueError(f"Unknown backbone: {name}")
+
+
+class MultiViewModel(nn.Module):
+    def __init__(self, num_classes=4, backbone="densenet121", masked_pool=False,
+                 mask_thresh=0.02, fusion="mean", attn_dim=128):
+        """4-view classifier with a shared, selectable backbone.
+
+        backbone: 'densenet121' | 'densenet169' | 'efficientnet_b0/b3/b5' | 'resnet50'.
+        masked_pool: pool conv features only over the breast region (background
+        was zeroed by preprocessing) instead of a plain global average pool.
         fusion: 'mean' averages the 4 per-view logits; 'gated' learns a
         gated-attention weight per view (Ilse et al. 2018) and aggregates the
-        per-view features before classifying, so it can weight views (L/R, CC/MLO)."""
+        per-view features before classifying."""
         super().__init__()
-        weights = models.DenseNet121_Weights.IMAGENET1K_V1
-        self.backbone = models.densenet121(weights=weights)
-        in_features = self.backbone.classifier.in_features
-        self.backbone.classifier = nn.Linear(in_features, num_classes)
+        self.features, feat_dim, self._needs_relu = build_backbone(backbone)
+        self.classifier = nn.Linear(feat_dim, num_classes)
+        self.backbone_name = backbone
         self.masked_pool = masked_pool
         self.mask_thresh = mask_thresh
         self.fusion = fusion
 
         if fusion == "gated":
-            self.attn_V = nn.Linear(in_features, attn_dim)
-            self.attn_U = nn.Linear(in_features, attn_dim)
+            self.attn_V = nn.Linear(feat_dim, attn_dim)
+            self.attn_U = nn.Linear(feat_dim, attn_dim)
             self.attn_w = nn.Linear(attn_dim, 1)
         elif fusion != "mean":
             raise ValueError(f"Unknown fusion: {fusion}")
 
     def _features_and_mask(self, x):
-        """x: [N, 3, H, W] normalized. Return (feat [N,C,h,w] after relu,
-        mask [N,1,h,w] breast fraction per feature cell)."""
-        feat = self.backbone.features(x)                 # [N, 1024, h', w']
-        feat = F.relu(feat, inplace=True)
+        """x: [N, 3, H, W] normalized. Return (feat [N,C,h,w], mask [N,1,h,w])."""
+        feat = self.features(x)
+        if self._needs_relu:
+            feat = F.relu(feat, inplace=True)
 
         gray = x[:, 0] * _STD0 + _MEAN0                  # recover grayscale in ~[0,1]
         m = (gray > self.mask_thresh).float().unsqueeze(1)   # [N, 1, H, W]
@@ -65,14 +93,18 @@ class DenseNet121MeanFusion(nn.Module):
         if self.fusion == "gated":
             h_v = pooled.view(b, v, -1)                  # [B, V, C]
             gate = torch.tanh(self.attn_V(h_v)) * torch.sigmoid(self.attn_U(h_v))
-            a = torch.softmax(self.attn_w(gate), dim=1)  # [B, V, 1] weights per view
-            z = (a * h_v).sum(dim=1)                     # [B, C] weighted feature
-            logits = self.backbone.classifier(z)         # [B, num_classes]
+            a = torch.softmax(self.attn_w(gate), dim=1)  # [B, V, 1] per-view weights
+            z = (a * h_v).sum(dim=1)                     # [B, C]
+            logits = self.classifier(z)
         else:                                            # mean of per-view logits
-            logits = self.backbone.classifier(pooled)
+            logits = self.classifier(pooled)
             logits = logits.view(b, v, -1).mean(dim=1)
 
         if return_attn:
             attn = feat.mean(dim=1)                       # [N, h, w] saliency proxy
-            return logits, attn, m.squeeze(1)            # [N,h,w]
+            return logits, attn, m.squeeze(1)
         return logits
+
+
+# Backward-compatible alias (older callers / checkpoints used this name).
+DenseNet121MeanFusion = MultiViewModel

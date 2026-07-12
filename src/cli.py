@@ -8,6 +8,14 @@ def parse_args():
     parser = argparse.ArgumentParser()
 
     parser.add_argument("--gpu", type=str, default="1")
+    parser.add_argument(
+        "--backbone",
+        type=str,
+        default="densenet121",
+        choices=["densenet121", "densenet169", "efficientnet_b0",
+                 "efficientnet_b3", "efficientnet_b5", "resnet50"],
+        help="Shared backbone for the 4-view model.",
+    )
     parser.add_argument("--epochs", type=int, default=50)
     parser.add_argument("--batch-size", type=int, default=2)
     parser.add_argument("--num-workers", type=int, default=2)
