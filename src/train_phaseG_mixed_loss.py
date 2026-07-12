@@ -50,6 +50,7 @@ def main():
 
     pp_tag = args.preprocess + ("pec" if (args.preprocess == "brm" and args.brm_pectoral) else "")
     pp_tag += "_mp" if args.masked_pool else ""
+    pp_tag += f"_att{args.attn_loss_weight}" if args.attn_loss_weight > 0 else ""
     phase_dir = out_dir / "phaseG_mixed_loss" / f"densenet121_mean_tnratio{args.tn_domain_ratio}_{loss_tag}_pp{pp_tag}_seed{args.seed}"
     phase_dir.mkdir(parents=True, exist_ok=True)
 
@@ -184,8 +185,8 @@ def main():
     for epoch in range(1, args.epochs + 1):
         print(f"[EPOCH] {epoch}/{args.epochs}", flush=True)
 
-        train_m = run_one_epoch(model, train_loader, criterion, optimizer, device, train=True)
-        valid_m = run_one_epoch(model, valid_loader, criterion, optimizer, device, train=False)
+        train_m = run_one_epoch(model, train_loader, criterion, optimizer, device, train=True, attn_weight=args.attn_loss_weight)
+        valid_m = run_one_epoch(model, valid_loader, criterion, optimizer, device, train=False, attn_weight=args.attn_loss_weight)
 
         lr_now = optimizer.param_groups[0]["lr"]
 

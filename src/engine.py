@@ -21,7 +21,17 @@ from sklearn.preprocessing import label_binarize
 from constants import CLASS_NAMES
 
 
-def run_one_epoch(model, loader, criterion, optimizer, device, train=True):
+def attention_outside_loss(attn, mask, eps=1e-6):
+    """Fraction of the per-image attention energy that falls OUTSIDE the breast
+    mask. attn, mask: [N, h, w]. Minimizing this pushes activations into the
+    breast (background/edge/pectoral suppression)."""
+    a = attn.flatten(1)
+    a = a / (a.sum(dim=1, keepdim=True) + eps)
+    outside = (a * (1.0 - mask.flatten(1))).sum(dim=1)
+    return outside.mean()
+
+
+def run_one_epoch(model, loader, criterion, optimizer, device, train=True, attn_weight=0.0):
     model.train() if train else model.eval()
 
     losses = []
@@ -38,8 +48,12 @@ def run_one_epoch(model, loader, criterion, optimizer, device, train=True):
             optimizer.zero_grad(set_to_none=True)
 
         with torch.set_grad_enabled(train):
-            logits = model(x)
-            loss = criterion(logits, y)
+            if attn_weight > 0:
+                logits, attn, mask = model(x, return_attn=True)
+                loss = criterion(logits, y) + attn_weight * attention_outside_loss(attn, mask)
+            else:
+                logits = model(x)
+                loss = criterion(logits, y)
             if train:
                 loss.backward()
                 optimizer.step()

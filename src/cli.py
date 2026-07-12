@@ -84,5 +84,12 @@ def parse_args():
         help="Pool conv features only over the breast region (derived from the "
              "zeroed-background input) instead of a plain global average pool.",
     )
+    parser.add_argument(
+        "--attn-loss-weight",
+        type=float,
+        default=0.0,
+        help="Weight of the attention-suppression loss (penalizes activation "
+             "energy outside the breast mask). 0 = off.",
+    )
 
     return parser.parse_args()

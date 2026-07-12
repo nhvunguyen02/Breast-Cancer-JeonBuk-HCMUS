@@ -25,28 +25,33 @@ class DenseNet121MeanFusion(nn.Module):
         self.masked_pool = masked_pool
         self.mask_thresh = mask_thresh
 
-    def _masked_logits(self, x):
-        """x: [N, 3, H, W] normalized. Return per-image logits using a breast-
-        masked global average pool over the conv feature maps."""
+    def _features_and_mask(self, x):
+        """x: [N, 3, H, W] normalized. Return (feat [N,C,h,w] after relu,
+        mask [N,1,h,w] breast fraction per feature cell)."""
         feat = self.backbone.features(x)                 # [N, 1024, h', w']
         feat = F.relu(feat, inplace=True)
 
         gray = x[:, 0] * _STD0 + _MEAN0                  # recover grayscale in ~[0,1]
         m = (gray > self.mask_thresh).float().unsqueeze(1)   # [N, 1, H, W]
         m = F.adaptive_avg_pool2d(m, feat.shape[-2:])    # breast fraction per cell
+        return feat, m
 
-        num = (feat * m).sum(dim=(2, 3))
-        den = m.sum(dim=(2, 3)).clamp_min(1e-6)
-        pooled = num / den                               # [N, 1024]
-        return self.backbone.classifier(pooled)          # [N, num_classes]
-
-    def forward(self, x):
+    def forward(self, x, return_attn=False):
         # x: [B, 4, 3, H, W]
         b, v, c, h, w = x.shape
         x = x.view(b * v, c, h, w)
+
+        feat, m = self._features_and_mask(x)             # [N,C,h,w], [N,1,h,w]
         if self.masked_pool:
-            logits = self._masked_logits(x)
+            num = (feat * m).sum(dim=(2, 3))
+            den = m.sum(dim=(2, 3)).clamp_min(1e-6)
+            pooled = num / den
         else:
-            logits = self.backbone(x)
-        logits = logits.view(b, v, -1)
-        return logits.mean(dim=1)
+            pooled = feat.mean(dim=(2, 3))               # plain global avg pool
+        logits = self.backbone.classifier(pooled)        # [N, num_classes]
+        logits = logits.view(b, v, -1).mean(dim=1)
+
+        if return_attn:
+            attn = feat.mean(dim=1)                       # [N, h, w] saliency proxy
+            return logits, attn, m.squeeze(1)            # [N,h,w]
+        return logits
