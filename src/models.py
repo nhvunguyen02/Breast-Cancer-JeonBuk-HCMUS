@@ -37,6 +37,15 @@ def build_backbone(name):
     if name == "resnet50":
         m = models.resnet50(weights="IMAGENET1K_V1")
         return nn.Sequential(*list(m.children())[:-2]), m.fc.in_features, False
+    if name == "convnext_tiny":
+        m = models.convnext_tiny(weights="IMAGENET1K_V1")
+        return m.features, m.classifier[2].in_features, False
+    if name == "convnext_small":
+        m = models.convnext_small(weights="IMAGENET1K_V1")
+        return m.features, m.classifier[2].in_features, False
+    if name == "convnext_base":
+        m = models.convnext_base(weights="IMAGENET1K_V1")
+        return m.features, m.classifier[2].in_features, False
     raise ValueError(f"Unknown backbone: {name}")
 
 
@@ -54,6 +63,9 @@ class MultiViewModel(nn.Module):
         super().__init__()
         self.features, feat_dim, self._needs_relu = build_backbone(backbone)
         self.classifier = nn.Linear(feat_dim, num_classes)
+        # ConvNeXt's head LayerNorm is dropped with its classifier; restore a
+        # norm on the pooled feature so the fresh Linear trains stably.
+        self.head_norm = nn.LayerNorm(feat_dim) if backbone.startswith("convnext") else nn.Identity()
         self.backbone_name = backbone
         self.masked_pool = masked_pool
         self.mask_thresh = mask_thresh
@@ -89,6 +101,8 @@ class MultiViewModel(nn.Module):
             pooled = num / den
         else:
             pooled = feat.mean(dim=(2, 3))               # plain global avg pool
+
+        pooled = self.head_norm(pooled)                  # no-op unless ConvNeXt
 
         if self.fusion == "gated":
             h_v = pooled.view(b, v, -1)                  # [B, V, C]

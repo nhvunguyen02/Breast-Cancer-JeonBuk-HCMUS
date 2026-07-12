@@ -13,7 +13,8 @@ def parse_args():
         type=str,
         default="densenet121",
         choices=["densenet121", "densenet169", "efficientnet_b0",
-                 "efficientnet_b3", "efficientnet_b5", "resnet50"],
+                 "efficientnet_b3", "efficientnet_b5", "resnet50",
+                 "convnext_tiny", "convnext_small", "convnext_base"],
         help="Shared backbone for the 4-view model.",
     )
     parser.add_argument("--epochs", type=int, default=50)
