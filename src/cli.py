@@ -78,5 +78,11 @@ def parse_args():
         help="With --preprocess brm, also remove the pectoral muscle in MLO "
              "views (conservative corner-anchored bright-triangle detector).",
     )
+    parser.add_argument(
+        "--masked-pool",
+        action="store_true",
+        help="Pool conv features only over the breast region (derived from the "
+             "zeroed-background input) instead of a plain global average pool.",
+    )
 
     return parser.parse_args()
