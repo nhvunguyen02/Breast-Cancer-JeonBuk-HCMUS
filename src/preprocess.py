@@ -47,14 +47,36 @@ def ensure_tissue_bright(arr: np.ndarray) -> np.ndarray:
 # --------------------------------------------------------------------------- #
 # M0.2 — breast mask (Otsu + largest connected component + morphology)
 # --------------------------------------------------------------------------- #
-def breast_mask(img: np.ndarray, closing_radius: int = 5) -> np.ndarray:
-    """Segment breast from background. Returns a bool mask (True = breast)."""
+def _air_level(img: np.ndarray) -> float:
+    """Estimate the air-background intensity from the 4 image corners (median is
+    robust: a bright corner artifact doesn't move it as long as most corners are air)."""
+    h, w = img.shape[-2], img.shape[-1]
+    ch, cw = max(1, h // 20), max(1, w // 20)
+    corners = np.concatenate([
+        img[:ch, :cw].ravel(), img[:ch, -cw:].ravel(),
+        img[-ch:, :cw].ravel(), img[-ch:, -cw:].ravel(),
+    ])
+    return float(np.median(corners))
+
+
+def breast_mask(img: np.ndarray, closing_radius: int = 5, bg_frac: float = 0.06) -> np.ndarray:
+    """Segment breast from background. Returns a bool mask (True = breast).
+
+    Uses an inclusive threshold = min(Otsu, air + bg_frac*(p99 - air)). Plain Otsu
+    lands on a mid-histogram valley for over-exposed or high-contrast breasts and
+    then drops faint peripheral fibroglandular tissue; the background-relative
+    floor keeps all tissue clearly above the air level.
+    """
     from scipy.ndimage import binary_fill_holes
     from skimage.filters import threshold_otsu
     from skimage.measure import label
     from skimage.morphology import binary_closing, disk
 
-    thr = float(threshold_otsu(img))
+    otsu = float(threshold_otsu(img))
+    air = _air_level(img)
+    p99 = float(np.percentile(img, 99))
+    low = air + bg_frac * (p99 - air)
+    thr = min(otsu, low)
     fg = img > thr
 
     lbl = label(fg)
