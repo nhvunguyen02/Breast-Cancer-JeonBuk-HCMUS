@@ -6,9 +6,14 @@ Run:
 """
 
 import os
+import sys
 import json
 import time
 from pathlib import Path
+
+# Make the sibling modules importable no matter the current working directory
+# (so `python src/train_phaseG_mixed_loss.py` works from the repo root too).
+sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
 
 from cli import parse_args
 
@@ -55,13 +60,19 @@ def main():
     print(f"Num_workers: {args.num_workers}", flush=True)
 
     tn_df = standardize_split_df(args.tn_split_csv, "TN")
-    vindr_df = standardize_split_df(args.vindr_split_csv, "VinDr")
 
     tn_train = tn_df[tn_df["_split"].isin(["train", "training"])].copy()
     tn_valid = tn_df[tn_df["_split"].isin(["valid", "val", "validation"])].copy()
     tn_test = tn_df[tn_df["_split"].isin(["test", "testing"])].copy()
 
-    vindr_train = vindr_df[vindr_df["_split"].isin(["train", "training"])].copy()
+    # VinDr is optional: only mix it in when the split CSV is actually present.
+    use_vindr = bool(args.vindr_split_csv) and Path(args.vindr_split_csv).exists()
+    if use_vindr:
+        vindr_df = standardize_split_df(args.vindr_split_csv, "VinDr")
+        vindr_train = vindr_df[vindr_df["_split"].isin(["train", "training"])].copy()
+    else:
+        print(f"VinDr split CSV not found ({args.vindr_split_csv}) -> TN-only training", flush=True)
+        vindr_train = tn_train.iloc[0:0].copy()  # empty, same schema
 
     mixed_train = pd.concat([tn_train, vindr_train], ignore_index=True)
 
@@ -81,16 +92,27 @@ def main():
     valid_ds = MultiViewDataset(tn_valid, img_size=args.img_size, train=False)
     test_ds = MultiViewDataset(tn_test, img_size=args.img_size, train=False)
 
-    sampler = make_domain_balanced_sampler(mixed_train, tn_ratio=args.tn_domain_ratio)
-
-    train_loader = DataLoader(
-        train_ds,
-        batch_size=args.batch_size,
-        sampler=sampler,
-        num_workers=args.num_workers,
-        pin_memory=True,
-        persistent_workers=(args.num_workers > 0),
-    )
+    # Domain-balanced sampling only makes sense with two domains; otherwise
+    # fall back to plain shuffling of the TN-only training set.
+    if use_vindr:
+        sampler = make_domain_balanced_sampler(mixed_train, tn_ratio=args.tn_domain_ratio)
+        train_loader = DataLoader(
+            train_ds,
+            batch_size=args.batch_size,
+            sampler=sampler,
+            num_workers=args.num_workers,
+            pin_memory=True,
+            persistent_workers=(args.num_workers > 0),
+        )
+    else:
+        train_loader = DataLoader(
+            train_ds,
+            batch_size=args.batch_size,
+            shuffle=True,
+            num_workers=args.num_workers,
+            pin_memory=True,
+            persistent_workers=(args.num_workers > 0),
+        )
     valid_loader = DataLoader(
         valid_ds,
         batch_size=args.batch_size,
