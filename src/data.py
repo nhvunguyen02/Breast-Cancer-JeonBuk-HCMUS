@@ -97,24 +97,41 @@ def standardize_split_df(csv_path, source_name):
 
 
 class MultiViewDataset(Dataset):
-    def __init__(self, df, img_size=224, train=False, preprocess="none", brm_pectoral=False):
+    def __init__(self, df, img_size=224, train=False, preprocess="none",
+                 brm_pectoral=False, aug="basic"):
         self.df = df.reset_index(drop=True)
         self.img_size = img_size
         self.train = train
         self.preprocess = preprocess      # "none" (raw resize) or "brm" (crop+normalize)
         self.brm_pectoral = brm_pectoral  # remove pectoral muscle in MLO views (brm only)
+        self.aug = aug                    # "basic" (flip only) or "strong"
 
         self.normalize = transforms.Normalize(
             mean=[0.485, 0.456, 0.406],
             std=[0.229, 0.224, 0.225],
         )
 
-        self.train_tf = transforms.Compose([
-            transforms.Resize((img_size, img_size)),
-            transforms.RandomHorizontalFlip(p=0.5),
-            transforms.ToTensor(),
-            self.normalize,
-        ])
+        if aug == "strong":
+            # Mammography-appropriate augmentation. Geometry (affine) fills with
+            # black to match the zeroed background; intensity jitter is kept MILD
+            # so the density signal (relative fibroglandular brightness) survives.
+            self.train_tf = transforms.Compose([
+                transforms.Resize((img_size, img_size)),
+                transforms.RandomHorizontalFlip(p=0.5),
+                transforms.RandomAffine(degrees=10, translate=(0.05, 0.05),
+                                        scale=(0.9, 1.1), fill=0),
+                transforms.ColorJitter(brightness=0.1, contrast=0.1),
+                transforms.ToTensor(),
+                self.normalize,
+                transforms.RandomErasing(p=0.25, scale=(0.02, 0.10), value=0.0),
+            ])
+        else:  # "basic"
+            self.train_tf = transforms.Compose([
+                transforms.Resize((img_size, img_size)),
+                transforms.RandomHorizontalFlip(p=0.5),
+                transforms.ToTensor(),
+                self.normalize,
+            ])
 
         self.eval_tf = transforms.Compose([
             transforms.Resize((img_size, img_size)),

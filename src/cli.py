@@ -108,5 +108,13 @@ def parse_args():
         help="How to combine the 4 views: 'mean' averages per-view logits; "
              "'gated' learns a gated-attention weight per view.",
     )
+    parser.add_argument(
+        "--aug",
+        type=str,
+        default="basic",
+        choices=["basic", "strong"],
+        help="Train augmentation: 'basic' = resize + h-flip; 'strong' adds "
+             "affine, mild intensity jitter, and random erasing.",
+    )
 
     return parser.parse_args()
