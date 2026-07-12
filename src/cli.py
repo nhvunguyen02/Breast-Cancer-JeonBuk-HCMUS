@@ -1,0 +1,68 @@
+"""Command-line argument parsing (kept torch-free so the entrypoint can set
+CUDA_VISIBLE_DEVICES before torch is ever imported)."""
+
+import argparse
+
+
+def parse_args():
+    parser = argparse.ArgumentParser()
+
+    parser.add_argument("--gpu", type=str, default="1")
+    parser.add_argument("--epochs", type=int, default=50)
+    parser.add_argument("--batch-size", type=int, default=2)
+    parser.add_argument("--num-workers", type=int, default=2)
+    parser.add_argument("--img-size", type=int, default=224)
+    parser.add_argument("--lr", type=float, default=1e-4)
+    parser.add_argument("--weight-decay", type=float, default=1e-4)
+    parser.add_argument("--seed", type=int, default=42)
+
+    parser.add_argument(
+        "--tn-split-csv",
+        type=str,
+        default="data/splits/all_splits_with_paths.csv",
+    )
+    parser.add_argument(
+        "--vindr-split-csv",
+        type=str,
+        default="data/splits/vindr_4view_density_split.csv",
+    )
+    parser.add_argument(
+        "--out-dir",
+        type=str,
+        default="outputs",
+    )
+
+    parser.add_argument(
+        "--tn-domain-ratio",
+        type=float,
+        default=0.5,
+        help="Sampling mass for TN train. 0.5 means TN and VinDr appear equally often per epoch.",
+    )
+    parser.add_argument(
+        "--early-stop-patience",
+        type=int,
+        default=10,
+    )
+    parser.add_argument(
+        "--loss-type",
+        type=str,
+        default="cb_focal",
+        choices=["ce", "focal", "cb_focal"],
+    )
+    parser.add_argument(
+        "--focal-gamma",
+        type=float,
+        default=2.0,
+    )
+    parser.add_argument(
+        "--cb-beta",
+        type=float,
+        default=0.999,
+    )
+    parser.add_argument(
+        "--min-delta",
+        type=float,
+        default=1e-4,
+    )
+
+    return parser.parse_args()

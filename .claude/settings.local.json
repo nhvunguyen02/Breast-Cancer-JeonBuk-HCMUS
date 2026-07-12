@@ -1,0 +1,13 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(python -c \"import torch\")",
+      "Bash(python -c \"import sys; sys.path.insert\\(0,'src'\\); import utils, data, models, losses, engine; print\\('IMPORT_OK torch modules'\\)\")",
+      "Bash(python src/train_phaseG_mixed_loss.py --help)",
+      "Bash(gh pr *)",
+      "Bash(git add *)",
+      "Bash(git commit -q -m ' *)",
+      "Bash(wsl -e bash -lc 'cd /mnt/c/Users/Tyler/Desktop/Ngoc/Breast-Cancer-JeonBuk-HCMUS && echo \"PWD_OK\" && git config user.name; git config user.email; echo \"---GH---\"; which gh && gh auth status 2>&1 | head -3')"
+    ]
+  }
+}

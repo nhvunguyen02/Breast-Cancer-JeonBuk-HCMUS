@@ -1,426 +1,34 @@
+"""Phase G: mixed TN + VinDr training of a DenseNet121 mean-fusion model for
+4-class breast density classification.
+
+Run:
+    python src/train_phaseG_mixed_loss.py --loss-type cb_focal --gpu 1
+"""
+
 import os
-import argparse
-import time
 import json
-import random
+import time
 from pathlib import Path
 
-import numpy as np
-import pandas as pd
-from PIL import Image
-
-from sklearn.metrics import (
-    accuracy_score,
-    balanced_accuracy_score,
-    f1_score,
-    precision_score,
-    recall_score,
-    classification_report,
-    confusion_matrix,
-)
-
-def parse_args():
-    parser = argparse.ArgumentParser()
-
-    parser.add_argument("--gpu", type=str, default="1")
-    parser.add_argument("--epochs", type=int, default=50)
-    parser.add_argument("--batch-size", type=int, default=2)
-    parser.add_argument("--num-workers", type=int, default=2)
-    parser.add_argument("--img-size", type=int, default=224)
-    parser.add_argument("--lr", type=float, default=1e-4)
-    parser.add_argument("--weight-decay", type=float, default=1e-4)
-    parser.add_argument("--seed", type=int, default=42)
-
-    parser.add_argument(
-        "--tn-split-csv",
-        type=str,
-        default="data/splits/all_splits_with_paths.csv",
-    )
-    parser.add_argument(
-        "--vindr-split-csv",
-        type=str,
-        default="data/splits/vindr_4view_density_split.csv",
-    )
-    parser.add_argument(
-        "--out-dir",
-        type=str,
-        default="outputs",
-    )
-
-    parser.add_argument(
-        "--tn-domain-ratio",
-        type=float,
-        default=0.5,
-        help="Sampling mass for TN train. 0.5 means TN and VinDr appear equally often per epoch.",
-    )
-    parser.add_argument(
-        "--early-stop-patience",
-        type=int,
-        default=10,
-    )
-    parser.add_argument(
-        "--loss-type",
-        type=str,
-        default="cb_focal",
-        choices=["ce", "focal", "cb_focal"],
-    )
-    parser.add_argument(
-        "--focal-gamma",
-        type=float,
-        default=2.0,
-    )
-    parser.add_argument(
-        "--cb-beta",
-        type=float,
-        default=0.999,
-    )
-    parser.add_argument(
-        "--min-delta",
-        type=float,
-        default=1e-4,
-    )
-
-    return parser.parse_args()
-
+from cli import parse_args
 
 args = parse_args()
 
-# set before importing torch
+# Must happen before torch is imported (transitively via the modules below).
 os.environ["CUDA_VISIBLE_DEVICES"] = args.gpu
 
+import numpy as np
+import pandas as pd
 import torch
-import torch.nn as nn
-import torch.nn.functional as F
-from torch.utils.data import Dataset, DataLoader, WeightedRandomSampler
-from torchvision import transforms, models
 
-
-LABEL2IDX = {"A": 0, "B": 1, "C": 2, "D": 3}
-IDX2LABEL = {0: "A", 1: "B", 2: "C", 3: "D"}
-VIEW_NAMES = ["left_cc", "left_mlo", "right_cc", "right_mlo"]
-
-
-def seed_everything(seed=42):
-    random.seed(seed)
-    np.random.seed(seed)
-    torch.manual_seed(seed)
-    torch.cuda.manual_seed_all(seed)
-    torch.backends.cudnn.benchmark = True
-    torch.backends.cudnn.deterministic = False
-
-
-def find_col(df, candidates):
-    cols_lower = {c.lower(): c for c in df.columns}
-    for cand in candidates:
-        if cand.lower() in cols_lower:
-            return cols_lower[cand.lower()]
-    return None
-
-
-def standardize_split_df(csv_path, source_name):
-    df = pd.read_csv(csv_path)
-
-    split_col = find_col(df, ["split", "set", "subset"])
-    label_col = find_col(df, ["Labels", "label", "density", "breast_density", "breast density"])
-    id_col = find_col(df, ["ID", "id", "case_id", "exam_id", "study_id", "patient_id"])
-
-    if split_col is None:
-        raise ValueError(f"Missing split column in {csv_path}. Columns={list(df.columns)}")
-    if label_col is None:
-        raise ValueError(f"Missing label column in {csv_path}. Columns={list(df.columns)}")
-    if id_col is None:
-        raise ValueError(f"Missing ID column in {csv_path}. Columns={list(df.columns)}")
-
-    out = df.copy()
-    out["_split"] = out[split_col].astype(str).str.lower().str.strip()
-    out["_id"] = out[id_col].astype(str).str.strip()
-    out["Labels"] = out[label_col].astype(str).str.strip()
-    out["label_idx"] = out["Labels"].map(LABEL2IDX)
-
-    if out["label_idx"].isna().any():
-        bad = out[out["label_idx"].isna()]["Labels"].unique()
-        raise ValueError(f"Unknown labels in {csv_path}: {bad}")
-
-    for view in VIEW_NAMES:
-        path_col = find_col(out, [f"{view}_path", view, f"path_{view}"])
-        if path_col is None:
-            raise ValueError(f"Missing {view}_path column in {csv_path}. Columns={list(out.columns)}")
-        out[f"{view}_path_final"] = out[path_col].astype(str)
-
-    out["domain"] = source_name
-
-    # Check existence quickly
-    missing = []
-    for _, row in out.iterrows():
-        for view in VIEW_NAMES:
-            p = Path(row[f"{view}_path_final"])
-            if not p.exists():
-                missing.append(str(p))
-                if len(missing) >= 5:
-                    break
-        if len(missing) >= 5:
-            break
-
-    if missing:
-        raise FileNotFoundError("Missing image paths, examples:\n" + "\n".join(missing))
-
-    keep_cols = (
-        ["_id", "_split", "Labels", "label_idx", "domain"]
-        + [f"{v}_path_final" for v in VIEW_NAMES]
-    )
-    return out[keep_cols].copy()
-
-
-class MultiViewDataset(Dataset):
-    def __init__(self, df, img_size=224, train=False):
-        self.df = df.reset_index(drop=True)
-        self.img_size = img_size
-        self.train = train
-
-        self.normalize = transforms.Normalize(
-            mean=[0.485, 0.456, 0.406],
-            std=[0.229, 0.224, 0.225],
-        )
-
-        self.train_tf = transforms.Compose([
-            transforms.Resize((img_size, img_size)),
-            transforms.RandomHorizontalFlip(p=0.5),
-            transforms.ToTensor(),
-            self.normalize,
-        ])
-
-        self.eval_tf = transforms.Compose([
-            transforms.Resize((img_size, img_size)),
-            transforms.ToTensor(),
-            self.normalize,
-        ])
-
-    def __len__(self):
-        return len(self.df)
-
-    def __getitem__(self, idx):
-        row = self.df.iloc[idx]
-        y = torch.tensor(int(row["label_idx"]), dtype=torch.long)
-
-        imgs = []
-        for view in VIEW_NAMES:
-            p = row[f"{view}_path_final"]
-            img = Image.open(p).convert("RGB")
-            if self.train:
-                img = self.train_tf(img)
-            else:
-                img = self.eval_tf(img)
-            imgs.append(img)
-
-        x = torch.stack(imgs, dim=0)
-        return x, y
-
-
-class DenseNet121MeanFusion(nn.Module):
-    def __init__(self, num_classes=4):
-        super().__init__()
-        weights = models.DenseNet121_Weights.IMAGENET1K_V1
-        self.backbone = models.densenet121(weights=weights)
-        in_features = self.backbone.classifier.in_features
-        self.backbone.classifier = nn.Linear(in_features, num_classes)
-
-    def forward(self, x):
-        # x: [B, 4, 3, H, W]
-        b, v, c, h, w = x.shape
-        x = x.view(b * v, c, h, w)
-        logits = self.backbone(x)
-        logits = logits.view(b, v, -1)
-        return logits.mean(dim=1)
-
-
-def count_params(model):
-    total = sum(p.numel() for p in model.parameters())
-    trainable = sum(p.numel() for p in model.parameters() if p.requires_grad)
-    return total, trainable
-
-
-def save_model_size_mb(model, path):
-    torch.save(model.state_dict(), path)
-    mb = Path(path).stat().st_size / (1024 ** 2)
-    try:
-        Path(path).unlink()
-    except Exception:
-        pass
-    return mb
-
-
-def make_domain_balanced_sampler(train_df, tn_ratio=0.5):
-    domains = train_df["domain"].tolist()
-    n_tn = sum(d == "TN" for d in domains)
-    n_vindr = sum(d == "VinDr" for d in domains)
-
-    if n_tn == 0 or n_vindr == 0:
-        raise ValueError(f"Invalid domain counts: TN={n_tn}, VinDr={n_vindr}")
-
-    vindr_ratio = 1.0 - tn_ratio
-
-    weights = []
-    for d in domains:
-        if d == "TN":
-            weights.append(tn_ratio / n_tn)
-        else:
-            weights.append(vindr_ratio / n_vindr)
-
-    weights = torch.DoubleTensor(weights)
-
-    sampler = WeightedRandomSampler(
-        weights=weights,
-        num_samples=len(train_df),
-        replacement=True,
-    )
-    return sampler
-
-
-class FocalLoss(nn.Module):
-    def __init__(self, alpha=None, gamma=2.0):
-        super().__init__()
-        self.alpha = alpha
-        self.gamma = gamma
-
-    def forward(self, logits, targets):
-        log_probs = F.log_softmax(logits, dim=1)
-        probs = torch.exp(log_probs)
-
-        target_log_probs = log_probs.gather(1, targets.view(-1, 1)).squeeze(1)
-        target_probs = probs.gather(1, targets.view(-1, 1)).squeeze(1)
-
-        loss = -((1.0 - target_probs) ** self.gamma) * target_log_probs
-
-        if self.alpha is not None:
-            alpha_t = self.alpha.gather(0, targets)
-            loss = alpha_t * loss
-
-        return loss.mean()
-
-
-def run_one_epoch(model, loader, criterion, optimizer, device, train=True):
-    model.train() if train else model.eval()
-
-    losses = []
-    all_true = []
-    all_pred = []
-
-    start = time.time()
-
-    for x, y in loader:
-        x = x.to(device, non_blocking=True)
-        y = y.to(device, non_blocking=True)
-
-        if train:
-            optimizer.zero_grad(set_to_none=True)
-
-        with torch.set_grad_enabled(train):
-            logits = model(x)
-            loss = criterion(logits, y)
-            if train:
-                loss.backward()
-                optimizer.step()
-
-        pred = torch.argmax(logits, dim=1)
-
-        losses.append(loss.item())
-        all_true.extend(y.detach().cpu().numpy().tolist())
-        all_pred.extend(pred.detach().cpu().numpy().tolist())
-
-    elapsed = time.time() - start
-
-    return {
-        "loss": float(np.mean(losses)),
-        "acc": accuracy_score(all_true, all_pred),
-        "macro_f1": f1_score(all_true, all_pred, average="macro", zero_division=0),
-        "weighted_f1": f1_score(all_true, all_pred, average="weighted", zero_division=0),
-        "elapsed_sec": elapsed,
-        "y_true": all_true,
-        "y_pred": all_pred,
-    }
-
-
-def evaluate_test(model, loader, criterion, device):
-    model.eval()
-
-    losses = []
-    all_true = []
-    all_pred = []
-
-    start = time.time()
-
-    with torch.no_grad():
-        for x, y in loader:
-            x = x.to(device, non_blocking=True)
-            y = y.to(device, non_blocking=True)
-
-            logits = model(x)
-            loss = criterion(logits, y)
-            pred = torch.argmax(logits, dim=1)
-
-            losses.append(loss.item())
-            all_true.extend(y.detach().cpu().numpy().tolist())
-            all_pred.extend(pred.detach().cpu().numpy().tolist())
-
-    elapsed = time.time() - start
-
-    metrics = {
-        "loss": float(np.mean(losses)),
-        "accuracy": accuracy_score(all_true, all_pred),
-        "balanced_accuracy": balanced_accuracy_score(all_true, all_pred),
-        "macro_precision": precision_score(all_true, all_pred, average="macro", zero_division=0),
-        "macro_recall": recall_score(all_true, all_pred, average="macro", zero_division=0),
-        "macro_f1": f1_score(all_true, all_pred, average="macro", zero_division=0),
-        "weighted_precision": precision_score(all_true, all_pred, average="weighted", zero_division=0),
-        "weighted_recall": recall_score(all_true, all_pred, average="weighted", zero_division=0),
-        "weighted_f1": f1_score(all_true, all_pred, average="weighted", zero_division=0),
-        "elapsed_sec": elapsed,
-        "sec_per_exam": elapsed / max(1, len(all_true)),
-    }
-
-    report = classification_report(
-        all_true,
-        all_pred,
-        target_names=["A", "B", "C", "D"],
-        zero_division=0,
-    )
-    cm = confusion_matrix(all_true, all_pred, labels=[0, 1, 2, 3])
-    cm_df = pd.DataFrame(cm, index=["A", "B", "C", "D"], columns=["A", "B", "C", "D"])
-
-    # Per-class accuracy = recall từng class
-    class_names = ["A", "B", "C", "D"]
-    per_class_rows = []
-
-    for i, class_name in enumerate(class_names):
-        support = int(cm[i, :].sum())
-        correct = int(cm[i, i])
-        acc = correct / support if support > 0 else 0.0
-
-        metrics[f"{class_name}_correct"] = correct
-        metrics[f"{class_name}_support"] = support
-        metrics[f"{class_name}_acc"] = acc
-
-        per_class_rows.append({
-            "class": class_name,
-            "correct": correct,
-            "support": support,
-            "accuracy": acc,
-        })
-
-    per_class_df = pd.DataFrame(per_class_rows)
-
-    return metrics, report, cm_df, per_class_df
-
-
-def append_benchmark(row, benchmark_path):
-    benchmark_path = Path(benchmark_path)
-    if benchmark_path.exists():
-        old = pd.read_csv(benchmark_path)
-        new = pd.concat([old, pd.DataFrame([row])], ignore_index=True)
-    else:
-        new = pd.DataFrame([row])
-    new.to_csv(benchmark_path, index=False)
-    return new
+from constants import LABEL2IDX  # noqa: F401  (kept for parity / downstream use)
+from utils import seed_everything, count_params, save_model_size_mb, append_benchmark
+from data import standardize_split_df, MultiViewDataset, make_domain_balanced_sampler
+from models import DenseNet121MeanFusion
+from losses import compute_class_weights, build_criterion
+from engine import run_one_epoch, evaluate_test
+
+from torch.utils.data import DataLoader
 
 
 def main():
@@ -516,12 +124,8 @@ def main():
     # Loss weights based on TN train only, not VinDr.
     tn_counts = tn_train["label_idx"].value_counts().sort_index().values.astype(np.float32)
 
-    ce_weights_np = tn_counts.sum() / (len(tn_counts) * tn_counts)
+    ce_weights_np, cb_weights_np = compute_class_weights(tn_counts, args.cb_beta)
     ce_weights = torch.tensor(ce_weights_np, dtype=torch.float32).to(device)
-
-    effective_num = 1.0 - np.power(args.cb_beta, tn_counts)
-    cb_weights_np = (1.0 - args.cb_beta) / effective_num
-    cb_weights_np = cb_weights_np / cb_weights_np.mean()
     cb_weights = torch.tensor(cb_weights_np, dtype=torch.float32).to(device)
 
     print(f"TN train counts: {tn_counts}", flush=True)
@@ -529,14 +133,8 @@ def main():
     print(f"CB weights from TN train beta={args.cb_beta}: {cb_weights}", flush=True)
     print(f"Loss type: {args.loss_type}, focal_gamma={args.focal_gamma}", flush=True)
 
-    if args.loss_type == "ce":
-        criterion = nn.CrossEntropyLoss(weight=ce_weights)
-    elif args.loss_type == "focal":
-        criterion = FocalLoss(alpha=ce_weights, gamma=args.focal_gamma)
-    elif args.loss_type == "cb_focal":
-        criterion = FocalLoss(alpha=cb_weights, gamma=args.focal_gamma)
-    else:
-        raise ValueError(f"Unknown loss type: {args.loss_type}")
+    criterion = build_criterion(args.loss_type, ce_weights, cb_weights, args.focal_gamma)
+
     optimizer = torch.optim.AdamW(
         model.parameters(),
         lr=args.lr,

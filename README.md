@@ -15,8 +15,23 @@ Input is one mammography exam with four standard views:
 - R-CC
 - R-MLO
 
-## Main File
+## Layout
 
 ```text
-src/train_phaseG_mixed_loss.py
+src/
+  train_phaseG_mixed_loss.py   # entrypoint: orchestrates the run
+  cli.py                       # argparse (torch-free)
+  constants.py                 # label / view constants
+  data.py                      # split-CSV standardization, dataset, sampler
+  models.py                    # DenseNet121 mean-fusion model
+  losses.py                    # focal loss + class-weight helpers
+  engine.py                    # train / eval loops, test metrics
+  utils.py                     # seeding, param count, benchmark IO
+```
+
+## Run
+
+```bash
+python src/train_phaseG_mixed_loss.py --loss-type cb_focal --gpu 1
+```
 
