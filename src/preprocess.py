@@ -47,14 +47,36 @@ def ensure_tissue_bright(arr: np.ndarray) -> np.ndarray:
 # --------------------------------------------------------------------------- #
 # M0.2 — breast mask (Otsu + largest connected component + morphology)
 # --------------------------------------------------------------------------- #
-def breast_mask(img: np.ndarray, closing_radius: int = 5) -> np.ndarray:
-    """Segment breast from background. Returns a bool mask (True = breast)."""
-    from scipy.ndimage import binary_fill_holes
+def _air_level(img: np.ndarray) -> float:
+    """Estimate air-background intensity from the 4 corners (median is robust)."""
+    h, w = img.shape[-2], img.shape[-1]
+    ch, cw = max(1, h // 20), max(1, w // 20)
+    corners = np.concatenate([
+        img[:ch, :cw].ravel(), img[:ch, -cw:].ravel(),
+        img[-ch:, :cw].ravel(), img[-ch:, -cw:].ravel(),
+    ])
+    return float(np.median(corners))
+
+
+def breast_mask(img: np.ndarray, closing_radius: int = 5, bg_frac: float = 0.06) -> np.ndarray:
+    """Segment breast from background. Returns a bool mask (True = breast).
+
+    Threshold = min(Otsu, air + bg_frac*(p99 - air)). Plain Otsu sits too high on
+    many exams, so darker peripheral/interior FAT falls below it and gets punched
+    out as holes -> real breast tissue is then zeroed. The background-relative
+    floor keeps all tissue above the air level. A generous close + hole-fill +
+    edge-padding dilation then guarantees a solid, slightly over-inclusive mask
+    (better to keep a rim of background than to carve into the breast).
+    """
+    from scipy.ndimage import binary_fill_holes, binary_dilation
     from skimage.filters import threshold_otsu
     from skimage.measure import label
     from skimage.morphology import binary_closing, disk
 
-    thr = float(threshold_otsu(img))
+    otsu = float(threshold_otsu(img))
+    air = _air_level(img)
+    p99 = float(np.percentile(img, 99))
+    thr = min(otsu, air + bg_frac * (p99 - air))
     fg = img > thr
 
     lbl = label(fg)
@@ -65,6 +87,10 @@ def breast_mask(img: np.ndarray, closing_radius: int = 5) -> np.ndarray:
     mask = lbl == int(counts.argmax())
 
     mask = binary_closing(mask, disk(closing_radius))
+    mask = binary_fill_holes(mask)
+    # pad the breast edge outward slightly so the skin-line rim is never shaved.
+    pad = max(1, int(0.006 * max(img.shape)))
+    mask = binary_dilation(mask, iterations=pad)
     mask = binary_fill_holes(mask)
     return np.asarray(mask, dtype=bool)
 
