@@ -239,16 +239,27 @@ def pectoral_mask_mlo(img: np.ndarray, bmask: np.ndarray, side: str,
 def preprocess_view(gray: np.ndarray, view: str, side: str,
                     closing_radius: int = 5, margin_frac: float = 0.03,
                     zero_background: bool = True,
-                    remove_pectoral: bool = True) -> np.ndarray:
+                    remove_pectoral: bool = False,
+                    normalize: bool = True,
+                    norm_low: float = 2.0, norm_high: float = 98.0) -> np.ndarray:
     """Full BRM-style preprocessing of ONE grayscale view.
+
+    Steps: ensure tissue-bright -> Otsu breast mask -> crop to breast bbox ->
+    [optional] pectoral removal (MLO) -> in-mask robust intensity normalization
+    (map breast [p_low, p_high] to [0,255]) -> zero background. NOT resized.
 
     Args:
         gray: 2D grayscale array (any scale). Breast may be dark or bright.
         view: 'CC' or 'MLO'.
         side: 'L' or 'R' (breast laterality / chest-wall side).
+        remove_pectoral: OFF by default. The Hough-based detector is unreliable
+            on this data and over-removes into fibroglandular tissue, which would
+            corrupt the density label; leaving the muscle in is the safer choice.
+        normalize: per-image robust contrast normalization *within the breast
+            mask*. Standard for mammography (removes exposure variation) and
+            density-preserving (a linear map keeps tissue proportions/texture).
     Returns:
-        float32 grayscale, cropped to the breast (background zeroed, pectoral
-        removed on MLO). NOT resized — the caller resizes to the model input.
+        float32 grayscale in [0, 255], cropped to the breast, background zeroed.
     """
     g = ensure_tissue_bright(gray)
 
@@ -262,7 +273,15 @@ def preprocess_view(gray: np.ndarray, view: str, side: str,
         bm = bm & ~pec
 
     out = crop.astype(np.float32, copy=True)
-    if zero_background and bm.any():
-        out = np.where(bm, out, 0.0).astype(np.float32)
 
-    return out
+    if normalize and bm.any():
+        vals = out[bm]
+        lo = float(np.percentile(vals, norm_low))
+        hi = float(np.percentile(vals, norm_high))
+        if hi > lo:
+            out = np.clip((out - lo) / (hi - lo), 0.0, 1.0) * 255.0
+
+    if zero_background and bm.any():
+        out = np.where(bm, out, 0.0)
+
+    return out.astype(np.float32)

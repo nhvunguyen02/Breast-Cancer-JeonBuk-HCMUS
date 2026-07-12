@@ -294,7 +294,7 @@ def main():
         "model": "densenet121",
         "fusion": "mean_4_views",
         "input": f"JPEG_or_PNG_resize_{args.img_size}",
-        "preprocessing": ("brm_crop_breast_pectoral_resize_imagenet_norm"
+        "preprocessing": ("brm_cropbreast_inmaskP2P98norm_resize_imagenet_norm"
                           if args.preprocess == "brm"
                           else "nocrop_noCLAHE_resize_imagenet_norm"),
         "split": "TN_seed42_train411_valid133_test132_plus_VinDr_train_external",
