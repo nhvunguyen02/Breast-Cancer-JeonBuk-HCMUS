@@ -305,6 +305,8 @@ def main():
         "balanced_accuracy": test_metrics["balanced_accuracy"],
         "macro_f1": test_metrics["macro_f1"],
         "weighted_f1": test_metrics["weighted_f1"],
+        "macro_auc": test_metrics["macro_auc"],
+        "weighted_auc": test_metrics["weighted_auc"],
         "params_total": total_params,
         "params_trainable": trainable_params,
         "model_size_mb": model_size_mb,
