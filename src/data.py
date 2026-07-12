@@ -27,11 +27,11 @@ def _brm_to_rgb(pil_img, view, side):
     gray = np.asarray(pil_img.convert("L"), dtype=np.float32)
     out = preprocess_view(gray, view=view, side=side)
 
-    fg = out[out > 0]
-    hi = float(np.percentile(fg, 99.5)) if fg.size else float(out.max())
-    hi = hi if hi > 0 else 1.0
-    arr8 = np.clip(out / hi, 0.0, 1.0) * 255.0
-    return Image.fromarray(arr8.astype(np.uint8), mode="L").convert("RGB")
+    # Keep the ORIGINAL 8-bit intensities (input JPEGs are already 0-255). Do NOT
+    # contrast-stretch per image: that would blow out low-contrast fatty breasts
+    # and destroy the density signal we are trying to classify.
+    arr8 = np.clip(out, 0.0, 255.0).astype(np.uint8)
+    return Image.fromarray(arr8, mode="L").convert("RGB")
 
 
 def find_col(df, candidates):
