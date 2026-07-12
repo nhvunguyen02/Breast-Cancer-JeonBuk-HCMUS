@@ -70,7 +70,13 @@ def parse_args():
         default="none",
         choices=["none", "brm"],
         help="none = raw resize + ImageNet norm; brm = BRM stage0 "
-             "(crop-to-breast + pectoral removal) before resize.",
+             "(crop-to-breast + in-mask p2-p98 normalize) before resize.",
+    )
+    parser.add_argument(
+        "--brm-pectoral",
+        action="store_true",
+        help="With --preprocess brm, also remove the pectoral muscle in MLO "
+             "views (conservative corner-anchored bright-triangle detector).",
     )
 
     return parser.parse_args()

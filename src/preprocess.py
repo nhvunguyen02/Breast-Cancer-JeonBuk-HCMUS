@@ -209,12 +209,14 @@ def _detect_pectoral_line(im, bm, top_frac, min_frac, max_frac,
     return best
 
 
-def _pectoral_plausible(pec: np.ndarray, bm: np.ndarray,
+def _pectoral_plausible(pec: np.ndarray, bm: np.ndarray, im: np.ndarray,
                         max_col_frac: float = 0.55, max_row_frac: float = 0.85,
                         max_area_frac: float = 0.30) -> bool:
-    """Reject implausible pectoral masks that eat into the breast: a real MLO
-    pectoral is a compact triangle pinned to the TOP-LEFT corner, so it must not
-    reach far right, stretch to the bottom, or cover too much of the breast."""
+    """Reject implausible pectoral masks that eat into the breast. A real MLO
+    pectoral is a compact, BRIGHT triangle pinned to the TOP-LEFT corner, so it
+    must: stay in the corner (not spill far right or to the bottom), not cover
+    too much of the breast, actually be anchored at the top-left corner, and be
+    brighter than the breast median (muscle is dense)."""
     area = int(pec.sum())
     if area == 0:
         return False
@@ -226,6 +228,19 @@ def _pectoral_plausible(pec: np.ndarray, bm: np.ndarray,
     if xs.max() > max_col_frac * W:          # spills right past the corner
         return False
     if ys.max() > max_row_frac * H:          # reaches the bottom
+        return False
+
+    # corner-anchor: pec must fill most of the top-left breast corner block,
+    # else it is a floating triangle over breast tissue, not the muscle.
+    cb_h, cb_w = max(1, int(0.12 * H)), max(1, int(0.12 * W))
+    corner_breast = int(bm[:cb_h, :cb_w].sum())
+    if corner_breast == 0:
+        return False
+    if pec[:cb_h, :cb_w].sum() / corner_breast < 0.5:
+        return False
+
+    # brightness: pectoral muscle is bright -> region mean above breast median.
+    if float(im[pec].mean()) < float(np.percentile(im[bm], 50)):
         return False
     return True
 
@@ -251,7 +266,7 @@ def pectoral_mask_mlo(img: np.ndarray, bmask: np.ndarray, side: str,
     else:
         theta, rho = line
         pec = (_signed(im.shape, theta, rho / s) <= 0) & bm
-        if not _pectoral_plausible(pec, bm, max_area_frac=max_area_frac_of_breast):
+        if not _pectoral_plausible(pec, bm, im, max_area_frac=max_area_frac_of_breast):
             pec = np.zeros(im.shape, dtype=bool)
 
     if flip:

@@ -48,7 +48,8 @@ def main():
     elif args.loss_type == "cb_focal":
         loss_tag = f"{args.loss_type}_gamma{args.focal_gamma}_beta{args.cb_beta}"
 
-    phase_dir = out_dir / "phaseG_mixed_loss" / f"densenet121_mean_tnratio{args.tn_domain_ratio}_{loss_tag}_pp{args.preprocess}_seed{args.seed}"
+    pp_tag = args.preprocess + ("pec" if (args.preprocess == "brm" and args.brm_pectoral) else "")
+    phase_dir = out_dir / "phaseG_mixed_loss" / f"densenet121_mean_tnratio{args.tn_domain_ratio}_{loss_tag}_pp{pp_tag}_seed{args.seed}"
     phase_dir.mkdir(parents=True, exist_ok=True)
 
     print("Phase G Mixed TN + VinDr Loss Training", flush=True)
@@ -88,9 +89,9 @@ def main():
     print("VinDr train labels:", vindr_train["label_idx"].value_counts().sort_index().to_dict(), flush=True)
     print("Mixed domain counts:", mixed_train["domain"].value_counts().to_dict(), flush=True)
 
-    train_ds = MultiViewDataset(mixed_train, img_size=args.img_size, train=True, preprocess=args.preprocess)
-    valid_ds = MultiViewDataset(tn_valid, img_size=args.img_size, train=False, preprocess=args.preprocess)
-    test_ds = MultiViewDataset(tn_test, img_size=args.img_size, train=False, preprocess=args.preprocess)
+    train_ds = MultiViewDataset(mixed_train, img_size=args.img_size, train=True, preprocess=args.preprocess, brm_pectoral=args.brm_pectoral)
+    valid_ds = MultiViewDataset(tn_valid, img_size=args.img_size, train=False, preprocess=args.preprocess, brm_pectoral=args.brm_pectoral)
+    test_ds = MultiViewDataset(tn_test, img_size=args.img_size, train=False, preprocess=args.preprocess, brm_pectoral=args.brm_pectoral)
 
     # Domain-balanced sampling only makes sense with two domains; otherwise
     # fall back to plain shuffling of the TN-only training set.

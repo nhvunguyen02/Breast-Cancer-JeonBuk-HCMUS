@@ -20,12 +20,12 @@ VIEW_META = {
 }
 
 
-def _brm_to_rgb(pil_img, view, side):
+def _brm_to_rgb(pil_img, view, side, remove_pectoral=False):
     """Run BRM stage0 preprocessing on a PIL image and return an RGB PIL image."""
     from preprocess import preprocess_view
 
     gray = np.asarray(pil_img.convert("L"), dtype=np.float32)
-    out = preprocess_view(gray, view=view, side=side)
+    out = preprocess_view(gray, view=view, side=side, remove_pectoral=remove_pectoral)
 
     # Keep the ORIGINAL 8-bit intensities (input JPEGs are already 0-255). Do NOT
     # contrast-stretch per image: that would blow out low-contrast fatty breasts
@@ -97,11 +97,12 @@ def standardize_split_df(csv_path, source_name):
 
 
 class MultiViewDataset(Dataset):
-    def __init__(self, df, img_size=224, train=False, preprocess="none"):
+    def __init__(self, df, img_size=224, train=False, preprocess="none", brm_pectoral=False):
         self.df = df.reset_index(drop=True)
         self.img_size = img_size
         self.train = train
-        self.preprocess = preprocess  # "none" (raw resize) or "brm" (crop+pectoral)
+        self.preprocess = preprocess      # "none" (raw resize) or "brm" (crop+normalize)
+        self.brm_pectoral = brm_pectoral  # remove pectoral muscle in MLO views (brm only)
 
         self.normalize = transforms.Normalize(
             mean=[0.485, 0.456, 0.406],
@@ -134,7 +135,7 @@ class MultiViewDataset(Dataset):
             img = Image.open(p)
             if self.preprocess == "brm":
                 view_code, side = VIEW_META[view]
-                img = _brm_to_rgb(img, view_code, side)
+                img = _brm_to_rgb(img, view_code, side, remove_pectoral=self.brm_pectoral)
             else:
                 img = img.convert("RGB")
             if self.train:
