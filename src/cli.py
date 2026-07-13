@@ -109,6 +109,12 @@ def parse_args():
              "'gated' learns a gated-attention weight per view.",
     )
     parser.add_argument(
+        "--clahe",
+        action="store_true",
+        help="Apply CLAHE (contrast-limited adaptive histogram equalization) "
+             "after resize, to both train and eval images.",
+    )
+    parser.add_argument(
         "--ordinal",
         action="store_true",
         help="Use CORAL ordinal loss + head instead of nominal classification "

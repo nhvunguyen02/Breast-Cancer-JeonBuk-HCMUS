@@ -34,6 +34,24 @@ def _brm_to_rgb(pil_img, view, side, remove_pectoral=False):
     return Image.fromarray(arr8, mode="L").convert("RGB")
 
 
+class CLAHE:
+    """Contrast-Limited Adaptive Histogram Equalization on the grayscale image.
+
+    Applied AFTER resize (fast on the small image; the default kernel ~1/8 of the
+    side gives roughly the 8x8 tiling used throughout the mammography literature).
+    Enhances local contrast of fibroglandular tissue; returns a 3-channel image."""
+
+    def __init__(self, clip_limit=0.01):
+        self.clip_limit = clip_limit
+
+    def __call__(self, img):
+        from skimage.exposure import equalize_adapthist
+        g = np.asarray(img.convert("L"), dtype=np.float32) / 255.0
+        g = equalize_adapthist(g, clip_limit=self.clip_limit)
+        arr = (np.clip(g, 0.0, 1.0) * 255).astype(np.uint8)
+        return Image.fromarray(arr, mode="L").convert("RGB")
+
+
 def find_col(df, candidates):
     cols_lower = {c.lower(): c for c in df.columns}
     for cand in candidates:
@@ -98,57 +116,53 @@ def standardize_split_df(csv_path, source_name):
 
 class MultiViewDataset(Dataset):
     def __init__(self, df, img_size=224, train=False, preprocess="none",
-                 brm_pectoral=False, aug="basic"):
+                 brm_pectoral=False, aug="basic", clahe=False):
         self.df = df.reset_index(drop=True)
         self.img_size = img_size
         self.train = train
         self.preprocess = preprocess      # "none" (raw resize) or "brm" (crop+normalize)
         self.brm_pectoral = brm_pectoral  # remove pectoral muscle in MLO views (brm only)
-        self.aug = aug                    # "basic" (flip only) or "strong"
+        self.aug = aug                    # "basic" | "affine" | "strong"
+        self.clahe = clahe
 
         self.normalize = transforms.Normalize(
             mean=[0.485, 0.456, 0.406],
             std=[0.229, 0.224, 0.225],
         )
 
+        # Common prefix: resize, then optional CLAHE (before any geometry/jitter).
+        pre = [transforms.Resize((img_size, img_size))]
+        if clahe:
+            pre.append(CLAHE(clip_limit=0.01))
+
+        tail = [transforms.ToTensor(), self.normalize]
+
         if aug == "affine":
             # Geometry-only augmentation (no erasing, which would occlude the
-            # fibroglandular tissue that defines density). Milder than 'strong'.
-            self.train_tf = transforms.Compose([
-                transforms.Resize((img_size, img_size)),
+            # fibroglandular tissue that defines density).
+            mid = [
                 transforms.RandomHorizontalFlip(p=0.5),
                 transforms.RandomAffine(degrees=7, translate=(0.05, 0.05), fill=0),
                 transforms.ColorJitter(brightness=0.1, contrast=0.1),
-                transforms.ToTensor(),
-                self.normalize,
-            ])
+            ]
+            self.train_tf = transforms.Compose(pre + mid + tail)
         elif aug == "strong":
-            # Mammography-appropriate augmentation. Geometry (affine) fills with
-            # black to match the zeroed background; intensity jitter is kept MILD
-            # so the density signal (relative fibroglandular brightness) survives.
-            self.train_tf = transforms.Compose([
-                transforms.Resize((img_size, img_size)),
+            # Affine (black fill matches background) + mild jitter + random erasing.
+            mid = [
                 transforms.RandomHorizontalFlip(p=0.5),
                 transforms.RandomAffine(degrees=10, translate=(0.05, 0.05),
                                         scale=(0.9, 1.1), fill=0),
                 transforms.ColorJitter(brightness=0.1, contrast=0.1),
-                transforms.ToTensor(),
-                self.normalize,
-                transforms.RandomErasing(p=0.25, scale=(0.02, 0.10), value=0.0),
-            ])
+            ]
+            self.train_tf = transforms.Compose(
+                pre + mid + tail + [transforms.RandomErasing(p=0.25, scale=(0.02, 0.10), value=0.0)]
+            )
         else:  # "basic"
-            self.train_tf = transforms.Compose([
-                transforms.Resize((img_size, img_size)),
-                transforms.RandomHorizontalFlip(p=0.5),
-                transforms.ToTensor(),
-                self.normalize,
-            ])
+            self.train_tf = transforms.Compose(
+                pre + [transforms.RandomHorizontalFlip(p=0.5)] + tail
+            )
 
-        self.eval_tf = transforms.Compose([
-            transforms.Resize((img_size, img_size)),
-            transforms.ToTensor(),
-            self.normalize,
-        ])
+        self.eval_tf = transforms.Compose(pre + tail)
 
     def __len__(self):
         return len(self.df)

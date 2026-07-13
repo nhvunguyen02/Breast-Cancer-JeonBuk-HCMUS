@@ -54,6 +54,7 @@ def main():
     pp_tag += f"_{args.fusion}" if args.fusion != "mean" else ""
     pp_tag += f"_aug{args.aug}" if args.aug != "basic" else ""
     pp_tag += "_coral" if args.ordinal else ""
+    pp_tag += "_clahe" if args.clahe else ""
     phase_dir = out_dir / "phaseG_mixed_loss" / f"{args.backbone}_{args.fusion}_tnratio{args.tn_domain_ratio}_{loss_tag}_pp{pp_tag}_seed{args.seed}"
     phase_dir.mkdir(parents=True, exist_ok=True)
 
@@ -94,9 +95,9 @@ def main():
     print("VinDr train labels:", vindr_train["label_idx"].value_counts().sort_index().to_dict(), flush=True)
     print("Mixed domain counts:", mixed_train["domain"].value_counts().to_dict(), flush=True)
 
-    train_ds = MultiViewDataset(mixed_train, img_size=args.img_size, train=True, preprocess=args.preprocess, brm_pectoral=args.brm_pectoral, aug=args.aug)
-    valid_ds = MultiViewDataset(tn_valid, img_size=args.img_size, train=False, preprocess=args.preprocess, brm_pectoral=args.brm_pectoral)
-    test_ds = MultiViewDataset(tn_test, img_size=args.img_size, train=False, preprocess=args.preprocess, brm_pectoral=args.brm_pectoral)
+    train_ds = MultiViewDataset(mixed_train, img_size=args.img_size, train=True, preprocess=args.preprocess, brm_pectoral=args.brm_pectoral, aug=args.aug, clahe=args.clahe)
+    valid_ds = MultiViewDataset(tn_valid, img_size=args.img_size, train=False, preprocess=args.preprocess, brm_pectoral=args.brm_pectoral, clahe=args.clahe)
+    test_ds = MultiViewDataset(tn_test, img_size=args.img_size, train=False, preprocess=args.preprocess, brm_pectoral=args.brm_pectoral, clahe=args.clahe)
 
     # Domain-balanced sampling only makes sense with two domains; otherwise
     # fall back to plain shuffling of the TN-only training set.
