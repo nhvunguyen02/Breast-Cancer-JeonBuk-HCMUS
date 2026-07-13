@@ -109,6 +109,12 @@ def parse_args():
              "'gated' learns a gated-attention weight per view.",
     )
     parser.add_argument(
+        "--ordinal",
+        action="store_true",
+        help="Use CORAL ordinal loss + head instead of nominal classification "
+             "(exploits A<B<C<D ordering; penalizes distant errors more).",
+    )
+    parser.add_argument(
         "--aug",
         type=str,
         default="basic",

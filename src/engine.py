@@ -19,6 +19,7 @@ from sklearn.metrics import (
 from sklearn.preprocessing import label_binarize
 
 from constants import CLASS_NAMES
+from losses import coral_loss, coral_probs
 
 
 def attention_outside_loss(attn, mask, eps=1e-6):
@@ -31,7 +32,8 @@ def attention_outside_loss(attn, mask, eps=1e-6):
     return outside.mean()
 
 
-def run_one_epoch(model, loader, criterion, optimizer, device, train=True, attn_weight=0.0):
+def run_one_epoch(model, loader, criterion, optimizer, device, train=True,
+                  attn_weight=0.0, ordinal=False, num_classes=4):
     model.train() if train else model.eval()
 
     losses = []
@@ -39,6 +41,9 @@ def run_one_epoch(model, loader, criterion, optimizer, device, train=True, attn_
     all_pred = []
 
     start = time.time()
+
+    def base_loss(logits, y):
+        return coral_loss(logits, y, num_classes) if ordinal else criterion(logits, y)
 
     for x, y in loader:
         x = x.to(device, non_blocking=True)
@@ -50,15 +55,15 @@ def run_one_epoch(model, loader, criterion, optimizer, device, train=True, attn_
         with torch.set_grad_enabled(train):
             if attn_weight > 0:
                 logits, attn, mask = model(x, return_attn=True)
-                loss = criterion(logits, y) + attn_weight * attention_outside_loss(attn, mask)
+                loss = base_loss(logits, y) + attn_weight * attention_outside_loss(attn, mask)
             else:
                 logits = model(x)
-                loss = criterion(logits, y)
+                loss = base_loss(logits, y)
             if train:
                 loss.backward()
                 optimizer.step()
 
-        pred = torch.argmax(logits, dim=1)
+        pred = coral_probs(logits).argmax(dim=1) if ordinal else torch.argmax(logits, dim=1)
 
         losses.append(loss.item())
         all_true.extend(y.detach().cpu().numpy().tolist())
@@ -77,7 +82,7 @@ def run_one_epoch(model, loader, criterion, optimizer, device, train=True, attn_
     }
 
 
-def evaluate_test(model, loader, criterion, device):
+def evaluate_test(model, loader, criterion, device, ordinal=False, num_classes=4):
     model.eval()
 
     losses = []
@@ -93,9 +98,13 @@ def evaluate_test(model, loader, criterion, device):
             y = y.to(device, non_blocking=True)
 
             logits = model(x)
-            loss = criterion(logits, y)
-            prob = F.softmax(logits, dim=1)
-            pred = torch.argmax(logits, dim=1)
+            if ordinal:
+                loss = coral_loss(logits, y, num_classes)
+                prob = coral_probs(logits)
+            else:
+                loss = criterion(logits, y)
+                prob = F.softmax(logits, dim=1)
+            pred = prob.argmax(dim=1)          # class = argmax of the distribution
 
             losses.append(loss.item())
             all_true.extend(y.detach().cpu().numpy().tolist())

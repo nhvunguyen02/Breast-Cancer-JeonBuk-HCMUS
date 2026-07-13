@@ -51,7 +51,7 @@ def build_backbone(name):
 
 class MultiViewModel(nn.Module):
     def __init__(self, num_classes=4, backbone="densenet121", masked_pool=False,
-                 mask_thresh=0.02, fusion="mean", attn_dim=128):
+                 mask_thresh=0.02, fusion="mean", attn_dim=128, ordinal=False):
         """4-view classifier with a shared, selectable backbone.
 
         backbone: 'densenet121' | 'densenet169' | 'efficientnet_b0/b3/b5' | 'resnet50'.
@@ -62,7 +62,14 @@ class MultiViewModel(nn.Module):
         per-view features before classifying."""
         super().__init__()
         self.features, feat_dim, self._needs_relu = build_backbone(backbone)
-        self.classifier = nn.Linear(feat_dim, num_classes)
+        self.num_classes = num_classes
+        self.ordinal = ordinal
+        if ordinal:
+            # CORAL head: one shared projection + (K-1) ordered bias thresholds.
+            self.classifier = nn.Linear(feat_dim, 1, bias=False)
+            self.ordinal_bias = nn.Parameter(torch.zeros(num_classes - 1))
+        else:
+            self.classifier = nn.Linear(feat_dim, num_classes)
         # ConvNeXt's head LayerNorm is dropped with its classifier; restore a
         # norm on the pooled feature so the fresh Linear trains stably.
         self.head_norm = nn.LayerNorm(feat_dim) if backbone.startswith("convnext") else nn.Identity()
@@ -89,6 +96,14 @@ class MultiViewModel(nn.Module):
         m = F.adaptive_avg_pool2d(m, feat.shape[-2:])    # breast fraction per cell
         return feat, m
 
+    def _head(self, z):
+        """Map a pooled/aggregated feature to logits: [., K] normally, or the
+        [., K-1] CORAL cumulative logits (shared projection + ordered biases)."""
+        out = self.classifier(z)
+        if self.ordinal:
+            out = out + self.ordinal_bias                # [.,1] + [K-1] -> [.,K-1]
+        return out
+
     def forward(self, x, return_attn=False):
         # x: [B, 4, 3, H, W]
         b, v, c, h, w = x.shape
@@ -109,9 +124,9 @@ class MultiViewModel(nn.Module):
             gate = torch.tanh(self.attn_V(h_v)) * torch.sigmoid(self.attn_U(h_v))
             a = torch.softmax(self.attn_w(gate), dim=1)  # [B, V, 1] per-view weights
             z = (a * h_v).sum(dim=1)                     # [B, C]
-            logits = self.classifier(z)
+            logits = self._head(z)
         else:                                            # mean of per-view logits
-            logits = self.classifier(pooled)
+            logits = self._head(pooled)
             logits = logits.view(b, v, -1).mean(dim=1)
 
         if return_attn:

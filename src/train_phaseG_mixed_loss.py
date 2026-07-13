@@ -53,6 +53,7 @@ def main():
     pp_tag += f"_att{args.attn_loss_weight}" if args.attn_loss_weight > 0 else ""
     pp_tag += f"_{args.fusion}" if args.fusion != "mean" else ""
     pp_tag += f"_aug{args.aug}" if args.aug != "basic" else ""
+    pp_tag += "_coral" if args.ordinal else ""
     phase_dir = out_dir / "phaseG_mixed_loss" / f"{args.backbone}_{args.fusion}_tnratio{args.tn_domain_ratio}_{loss_tag}_pp{pp_tag}_seed{args.seed}"
     phase_dir.mkdir(parents=True, exist_ok=True)
 
@@ -139,8 +140,10 @@ def main():
     print(f"Valid batches: {len(valid_loader)}", flush=True)
     print(f"Test batches: {len(test_loader)}", flush=True)
 
-    model = MultiViewModel(num_classes=4, backbone=args.backbone, masked_pool=args.masked_pool, fusion=args.fusion).to(device)
+    model = MultiViewModel(num_classes=4, backbone=args.backbone, masked_pool=args.masked_pool, fusion=args.fusion, ordinal=args.ordinal).to(device)
     print(f"Backbone: {args.backbone}", flush=True)
+    if args.ordinal:
+        print("Loss/head: CORAL ordinal", flush=True)
     if args.masked_pool:
         print("Masked global average pooling: ON (breast-region features only)", flush=True)
     print(f"View fusion: {args.fusion}", flush=True)
@@ -189,8 +192,8 @@ def main():
     for epoch in range(1, args.epochs + 1):
         print(f"[EPOCH] {epoch}/{args.epochs}", flush=True)
 
-        train_m = run_one_epoch(model, train_loader, criterion, optimizer, device, train=True, attn_weight=args.attn_loss_weight)
-        valid_m = run_one_epoch(model, valid_loader, criterion, optimizer, device, train=False, attn_weight=args.attn_loss_weight)
+        train_m = run_one_epoch(model, train_loader, criterion, optimizer, device, train=True, attn_weight=args.attn_loss_weight, ordinal=args.ordinal)
+        valid_m = run_one_epoch(model, valid_loader, criterion, optimizer, device, train=False, attn_weight=args.attn_loss_weight, ordinal=args.ordinal)
 
         lr_now = optimizer.param_groups[0]["lr"]
 
@@ -267,7 +270,7 @@ def main():
     ckpt = torch.load(best_ckpt, map_location=device)
     model.load_state_dict(ckpt["model_state_dict"])
 
-    test_metrics, report, cm_df, per_class_df = evaluate_test(model, test_loader, criterion, device)
+    test_metrics, report, cm_df, per_class_df = evaluate_test(model, test_loader, criterion, device, ordinal=args.ordinal)
 
     print("\n[TEST] Metrics:", flush=True)
     for k, v in test_metrics.items():

@@ -28,6 +28,26 @@ class FocalLoss(nn.Module):
         return loss.mean()
 
 
+def coral_loss(logits, targets, num_classes):
+    """CORAL ordinal loss (Cao et al. 2020). logits: [N, K-1] cumulative
+    thresholds P(y>k); targets: [N] class index. Encodes that A<B<C<D are ordered,
+    so predicting an adjacent class (C vs D) is penalized less than a distant one."""
+    levels = (targets.view(-1, 1) >
+              torch.arange(num_classes - 1, device=targets.device).view(1, -1)).float()
+    return F.binary_cross_entropy_with_logits(logits, levels, reduction="mean")
+
+
+def coral_probs(logits):
+    """Convert CORAL cumulative logits [N, K-1] to a per-class distribution [N, K]."""
+    p_gt = torch.sigmoid(logits)                       # P(y > k), k=0..K-2
+    n = p_gt.shape[0]
+    ones = torch.ones(n, 1, device=logits.device)
+    zeros = torch.zeros(n, 1, device=logits.device)
+    left = torch.cat([ones, p_gt], dim=1)              # [1, P(y>0), ...]
+    right = torch.cat([p_gt, zeros], dim=1)            # [P(y>0), ..., 0]
+    return (left - right).clamp_min(0.0)               # class probs, sum ~ 1
+
+
 def compute_class_weights(tn_counts, cb_beta):
     """Return (ce_weights, cb_weights) as numpy arrays, derived from TN-train
     class counts only (VinDr is excluded on purpose)."""
