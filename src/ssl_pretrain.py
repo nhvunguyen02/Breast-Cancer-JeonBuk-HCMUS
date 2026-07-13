@@ -82,9 +82,19 @@ class TwoCropDataset(Dataset):
 
 
 class SimCLRNet(nn.Module):
-    def __init__(self, backbone, proj_dim=128):
+    def __init__(self, backbone, proj_dim=128, memory_efficient=True):
         super().__init__()
         self.features, feat_dim, self.needs_relu = build_backbone(backbone)
+        if memory_efficient:
+            # Gradient checkpointing on DenseNet dense-layers -> much lower memory,
+            # so we can use a bigger batch (more contrastive negatives).
+            try:
+                from torchvision.models.densenet import _DenseLayer
+                for m in self.features.modules():
+                    if isinstance(m, _DenseLayer):
+                        m.memory_efficient = True
+            except Exception:
+                pass
         self.proj = nn.Sequential(
             nn.Linear(feat_dim, 512), nn.BatchNorm1d(512), nn.ReLU(inplace=True),
             nn.Linear(512, proj_dim),
