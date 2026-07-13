@@ -17,6 +17,13 @@ def parse_args():
                  "convnext_tiny", "convnext_small", "convnext_base"],
         help="Shared backbone for the 4-view model.",
     )
+    parser.add_argument(
+        "--init-weights",
+        type=str,
+        default="",
+        help="Path to an SSL-pretrained backbone checkpoint (from ssl_pretrain.py) "
+             "to initialize the feature extractor before fine-tuning.",
+    )
     parser.add_argument("--epochs", type=int, default=50)
     parser.add_argument("--batch-size", type=int, default=2)
     parser.add_argument("--num-workers", type=int, default=2)

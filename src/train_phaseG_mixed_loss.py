@@ -55,6 +55,7 @@ def main():
     pp_tag += f"_aug{args.aug}" if args.aug != "basic" else ""
     pp_tag += "_coral" if args.ordinal else ""
     pp_tag += "_clahe" if args.clahe else ""
+    pp_tag += "_ssl" if args.init_weights else ""
     phase_dir = out_dir / "phaseG_mixed_loss" / f"{args.backbone}_{args.fusion}_tnratio{args.tn_domain_ratio}_{loss_tag}_pp{pp_tag}_seed{args.seed}"
     phase_dir.mkdir(parents=True, exist_ok=True)
 
@@ -143,6 +144,13 @@ def main():
 
     model = MultiViewModel(num_classes=4, backbone=args.backbone, masked_pool=args.masked_pool, fusion=args.fusion, ordinal=args.ordinal).to(device)
     print(f"Backbone: {args.backbone}", flush=True)
+    if args.init_weights:
+        ssl_ck = torch.load(args.init_weights, map_location=device, weights_only=False)
+        assert ssl_ck.get("backbone") == args.backbone, \
+            f"SSL backbone {ssl_ck.get('backbone')} != --backbone {args.backbone}"
+        missing, unexpected = model.features.load_state_dict(ssl_ck["features_state_dict"], strict=False)
+        print(f"Loaded SSL backbone from {args.init_weights} "
+              f"(missing={len(missing)}, unexpected={len(unexpected)})", flush=True)
     if args.ordinal:
         print("Loss/head: CORAL ordinal", flush=True)
     if args.masked_pool:
