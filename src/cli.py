@@ -112,9 +112,9 @@ def parse_args():
         "--aug",
         type=str,
         default="basic",
-        choices=["basic", "strong"],
-        help="Train augmentation: 'basic' = resize + h-flip; 'strong' adds "
-             "affine, mild intensity jitter, and random erasing.",
+        choices=["basic", "affine", "strong"],
+        help="Train augmentation: 'basic' = resize + h-flip; 'affine' adds "
+             "geometry + mild jitter (no erasing); 'strong' also adds erasing.",
     )
 
     return parser.parse_args()

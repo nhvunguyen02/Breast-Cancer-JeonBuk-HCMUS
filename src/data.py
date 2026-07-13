@@ -111,7 +111,18 @@ class MultiViewDataset(Dataset):
             std=[0.229, 0.224, 0.225],
         )
 
-        if aug == "strong":
+        if aug == "affine":
+            # Geometry-only augmentation (no erasing, which would occlude the
+            # fibroglandular tissue that defines density). Milder than 'strong'.
+            self.train_tf = transforms.Compose([
+                transforms.Resize((img_size, img_size)),
+                transforms.RandomHorizontalFlip(p=0.5),
+                transforms.RandomAffine(degrees=7, translate=(0.05, 0.05), fill=0),
+                transforms.ColorJitter(brightness=0.1, contrast=0.1),
+                transforms.ToTensor(),
+                self.normalize,
+            ])
+        elif aug == "strong":
             # Mammography-appropriate augmentation. Geometry (affine) fills with
             # black to match the zeroed background; intensity jitter is kept MILD
             # so the density signal (relative fibroglandular brightness) survives.
