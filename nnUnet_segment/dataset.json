@@ -1,0 +1,12 @@
+{
+    "channel_names": {
+        "0": "mammography"
+    },
+    "labels": {
+        "background": 0,
+        "breast": 1
+    },
+    "numTraining": 596,
+    "file_ending": ".png",
+    "overwrite_image_reader_writer": "NaturalImage2DIO"
+}

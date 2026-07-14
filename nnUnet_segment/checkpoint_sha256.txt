@@ -1,0 +1,1 @@
+920d75bfce4e40493381c45192358037c1d7b52ef5b7d6b8ab482470791212dd  /mnt/hcmus/breast_vn/code/Breast-Cancer-JeonBuk-HCMUS/nnUnet_segment/checkpoint_final.pth

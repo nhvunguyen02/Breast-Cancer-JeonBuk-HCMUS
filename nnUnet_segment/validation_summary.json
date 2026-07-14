@@ -1,0 +1,1946 @@
+{
+    "foreground_mean": {
+        "Dice": 0.983143410527047,
+        "FN": 6301.483333333334,
+        "FP": 10545.333333333334,
+        "IoU": 0.9671971055262811,
+        "TN": 2753374.8583333334,
+        "TP": 520965.525,
+        "n_pred": 531510.8583333333,
+        "n_ref": 527267.0083333333
+    },
+    "mean": {
+        "1": {
+            "Dice": 0.983143410527047,
+            "FN": 6301.483333333334,
+            "FP": 10545.333333333334,
+            "IoU": 0.9671971055262811,
+            "TN": 2753374.8583333334,
+            "TP": 520965.525,
+            "n_pred": 531510.8583333333,
+            "n_ref": 527267.0083333333
+        }
+    },
+    "metric_per_case": [
+        {
+            "metrics": {
+                "1": {
+                    "Dice": 0.9888247145290309,
+                    "FN": 2394,
+                    "FP": 11096,
+                    "IoU": 0.9778964426216884,
+                    "TN": 2727931,
+                    "TP": 596819,
+                    "n_pred": 607915,
+                    "n_ref": 599213
+                }
+            },
+            "prediction_file": "/mnt/hcmus/TNMammo_v2/Segmet/workspace/nnUNet_results/Dataset501_TNMammoBreast/nnUNetTrainer_250epochs__nnUNetPlans__2d/fold_0/validation/tnm_000470cbf12fe2b285cba99286a9a4fa.png",
+            "reference_file": "/mnt/hcmus/TNMammo_v2/Segmet/workspace/nnUNet_preprocessed/Dataset501_TNMammoBreast/gt_segmentations/tnm_000470cbf12fe2b285cba99286a9a4fa.png"
+        },
+        {
+            "metrics": {
+                "1": {
+                    "Dice": 0.9888940506054693,
+                    "FN": 820,
+                    "FP": 8145,
+                    "IoU": 0.9780320758646883,
+                    "TN": 2930145,
+                    "TP": 399130,
+                    "n_pred": 407275,
+                    "n_ref": 399950
+                }
+            },
+            "prediction_file": "/mnt/hcmus/TNMammo_v2/Segmet/workspace/nnUNet_results/Dataset501_TNMammoBreast/nnUNetTrainer_250epochs__nnUNetPlans__2d/fold_0/validation/tnm_00104c12656c7d97e69fe4b097d90430.png",
+            "reference_file": "/mnt/hcmus/TNMammo_v2/Segmet/workspace/nnUNet_preprocessed/Dataset501_TNMammoBreast/gt_segmentations/tnm_00104c12656c7d97e69fe4b097d90430.png"
+        },
+        {
+            "metrics": {
+                "1": {
+                    "Dice": 0.9842367120882675,
+                    "FN": 5513,
+                    "FP": 5405,
+                    "IoU": 0.9689626744747989,
+                    "TN": 2986470,
+                    "TP": 340852,
+                    "n_pred": 346257,
+                    "n_ref": 346365
+                }
+            },
+            "prediction_file": "/mnt/hcmus/TNMammo_v2/Segmet/workspace/nnUNet_results/Dataset501_TNMammoBreast/nnUNetTrainer_250epochs__nnUNetPlans__2d/fold_0/validation/tnm_0011e7c3e74e8117b693861d9972a519.png",
+            "reference_file": "/mnt/hcmus/TNMammo_v2/Segmet/workspace/nnUNet_preprocessed/Dataset501_TNMammoBreast/gt_segmentations/tnm_0011e7c3e74e8117b693861d9972a519.png"
+        },
+        {
+            "metrics": {
+                "1": {
+                    "Dice": 0.9756208444621243,
+                    "FN": 1916,
+                    "FP": 9238,
+                    "IoU": 0.952402085875957,
+                    "TN": 2765982,
+                    "TP": 223184,
+                    "n_pred": 232422,
+                    "n_ref": 225100
+                }
+            },
+            "prediction_file": "/mnt/hcmus/TNMammo_v2/Segmet/workspace/nnUNet_results/Dataset501_TNMammoBreast/nnUNetTrainer_250epochs__nnUNetPlans__2d/fold_0/validation/tnm_001e349625800ed8699e698102ed282a.png",
+            "reference_file": "/mnt/hcmus/TNMammo_v2/Segmet/workspace/nnUNet_preprocessed/Dataset501_TNMammoBreast/gt_segmentations/tnm_001e349625800ed8699e698102ed282a.png"
+        },
+        {
+            "metrics": {
+                "1": {
+                    "Dice": 0.985546856539752,
+                    "FN": 6610,
+                    "FP": 4400,
+                    "IoU": 0.9715055474894602,
+                    "TN": 2951849,
+                    "TP": 375381,
+                    "n_pred": 379781,
+                    "n_ref": 381991
+                }
+            },
+            "prediction_file": "/mnt/hcmus/TNMammo_v2/Segmet/workspace/nnUNet_results/Dataset501_TNMammoBreast/nnUNetTrainer_250epochs__nnUNetPlans__2d/fold_0/validation/tnm_00428762ed67f04118bdb512b08a0513.png",
+            "reference_file": "/mnt/hcmus/TNMammo_v2/Segmet/workspace/nnUNet_preprocessed/Dataset501_TNMammoBreast/gt_segmentations/tnm_00428762ed67f04118bdb512b08a0513.png"
+        },
+        {
+            "metrics": {
+                "1": {
+                    "Dice": 0.9911213467466283,
+                    "FN": 2197,
+                    "FP": 5845,
+                    "IoU": 0.9823989669624976,
+                    "TN": 2881335,
+                    "TP": 448863,
+                    "n_pred": 454708,
+                    "n_ref": 451060
+                }
+            },
+            "prediction_file": "/mnt/hcmus/TNMammo_v2/Segmet/workspace/nnUNet_results/Dataset501_TNMammoBreast/nnUNetTrainer_250epochs__nnUNetPlans__2d/fold_0/validation/tnm_0067144f99fc95bf1633b72eab0cc0f2.png",
+            "reference_file": "/mnt/hcmus/TNMammo_v2/Segmet/workspace/nnUNet_preprocessed/Dataset501_TNMammoBreast/gt_segmentations/tnm_0067144f99fc95bf1633b72eab0cc0f2.png"
+        },
+        {
+            "metrics": {
+                "1": {
+                    "Dice": 0.9799339735600209,
+                    "FN": 9309,
+                    "FP": 15259,
+                    "IoU": 0.9606573968353609,
+                    "TN": 2713777,
+                    "TP": 599895,
+                    "n_pred": 615154,
+                    "n_ref": 609204
+                }
+            },
+            "prediction_file": "/mnt/hcmus/TNMammo_v2/Segmet/workspace/nnUNet_results/Dataset501_TNMammoBreast/nnUNetTrainer_250epochs__nnUNetPlans__2d/fold_0/validation/tnm_00939f7a0c1c324f8314bff9a2bf964c.png",
+            "reference_file": "/mnt/hcmus/TNMammo_v2/Segmet/workspace/nnUNet_preprocessed/Dataset501_TNMammoBreast/gt_segmentations/tnm_00939f7a0c1c324f8314bff9a2bf964c.png"
+        },
+        {
+            "metrics": {
+                "1": {
+                    "Dice": 0.9836197670951822,
+                    "FN": 16149,
+                    "FP": 26540,
+                    "IoU": 0.9677675098855414,
+                    "TN": 1675911,
+                    "TP": 1281720,
+                    "n_pred": 1308260,
+                    "n_ref": 1297869
+                }
+            },
+            "prediction_file": "/mnt/hcmus/TNMammo_v2/Segmet/workspace/nnUNet_results/Dataset501_TNMammoBreast/nnUNetTrainer_250epochs__nnUNetPlans__2d/fold_0/validation/tnm_0102ef460bb7a9f7ffe8f3506b5912af.png",
+            "reference_file": "/mnt/hcmus/TNMammo_v2/Segmet/workspace/nnUNet_preprocessed/Dataset501_TNMammoBreast/gt_segmentations/tnm_0102ef460bb7a9f7ffe8f3506b5912af.png"
+        },
+        {
+            "metrics": {
+                "1": {
+                    "Dice": 0.9870156998745923,
+                    "FN": 7192,
+                    "FP": 10461,
+                    "IoU": 0.9743642618670392,
+                    "TN": 2311711,
+                    "TP": 670956,
+                    "n_pred": 681417,
+                    "n_ref": 678148
+                }
+            },
+            "prediction_file": "/mnt/hcmus/TNMammo_v2/Segmet/workspace/nnUNet_results/Dataset501_TNMammoBreast/nnUNetTrainer_250epochs__nnUNetPlans__2d/fold_0/validation/tnm_0103fc3489dfc797d8d8552cc6272630.png",
+            "reference_file": "/mnt/hcmus/TNMammo_v2/Segmet/workspace/nnUNet_preprocessed/Dataset501_TNMammoBreast/gt_segmentations/tnm_0103fc3489dfc797d8d8552cc6272630.png"
+        },
+        {
+            "metrics": {
+                "1": {
+                    "Dice": 0.9929104928921838,
+                    "FN": 4803,
+                    "FP": 1586,
+                    "IoU": 0.9859208003702153,
+                    "TN": 2749282,
+                    "TP": 447401,
+                    "n_pred": 448987,
+                    "n_ref": 452204
+                }
+            },
+            "prediction_file": "/mnt/hcmus/TNMammo_v2/Segmet/workspace/nnUNet_results/Dataset501_TNMammoBreast/nnUNetTrainer_250epochs__nnUNetPlans__2d/fold_0/validation/tnm_01063a8571b3ed30201ea2e220c50d53.png",
+            "reference_file": "/mnt/hcmus/TNMammo_v2/Segmet/workspace/nnUNet_preprocessed/Dataset501_TNMammoBreast/gt_segmentations/tnm_01063a8571b3ed30201ea2e220c50d53.png"
+        },
+        {
+            "metrics": {
+                "1": {
+                    "Dice": 0.9835431238164475,
+                    "FN": 4828,
+                    "FP": 6400,
+                    "IoU": 0.9676191355105148,
+                    "TN": 2991492,
+                    "TP": 335520,
+                    "n_pred": 341920,
+                    "n_ref": 340348
+                }
+            },
+            "prediction_file": "/mnt/hcmus/TNMammo_v2/Segmet/workspace/nnUNet_results/Dataset501_TNMammoBreast/nnUNetTrainer_250epochs__nnUNetPlans__2d/fold_0/validation/tnm_013574ba096190e923131682ae96d252.png",
+            "reference_file": "/mnt/hcmus/TNMammo_v2/Segmet/workspace/nnUNet_preprocessed/Dataset501_TNMammoBreast/gt_segmentations/tnm_013574ba096190e923131682ae96d252.png"
+        },
+        {
+            "metrics": {
+                "1": {
+                    "Dice": 0.9881887223486533,
+                    "FN": 10324,
+                    "FP": 3222,
+                    "IoU": 0.976653200231641,
+                    "TN": 2758032,
+                    "TP": 566662,
+                    "n_pred": 569884,
+                    "n_ref": 576986
+                }
+            },
+            "prediction_file": "/mnt/hcmus/TNMammo_v2/Segmet/workspace/nnUNet_results/Dataset501_TNMammoBreast/nnUNetTrainer_250epochs__nnUNetPlans__2d/fold_0/validation/tnm_013aae7f70bfaf34e621b6a922e2f7a4.png",
+            "reference_file": "/mnt/hcmus/TNMammo_v2/Segmet/workspace/nnUNet_preprocessed/Dataset501_TNMammoBreast/gt_segmentations/tnm_013aae7f70bfaf34e621b6a922e2f7a4.png"
+        },
+        {
+            "metrics": {
+                "1": {
+                    "Dice": 0.9847273497514035,
+                    "FN": 4495,
+                    "FP": 8772,
+                    "IoU": 0.9699141895630562,
+                    "TN": 2897268,
+                    "TP": 427705,
+                    "n_pred": 436477,
+                    "n_ref": 432200
+                }
+            },
+            "prediction_file": "/mnt/hcmus/TNMammo_v2/Segmet/workspace/nnUNet_results/Dataset501_TNMammoBreast/nnUNetTrainer_250epochs__nnUNetPlans__2d/fold_0/validation/tnm_01429480e2f29ce823a77057e316a83d.png",
+            "reference_file": "/mnt/hcmus/TNMammo_v2/Segmet/workspace/nnUNet_preprocessed/Dataset501_TNMammoBreast/gt_segmentations/tnm_01429480e2f29ce823a77057e316a83d.png"
+        },
+        {
+            "metrics": {
+                "1": {
+                    "Dice": 0.9755910942517835,
+                    "FN": 8474,
+                    "FP": 9646,
+                    "IoU": 0.9523453854974279,
+                    "TN": 2958004,
+                    "TP": 362116,
+                    "n_pred": 371762,
+                    "n_ref": 370590
+                }
+            },
+            "prediction_file": "/mnt/hcmus/TNMammo_v2/Segmet/workspace/nnUNet_results/Dataset501_TNMammoBreast/nnUNetTrainer_250epochs__nnUNetPlans__2d/fold_0/validation/tnm_014c0ffd807ff6b77affde714f20f544.png",
+            "reference_file": "/mnt/hcmus/TNMammo_v2/Segmet/workspace/nnUNet_preprocessed/Dataset501_TNMammoBreast/gt_segmentations/tnm_014c0ffd807ff6b77affde714f20f544.png"
+        },
+        {
+            "metrics": {
+                "1": {
+                    "Dice": 0.992690191225315,
+                    "FN": 1221,
+                    "FP": 5300,
+                    "IoU": 0.9854864735535994,
+                    "TN": 2888935,
+                    "TP": 442784,
+                    "n_pred": 448084,
+                    "n_ref": 444005
+                }
+            },
+            "prediction_file": "/mnt/hcmus/TNMammo_v2/Segmet/workspace/nnUNet_results/Dataset501_TNMammoBreast/nnUNetTrainer_250epochs__nnUNetPlans__2d/fold_0/validation/tnm_016266451bdd465d54257df544b4368b.png",
+            "reference_file": "/mnt/hcmus/TNMammo_v2/Segmet/workspace/nnUNet_preprocessed/Dataset501_TNMammoBreast/gt_segmentations/tnm_016266451bdd465d54257df544b4368b.png"
+        },
+        {
+            "metrics": {
+                "1": {
+                    "Dice": 0.9845624531255792,
+                    "FN": 458,
+                    "FP": 21196,
+                    "IoU": 0.969594295735984,
+                    "TN": 2626071,
+                    "TP": 690515,
+                    "n_pred": 711711,
+                    "n_ref": 690973
+                }
+            },
+            "prediction_file": "/mnt/hcmus/TNMammo_v2/Segmet/workspace/nnUNet_results/Dataset501_TNMammoBreast/nnUNetTrainer_250epochs__nnUNetPlans__2d/fold_0/validation/tnm_0173c6e1773e18b479a95a11acf8125f.png",
+            "reference_file": "/mnt/hcmus/TNMammo_v2/Segmet/workspace/nnUNet_preprocessed/Dataset501_TNMammoBreast/gt_segmentations/tnm_0173c6e1773e18b479a95a11acf8125f.png"
+        },
+        {
+            "metrics": {
+                "1": {
+                    "Dice": 0.981263169060603,
+                    "FN": 7217,
+                    "FP": 8327,
+                    "IoU": 0.9632155619187354,
+                    "TN": 2915670,
+                    "TP": 407026,
+                    "n_pred": 415353,
+                    "n_ref": 414243
+                }
+            },
+            "prediction_file": "/mnt/hcmus/TNMammo_v2/Segmet/workspace/nnUNet_results/Dataset501_TNMammoBreast/nnUNetTrainer_250epochs__nnUNetPlans__2d/fold_0/validation/tnm_0176bd63da4d5e932fec5c4d115b0656.png",
+            "reference_file": "/mnt/hcmus/TNMammo_v2/Segmet/workspace/nnUNet_preprocessed/Dataset501_TNMammoBreast/gt_segmentations/tnm_0176bd63da4d5e932fec5c4d115b0656.png"
+        },
+        {
+            "metrics": {
+                "1": {
+                    "Dice": 0.9908534779114757,
+                    "FN": 977,
+                    "FP": 5044,
+                    "IoU": 0.9818727570509888,
+                    "TN": 3006088,
+                    "TP": 326131,
+                    "n_pred": 331175,
+                    "n_ref": 327108
+                }
+            },
+            "prediction_file": "/mnt/hcmus/TNMammo_v2/Segmet/workspace/nnUNet_results/Dataset501_TNMammoBreast/nnUNetTrainer_250epochs__nnUNetPlans__2d/fold_0/validation/tnm_01958718afdf303581e758cdf34eaf8a.png",
+            "reference_file": "/mnt/hcmus/TNMammo_v2/Segmet/workspace/nnUNet_preprocessed/Dataset501_TNMammoBreast/gt_segmentations/tnm_01958718afdf303581e758cdf34eaf8a.png"
+        },
+        {
+            "metrics": {
+                "1": {
+                    "Dice": 0.9897981404782991,
+                    "FN": 7515,
+                    "FP": 7242,
+                    "IoU": 0.9798023347006484,
+                    "TN": 2607611,
+                    "TP": 715872,
+                    "n_pred": 723114,
+                    "n_ref": 723387
+                }
+            },
+            "prediction_file": "/mnt/hcmus/TNMammo_v2/Segmet/workspace/nnUNet_results/Dataset501_TNMammoBreast/nnUNetTrainer_250epochs__nnUNetPlans__2d/fold_0/validation/tnm_019b979a1e5e4b6303cbf412e980fbee.png",
+            "reference_file": "/mnt/hcmus/TNMammo_v2/Segmet/workspace/nnUNet_preprocessed/Dataset501_TNMammoBreast/gt_segmentations/tnm_019b979a1e5e4b6303cbf412e980fbee.png"
+        },
+        {
+            "metrics": {
+                "1": {
+                    "Dice": 0.9871839402926585,
+                    "FN": 2226,
+                    "FP": 7847,
+                    "IoU": 0.9746922265212803,
+                    "TN": 2940220,
+                    "TP": 387947,
+                    "n_pred": 395794,
+                    "n_ref": 390173
+                }
+            },
+            "prediction_file": "/mnt/hcmus/TNMammo_v2/Segmet/workspace/nnUNet_results/Dataset501_TNMammoBreast/nnUNetTrainer_250epochs__nnUNetPlans__2d/fold_0/validation/tnm_01d524575ad7f3be2080305dc1dedc07.png",
+            "reference_file": "/mnt/hcmus/TNMammo_v2/Segmet/workspace/nnUNet_preprocessed/Dataset501_TNMammoBreast/gt_segmentations/tnm_01d524575ad7f3be2080305dc1dedc07.png"
+        },
+        {
+            "metrics": {
+                "1": {
+                    "Dice": 0.9661231336369577,
+                    "FN": 10082,
+                    "FP": 59392,
+                    "IoU": 0.9344663422401278,
+                    "TN": 2278113,
+                    "TP": 990653,
+                    "n_pred": 1050045,
+                    "n_ref": 1000735
+                }
+            },
+            "prediction_file": "/mnt/hcmus/TNMammo_v2/Segmet/workspace/nnUNet_results/Dataset501_TNMammoBreast/nnUNetTrainer_250epochs__nnUNetPlans__2d/fold_0/validation/tnm_01e79ce666e00c526e6e6fd6a7a8180a.png",
+            "reference_file": "/mnt/hcmus/TNMammo_v2/Segmet/workspace/nnUNet_preprocessed/Dataset501_TNMammoBreast/gt_segmentations/tnm_01e79ce666e00c526e6e6fd6a7a8180a.png"
+        },
+        {
+            "metrics": {
+                "1": {
+                    "Dice": 0.9933466952649753,
+                    "FN": 1728,
+                    "FP": 5087,
+                    "IoU": 0.9867813383143346,
+                    "TN": 2822681,
+                    "TP": 508744,
+                    "n_pred": 513831,
+                    "n_ref": 510472
+                }
+            },
+            "prediction_file": "/mnt/hcmus/TNMammo_v2/Segmet/workspace/nnUNet_results/Dataset501_TNMammoBreast/nnUNetTrainer_250epochs__nnUNetPlans__2d/fold_0/validation/tnm_02236ba6ae89a0051144b957ebcdc7d7.png",
+            "reference_file": "/mnt/hcmus/TNMammo_v2/Segmet/workspace/nnUNet_preprocessed/Dataset501_TNMammoBreast/gt_segmentations/tnm_02236ba6ae89a0051144b957ebcdc7d7.png"
+        },
+        {
+            "metrics": {
+                "1": {
+                    "Dice": 0.9855963385084806,
+                    "FN": 8871,
+                    "FP": 5895,
+                    "IoU": 0.9716017162825673,
+                    "TN": 2818279,
+                    "TP": 505195,
+                    "n_pred": 511090,
+                    "n_ref": 514066
+                }
+            },
+            "prediction_file": "/mnt/hcmus/TNMammo_v2/Segmet/workspace/nnUNet_results/Dataset501_TNMammoBreast/nnUNetTrainer_250epochs__nnUNetPlans__2d/fold_0/validation/tnm_0228a0c3c65d83e70bf133e5ce5adb0f.png",
+            "reference_file": "/mnt/hcmus/TNMammo_v2/Segmet/workspace/nnUNet_preprocessed/Dataset501_TNMammoBreast/gt_segmentations/tnm_0228a0c3c65d83e70bf133e5ce5adb0f.png"
+        },
+        {
+            "metrics": {
+                "1": {
+                    "Dice": 0.9902126843082053,
+                    "FN": 3563,
+                    "FP": 8271,
+                    "IoU": 0.980615094803227,
+                    "TN": 2727765,
+                    "TP": 598641,
+                    "n_pred": 606912,
+                    "n_ref": 602204
+                }
+            },
+            "prediction_file": "/mnt/hcmus/TNMammo_v2/Segmet/workspace/nnUNet_results/Dataset501_TNMammoBreast/nnUNetTrainer_250epochs__nnUNetPlans__2d/fold_0/validation/tnm_022bddf1e41c8244acbf03918ca68925.png",
+            "reference_file": "/mnt/hcmus/TNMammo_v2/Segmet/workspace/nnUNet_preprocessed/Dataset501_TNMammoBreast/gt_segmentations/tnm_022bddf1e41c8244acbf03918ca68925.png"
+        },
+        {
+            "metrics": {
+                "1": {
+                    "Dice": 0.989846621468683,
+                    "FN": 6622,
+                    "FP": 6566,
+                    "IoU": 0.9798973527246343,
+                    "TN": 2682207,
+                    "TP": 642845,
+                    "n_pred": 649411,
+                    "n_ref": 649467
+                }
+            },
+            "prediction_file": "/mnt/hcmus/TNMammo_v2/Segmet/workspace/nnUNet_results/Dataset501_TNMammoBreast/nnUNetTrainer_250epochs__nnUNetPlans__2d/fold_0/validation/tnm_023d95639b21bb9d8740a68f8fb29585.png",
+            "reference_file": "/mnt/hcmus/TNMammo_v2/Segmet/workspace/nnUNet_preprocessed/Dataset501_TNMammoBreast/gt_segmentations/tnm_023d95639b21bb9d8740a68f8fb29585.png"
+        },
+        {
+            "metrics": {
+                "1": {
+                    "Dice": 0.9843586497504294,
+                    "FN": 12432,
+                    "FP": 9795,
+                    "IoU": 0.9691990676714235,
+                    "TN": 2278686,
+                    "TP": 699407,
+                    "n_pred": 709202,
+                    "n_ref": 711839
+                }
+            },
+            "prediction_file": "/mnt/hcmus/TNMammo_v2/Segmet/workspace/nnUNet_results/Dataset501_TNMammoBreast/nnUNetTrainer_250epochs__nnUNetPlans__2d/fold_0/validation/tnm_025a6d27ef782cbe382d3325e0f67689.png",
+            "reference_file": "/mnt/hcmus/TNMammo_v2/Segmet/workspace/nnUNet_preprocessed/Dataset501_TNMammoBreast/gt_segmentations/tnm_025a6d27ef782cbe382d3325e0f67689.png"
+        },
+        {
+            "metrics": {
+                "1": {
+                    "Dice": 0.9691327917426608,
+                    "FN": 45251,
+                    "FP": 1138,
+                    "IoU": 0.9401140942109903,
+                    "TN": 2225697,
+                    "TP": 728234,
+                    "n_pred": 729372,
+                    "n_ref": 773485
+                }
+            },
+            "prediction_file": "/mnt/hcmus/TNMammo_v2/Segmet/workspace/nnUNet_results/Dataset501_TNMammoBreast/nnUNetTrainer_250epochs__nnUNetPlans__2d/fold_0/validation/tnm_025df0d3645c1abb3338dec7eb3bb8fb.png",
+            "reference_file": "/mnt/hcmus/TNMammo_v2/Segmet/workspace/nnUNet_preprocessed/Dataset501_TNMammoBreast/gt_segmentations/tnm_025df0d3645c1abb3338dec7eb3bb8fb.png"
+        },
+        {
+            "metrics": {
+                "1": {
+                    "Dice": 0.9866747900090528,
+                    "FN": 8106,
+                    "FP": 5848,
+                    "IoU": 0.9737000326063807,
+                    "TN": 2807669,
+                    "TP": 516617,
+                    "n_pred": 522465,
+                    "n_ref": 524723
+                }
+            },
+            "prediction_file": "/mnt/hcmus/TNMammo_v2/Segmet/workspace/nnUNet_results/Dataset501_TNMammoBreast/nnUNetTrainer_250epochs__nnUNetPlans__2d/fold_0/validation/tnm_026584d67d4543b8c6e3d9a680d40b48.png",
+            "reference_file": "/mnt/hcmus/TNMammo_v2/Segmet/workspace/nnUNet_preprocessed/Dataset501_TNMammoBreast/gt_segmentations/tnm_026584d67d4543b8c6e3d9a680d40b48.png"
+        },
+        {
+            "metrics": {
+                "1": {
+                    "Dice": 0.9913414657834929,
+                    "FN": 1195,
+                    "FP": 5937,
+                    "IoU": 0.9828315848767736,
+                    "TN": 2922826,
+                    "TP": 408282,
+                    "n_pred": 414219,
+                    "n_ref": 409477
+                }
+            },
+            "prediction_file": "/mnt/hcmus/TNMammo_v2/Segmet/workspace/nnUNet_results/Dataset501_TNMammoBreast/nnUNetTrainer_250epochs__nnUNetPlans__2d/fold_0/validation/tnm_0273181a64f5bbc11d491b19965e31cf.png",
+            "reference_file": "/mnt/hcmus/TNMammo_v2/Segmet/workspace/nnUNet_preprocessed/Dataset501_TNMammoBreast/gt_segmentations/tnm_0273181a64f5bbc11d491b19965e31cf.png"
+        },
+        {
+            "metrics": {
+                "1": {
+                    "Dice": 0.9854772508459498,
+                    "FN": 118,
+                    "FP": 12779,
+                    "IoU": 0.9713702838774985,
+                    "TN": 2887764,
+                    "TP": 437579,
+                    "n_pred": 450358,
+                    "n_ref": 437697
+                }
+            },
+            "prediction_file": "/mnt/hcmus/TNMammo_v2/Segmet/workspace/nnUNet_results/Dataset501_TNMammoBreast/nnUNetTrainer_250epochs__nnUNetPlans__2d/fold_0/validation/tnm_02895cbbcb504f54c6882c4c5695f563.png",
+            "reference_file": "/mnt/hcmus/TNMammo_v2/Segmet/workspace/nnUNet_preprocessed/Dataset501_TNMammoBreast/gt_segmentations/tnm_02895cbbcb504f54c6882c4c5695f563.png"
+        },
+        {
+            "metrics": {
+                "1": {
+                    "Dice": 0.9789003183011897,
+                    "FN": 22850,
+                    "FP": 5190,
+                    "IoU": 0.958672630935098,
+                    "TN": 2659755,
+                    "TP": 650445,
+                    "n_pred": 655635,
+                    "n_ref": 673295
+                }
+            },
+            "prediction_file": "/mnt/hcmus/TNMammo_v2/Segmet/workspace/nnUNet_results/Dataset501_TNMammoBreast/nnUNetTrainer_250epochs__nnUNetPlans__2d/fold_0/validation/tnm_0298a7e443b178300c714a59a3883576.png",
+            "reference_file": "/mnt/hcmus/TNMammo_v2/Segmet/workspace/nnUNet_preprocessed/Dataset501_TNMammoBreast/gt_segmentations/tnm_0298a7e443b178300c714a59a3883576.png"
+        },
+        {
+            "metrics": {
+                "1": {
+                    "Dice": 0.996235367208865,
+                    "FN": 3511,
+                    "FP": 561,
+                    "IoU": 0.9924989730298291,
+                    "TN": 2795381,
+                    "TP": 538787,
+                    "n_pred": 539348,
+                    "n_ref": 542298
+                }
+            },
+            "prediction_file": "/mnt/hcmus/TNMammo_v2/Segmet/workspace/nnUNet_results/Dataset501_TNMammoBreast/nnUNetTrainer_250epochs__nnUNetPlans__2d/fold_0/validation/tnm_029bce64717d6abfa8b91da845e2369e.png",
+            "reference_file": "/mnt/hcmus/TNMammo_v2/Segmet/workspace/nnUNet_preprocessed/Dataset501_TNMammoBreast/gt_segmentations/tnm_029bce64717d6abfa8b91da845e2369e.png"
+        },
+        {
+            "metrics": {
+                "1": {
+                    "Dice": 0.9769731146892237,
+                    "FN": 2947,
+                    "FP": 9156,
+                    "IoU": 0.9549828344857598,
+                    "TN": 3069387,
+                    "TP": 256750,
+                    "n_pred": 265906,
+                    "n_ref": 259697
+                }
+            },
+            "prediction_file": "/mnt/hcmus/TNMammo_v2/Segmet/workspace/nnUNet_results/Dataset501_TNMammoBreast/nnUNetTrainer_250epochs__nnUNetPlans__2d/fold_0/validation/tnm_02de08598e97d5f0eb9d94ae05209cdd.png",
+            "reference_file": "/mnt/hcmus/TNMammo_v2/Segmet/workspace/nnUNet_preprocessed/Dataset501_TNMammoBreast/gt_segmentations/tnm_02de08598e97d5f0eb9d94ae05209cdd.png"
+        },
+        {
+            "metrics": {
+                "1": {
+                    "Dice": 0.9856087367355039,
+                    "FN": 8111,
+                    "FP": 12267,
+                    "IoU": 0.9716258138537541,
+                    "TN": 2620052,
+                    "TP": 697810,
+                    "n_pred": 710077,
+                    "n_ref": 705921
+                }
+            },
+            "prediction_file": "/mnt/hcmus/TNMammo_v2/Segmet/workspace/nnUNet_results/Dataset501_TNMammoBreast/nnUNetTrainer_250epochs__nnUNetPlans__2d/fold_0/validation/tnm_02e8a3a33d01acd45a9cf13790ea0324.png",
+            "reference_file": "/mnt/hcmus/TNMammo_v2/Segmet/workspace/nnUNet_preprocessed/Dataset501_TNMammoBreast/gt_segmentations/tnm_02e8a3a33d01acd45a9cf13790ea0324.png"
+        },
+        {
+            "metrics": {
+                "1": {
+                    "Dice": 0.991387409416417,
+                    "FN": 5043,
+                    "FP": 9863,
+                    "IoU": 0.9829219054689774,
+                    "TN": 2465426,
+                    "TP": 857908,
+                    "n_pred": 867771,
+                    "n_ref": 862951
+                }
+            },
+            "prediction_file": "/mnt/hcmus/TNMammo_v2/Segmet/workspace/nnUNet_results/Dataset501_TNMammoBreast/nnUNetTrainer_250epochs__nnUNetPlans__2d/fold_0/validation/tnm_02e9b8f7d34b224f72ab6ead8f389efa.png",
+            "reference_file": "/mnt/hcmus/TNMammo_v2/Segmet/workspace/nnUNet_preprocessed/Dataset501_TNMammoBreast/gt_segmentations/tnm_02e9b8f7d34b224f72ab6ead8f389efa.png"
+        },
+        {
+            "metrics": {
+                "1": {
+                    "Dice": 0.9752759651663845,
+                    "FN": 31837,
+                    "FP": 3771,
+                    "IoU": 0.9517449889079065,
+                    "TN": 2262407,
+                    "TP": 702305,
+                    "n_pred": 706076,
+                    "n_ref": 734142
+                }
+            },
+            "prediction_file": "/mnt/hcmus/TNMammo_v2/Segmet/workspace/nnUNet_results/Dataset501_TNMammoBreast/nnUNetTrainer_250epochs__nnUNetPlans__2d/fold_0/validation/tnm_02eb65ae0e26b4c495deec8bbcb2d71c.png",
+            "reference_file": "/mnt/hcmus/TNMammo_v2/Segmet/workspace/nnUNet_preprocessed/Dataset501_TNMammoBreast/gt_segmentations/tnm_02eb65ae0e26b4c495deec8bbcb2d71c.png"
+        },
+        {
+            "metrics": {
+                "1": {
+                    "Dice": 0.9812519305642571,
+                    "FN": 3136,
+                    "FP": 7607,
+                    "IoU": 0.9631939043651351,
+                    "TN": 3046359,
+                    "TP": 281138,
+                    "n_pred": 288745,
+                    "n_ref": 284274
+                }
+            },
+            "prediction_file": "/mnt/hcmus/TNMammo_v2/Segmet/workspace/nnUNet_results/Dataset501_TNMammoBreast/nnUNetTrainer_250epochs__nnUNetPlans__2d/fold_0/validation/tnm_02f0418f8a925fb7086b245c18c31859.png",
+            "reference_file": "/mnt/hcmus/TNMammo_v2/Segmet/workspace/nnUNet_preprocessed/Dataset501_TNMammoBreast/gt_segmentations/tnm_02f0418f8a925fb7086b245c18c31859.png"
+        },
+        {
+            "metrics": {
+                "1": {
+                    "Dice": 0.9673444577531983,
+                    "FN": 2927,
+                    "FP": 24418,
+                    "IoU": 0.936754240091035,
+                    "TN": 2905879,
+                    "TP": 405016,
+                    "n_pred": 429434,
+                    "n_ref": 407943
+                }
+            },
+            "prediction_file": "/mnt/hcmus/TNMammo_v2/Segmet/workspace/nnUNet_results/Dataset501_TNMammoBreast/nnUNetTrainer_250epochs__nnUNetPlans__2d/fold_0/validation/tnm_02f879224aa9f2b6122fadbe78c7e49f.png",
+            "reference_file": "/mnt/hcmus/TNMammo_v2/Segmet/workspace/nnUNet_preprocessed/Dataset501_TNMammoBreast/gt_segmentations/tnm_02f879224aa9f2b6122fadbe78c7e49f.png"
+        },
+        {
+            "metrics": {
+                "1": {
+                    "Dice": 0.9891993918692833,
+                    "FN": 17668,
+                    "FP": 1570,
+                    "IoU": 0.9786295970860359,
+                    "TN": 2100103,
+                    "TP": 880979,
+                    "n_pred": 882549,
+                    "n_ref": 898647
+                }
+            },
+            "prediction_file": "/mnt/hcmus/TNMammo_v2/Segmet/workspace/nnUNet_results/Dataset501_TNMammoBreast/nnUNetTrainer_250epochs__nnUNetPlans__2d/fold_0/validation/tnm_02fe5233c545765557bbaa4131a88146.png",
+            "reference_file": "/mnt/hcmus/TNMammo_v2/Segmet/workspace/nnUNet_preprocessed/Dataset501_TNMammoBreast/gt_segmentations/tnm_02fe5233c545765557bbaa4131a88146.png"
+        },
+        {
+            "metrics": {
+                "1": {
+                    "Dice": 0.9866906047302286,
+                    "FN": 1476,
+                    "FP": 13306,
+                    "IoU": 0.9737308361456017,
+                    "TN": 2775527,
+                    "TP": 547931,
+                    "n_pred": 561237,
+                    "n_ref": 549407
+                }
+            },
+            "prediction_file": "/mnt/hcmus/TNMammo_v2/Segmet/workspace/nnUNet_results/Dataset501_TNMammoBreast/nnUNetTrainer_250epochs__nnUNetPlans__2d/fold_0/validation/tnm_03136a1057eac8c4ca8cf0300a6aaf0f.png",
+            "reference_file": "/mnt/hcmus/TNMammo_v2/Segmet/workspace/nnUNet_preprocessed/Dataset501_TNMammoBreast/gt_segmentations/tnm_03136a1057eac8c4ca8cf0300a6aaf0f.png"
+        },
+        {
+            "metrics": {
+                "1": {
+                    "Dice": 0.994116475292042,
+                    "FN": 2892,
+                    "FP": 416,
+                    "IoU": 0.9883017773659902,
+                    "TN": 3055462,
+                    "TP": 279470,
+                    "n_pred": 279886,
+                    "n_ref": 282362
+                }
+            },
+            "prediction_file": "/mnt/hcmus/TNMammo_v2/Segmet/workspace/nnUNet_results/Dataset501_TNMammoBreast/nnUNetTrainer_250epochs__nnUNetPlans__2d/fold_0/validation/tnm_032ab9e0ecd5fd673517ffa3eb805d15.png",
+            "reference_file": "/mnt/hcmus/TNMammo_v2/Segmet/workspace/nnUNet_preprocessed/Dataset501_TNMammoBreast/gt_segmentations/tnm_032ab9e0ecd5fd673517ffa3eb805d15.png"
+        },
+        {
+            "metrics": {
+                "1": {
+                    "Dice": 0.9845829993547665,
+                    "FN": 5177,
+                    "FP": 12576,
+                    "IoU": 0.9696341490531731,
+                    "TN": 2753603,
+                    "TP": 566884,
+                    "n_pred": 579460,
+                    "n_ref": 572061
+                }
+            },
+            "prediction_file": "/mnt/hcmus/TNMammo_v2/Segmet/workspace/nnUNet_results/Dataset501_TNMammoBreast/nnUNetTrainer_250epochs__nnUNetPlans__2d/fold_0/validation/tnm_033c3a8952ce3b546b0caf954b1a554f.png",
+            "reference_file": "/mnt/hcmus/TNMammo_v2/Segmet/workspace/nnUNet_preprocessed/Dataset501_TNMammoBreast/gt_segmentations/tnm_033c3a8952ce3b546b0caf954b1a554f.png"
+        },
+        {
+            "metrics": {
+                "1": {
+                    "Dice": 0.9808428373010631,
+                    "FN": 6643,
+                    "FP": 7136,
+                    "IoU": 0.9624058714394849,
+                    "TN": 2971720,
+                    "TP": 352741,
+                    "n_pred": 359877,
+                    "n_ref": 359384
+                }
+            },
+            "prediction_file": "/mnt/hcmus/TNMammo_v2/Segmet/workspace/nnUNet_results/Dataset501_TNMammoBreast/nnUNetTrainer_250epochs__nnUNetPlans__2d/fold_0/validation/tnm_034d4806fba1ea27cb26a890364a30ce.png",
+            "reference_file": "/mnt/hcmus/TNMammo_v2/Segmet/workspace/nnUNet_preprocessed/Dataset501_TNMammoBreast/gt_segmentations/tnm_034d4806fba1ea27cb26a890364a30ce.png"
+        },
+        {
+            "metrics": {
+                "1": {
+                    "Dice": 0.9601363982552101,
+                    "FN": 3110,
+                    "FP": 29132,
+                    "IoU": 0.9233291718684977,
+                    "TN": 2917715,
+                    "TP": 388283,
+                    "n_pred": 417415,
+                    "n_ref": 391393
+                }
+            },
+            "prediction_file": "/mnt/hcmus/TNMammo_v2/Segmet/workspace/nnUNet_results/Dataset501_TNMammoBreast/nnUNetTrainer_250epochs__nnUNetPlans__2d/fold_0/validation/tnm_03bc212124aba1eea604e6ae3ce49c3e.png",
+            "reference_file": "/mnt/hcmus/TNMammo_v2/Segmet/workspace/nnUNet_preprocessed/Dataset501_TNMammoBreast/gt_segmentations/tnm_03bc212124aba1eea604e6ae3ce49c3e.png"
+        },
+        {
+            "metrics": {
+                "1": {
+                    "Dice": 0.9873844700802806,
+                    "FN": 3604,
+                    "FP": 10982,
+                    "IoU": 0.9750832778147901,
+                    "TN": 2752850,
+                    "TP": 570804,
+                    "n_pred": 581786,
+                    "n_ref": 574408
+                }
+            },
+            "prediction_file": "/mnt/hcmus/TNMammo_v2/Segmet/workspace/nnUNet_results/Dataset501_TNMammoBreast/nnUNetTrainer_250epochs__nnUNetPlans__2d/fold_0/validation/tnm_03cc93a37e73fc538bfde4c4de4d6dd1.png",
+            "reference_file": "/mnt/hcmus/TNMammo_v2/Segmet/workspace/nnUNet_preprocessed/Dataset501_TNMammoBreast/gt_segmentations/tnm_03cc93a37e73fc538bfde4c4de4d6dd1.png"
+        },
+        {
+            "metrics": {
+                "1": {
+                    "Dice": 0.9920539241219845,
+                    "FN": 3056,
+                    "FP": 2329,
+                    "IoU": 0.9842331329657814,
+                    "TN": 2996701,
+                    "TP": 336154,
+                    "n_pred": 338483,
+                    "n_ref": 339210
+                }
+            },
+            "prediction_file": "/mnt/hcmus/TNMammo_v2/Segmet/workspace/nnUNet_results/Dataset501_TNMammoBreast/nnUNetTrainer_250epochs__nnUNetPlans__2d/fold_0/validation/tnm_03da83bd0115e2f0701c05e9ed7c57e6.png",
+            "reference_file": "/mnt/hcmus/TNMammo_v2/Segmet/workspace/nnUNet_preprocessed/Dataset501_TNMammoBreast/gt_segmentations/tnm_03da83bd0115e2f0701c05e9ed7c57e6.png"
+        },
+        {
+            "metrics": {
+                "1": {
+                    "Dice": 0.9912891152229891,
+                    "FN": 321,
+                    "FP": 6959,
+                    "IoU": 0.9827286789337332,
+                    "TN": 2916732,
+                    "TP": 414228,
+                    "n_pred": 421187,
+                    "n_ref": 414549
+                }
+            },
+            "prediction_file": "/mnt/hcmus/TNMammo_v2/Segmet/workspace/nnUNet_results/Dataset501_TNMammoBreast/nnUNetTrainer_250epochs__nnUNetPlans__2d/fold_0/validation/tnm_0415ad24f6c9efbc0c7a6bd3a9072e34.png",
+            "reference_file": "/mnt/hcmus/TNMammo_v2/Segmet/workspace/nnUNet_preprocessed/Dataset501_TNMammoBreast/gt_segmentations/tnm_0415ad24f6c9efbc0c7a6bd3a9072e34.png"
+        },
+        {
+            "metrics": {
+                "1": {
+                    "Dice": 0.9829250647348245,
+                    "FN": 2986,
+                    "FP": 7446,
+                    "IoU": 0.9664234469395835,
+                    "TN": 3027547,
+                    "TP": 300261,
+                    "n_pred": 307707,
+                    "n_ref": 303247
+                }
+            },
+            "prediction_file": "/mnt/hcmus/TNMammo_v2/Segmet/workspace/nnUNet_results/Dataset501_TNMammoBreast/nnUNetTrainer_250epochs__nnUNetPlans__2d/fold_0/validation/tnm_0426e31fea8079ce30b796c80321a17c.png",
+            "reference_file": "/mnt/hcmus/TNMammo_v2/Segmet/workspace/nnUNet_preprocessed/Dataset501_TNMammoBreast/gt_segmentations/tnm_0426e31fea8079ce30b796c80321a17c.png"
+        },
+        {
+            "metrics": {
+                "1": {
+                    "Dice": 0.9872606028274207,
+                    "FN": 861,
+                    "FP": 8691,
+                    "IoU": 0.9748417071397718,
+                    "TN": 2958564,
+                    "TP": 370124,
+                    "n_pred": 378815,
+                    "n_ref": 370985
+                }
+            },
+            "prediction_file": "/mnt/hcmus/TNMammo_v2/Segmet/workspace/nnUNet_results/Dataset501_TNMammoBreast/nnUNetTrainer_250epochs__nnUNetPlans__2d/fold_0/validation/tnm_0439739166db11abd39ad540f7f66023.png",
+            "reference_file": "/mnt/hcmus/TNMammo_v2/Segmet/workspace/nnUNet_preprocessed/Dataset501_TNMammoBreast/gt_segmentations/tnm_0439739166db11abd39ad540f7f66023.png"
+        },
+        {
+            "metrics": {
+                "1": {
+                    "Dice": 0.988977110120416,
+                    "FN": 659,
+                    "FP": 10010,
+                    "IoU": 0.9781945789953442,
+                    "TN": 2848958,
+                    "TP": 478613,
+                    "n_pred": 488623,
+                    "n_ref": 479272
+                }
+            },
+            "prediction_file": "/mnt/hcmus/TNMammo_v2/Segmet/workspace/nnUNet_results/Dataset501_TNMammoBreast/nnUNetTrainer_250epochs__nnUNetPlans__2d/fold_0/validation/tnm_044560be48741d6c344395686c892943.png",
+            "reference_file": "/mnt/hcmus/TNMammo_v2/Segmet/workspace/nnUNet_preprocessed/Dataset501_TNMammoBreast/gt_segmentations/tnm_044560be48741d6c344395686c892943.png"
+        },
+        {
+            "metrics": {
+                "1": {
+                    "Dice": 0.9900750469219838,
+                    "FN": 2612,
+                    "FP": 7927,
+                    "IoU": 0.9803451671378803,
+                    "TN": 2802036,
+                    "TP": 525665,
+                    "n_pred": 533592,
+                    "n_ref": 528277
+                }
+            },
+            "prediction_file": "/mnt/hcmus/TNMammo_v2/Segmet/workspace/nnUNet_results/Dataset501_TNMammoBreast/nnUNetTrainer_250epochs__nnUNetPlans__2d/fold_0/validation/tnm_04a5ce35a1b0549342e36aba8d1c759d.png",
+            "reference_file": "/mnt/hcmus/TNMammo_v2/Segmet/workspace/nnUNet_preprocessed/Dataset501_TNMammoBreast/gt_segmentations/tnm_04a5ce35a1b0549342e36aba8d1c759d.png"
+        },
+        {
+            "metrics": {
+                "1": {
+                    "Dice": 0.9890425234829817,
+                    "FN": 3133,
+                    "FP": 7108,
+                    "IoU": 0.9783225768213926,
+                    "TN": 2865813,
+                    "TP": 462186,
+                    "n_pred": 469294,
+                    "n_ref": 465319
+                }
+            },
+            "prediction_file": "/mnt/hcmus/TNMammo_v2/Segmet/workspace/nnUNet_results/Dataset501_TNMammoBreast/nnUNetTrainer_250epochs__nnUNetPlans__2d/fold_0/validation/tnm_04c44391c2867b9f0ee94af7599e5823.png",
+            "reference_file": "/mnt/hcmus/TNMammo_v2/Segmet/workspace/nnUNet_preprocessed/Dataset501_TNMammoBreast/gt_segmentations/tnm_04c44391c2867b9f0ee94af7599e5823.png"
+        },
+        {
+            "metrics": {
+                "1": {
+                    "Dice": 0.9853215200882965,
+                    "FN": 7103,
+                    "FP": 14229,
+                    "IoU": 0.971067722037466,
+                    "TN": 2600932,
+                    "TP": 715976,
+                    "n_pred": 730205,
+                    "n_ref": 723079
+                }
+            },
+            "prediction_file": "/mnt/hcmus/TNMammo_v2/Segmet/workspace/nnUNet_results/Dataset501_TNMammoBreast/nnUNetTrainer_250epochs__nnUNetPlans__2d/fold_0/validation/tnm_04e591f40cb5a7bf619229b417c5d48e.png",
+            "reference_file": "/mnt/hcmus/TNMammo_v2/Segmet/workspace/nnUNet_preprocessed/Dataset501_TNMammoBreast/gt_segmentations/tnm_04e591f40cb5a7bf619229b417c5d48e.png"
+        },
+        {
+            "metrics": {
+                "1": {
+                    "Dice": 0.9908108752955865,
+                    "FN": 479,
+                    "FP": 5144,
+                    "IoU": 0.9817890928876093,
+                    "TN": 3029469,
+                    "TP": 303148,
+                    "n_pred": 308292,
+                    "n_ref": 303627
+                }
+            },
+            "prediction_file": "/mnt/hcmus/TNMammo_v2/Segmet/workspace/nnUNet_results/Dataset501_TNMammoBreast/nnUNetTrainer_250epochs__nnUNetPlans__2d/fold_0/validation/tnm_0510873ed4154bff9feba071c707944f.png",
+            "reference_file": "/mnt/hcmus/TNMammo_v2/Segmet/workspace/nnUNet_preprocessed/Dataset501_TNMammoBreast/gt_segmentations/tnm_0510873ed4154bff9feba071c707944f.png"
+        },
+        {
+            "metrics": {
+                "1": {
+                    "Dice": 0.9829872430528622,
+                    "FN": 386,
+                    "FP": 15844,
+                    "IoU": 0.9665436705077199,
+                    "TN": 2853130,
+                    "TP": 468880,
+                    "n_pred": 484724,
+                    "n_ref": 469266
+                }
+            },
+            "prediction_file": "/mnt/hcmus/TNMammo_v2/Segmet/workspace/nnUNet_results/Dataset501_TNMammoBreast/nnUNetTrainer_250epochs__nnUNetPlans__2d/fold_0/validation/tnm_051144a61d3f6288c36bbd79be5a0a96.png",
+            "reference_file": "/mnt/hcmus/TNMammo_v2/Segmet/workspace/nnUNet_preprocessed/Dataset501_TNMammoBreast/gt_segmentations/tnm_051144a61d3f6288c36bbd79be5a0a96.png"
+        },
+        {
+            "metrics": {
+                "1": {
+                    "Dice": 0.9938407953173907,
+                    "FN": 1330,
+                    "FP": 2334,
+                    "IoU": 0.9877569977913143,
+                    "TN": 2995959,
+                    "TP": 295609,
+                    "n_pred": 297943,
+                    "n_ref": 296939
+                }
+            },
+            "prediction_file": "/mnt/hcmus/TNMammo_v2/Segmet/workspace/nnUNet_results/Dataset501_TNMammoBreast/nnUNetTrainer_250epochs__nnUNetPlans__2d/fold_0/validation/tnm_0512eba40f343332df4758ea376de0dc.png",
+            "reference_file": "/mnt/hcmus/TNMammo_v2/Segmet/workspace/nnUNet_preprocessed/Dataset501_TNMammoBreast/gt_segmentations/tnm_0512eba40f343332df4758ea376de0dc.png"
+        },
+        {
+            "metrics": {
+                "1": {
+                    "Dice": 0.9669722477421279,
+                    "FN": 2319,
+                    "FP": 12744,
+                    "IoU": 0.9360564085801492,
+                    "TN": 2764753,
+                    "TP": 220504,
+                    "n_pred": 233248,
+                    "n_ref": 222823
+                }
+            },
+            "prediction_file": "/mnt/hcmus/TNMammo_v2/Segmet/workspace/nnUNet_results/Dataset501_TNMammoBreast/nnUNetTrainer_250epochs__nnUNetPlans__2d/fold_0/validation/tnm_0520fd058bcfb2a9f6c143004113f499.png",
+            "reference_file": "/mnt/hcmus/TNMammo_v2/Segmet/workspace/nnUNet_preprocessed/Dataset501_TNMammoBreast/gt_segmentations/tnm_0520fd058bcfb2a9f6c143004113f499.png"
+        },
+        {
+            "metrics": {
+                "1": {
+                    "Dice": 0.981728459443116,
+                    "FN": 6134,
+                    "FP": 7040,
+                    "IoU": 0.9641126363074207,
+                    "TN": 2971147,
+                    "TP": 353919,
+                    "n_pred": 360959,
+                    "n_ref": 360053
+                }
+            },
+            "prediction_file": "/mnt/hcmus/TNMammo_v2/Segmet/workspace/nnUNet_results/Dataset501_TNMammoBreast/nnUNetTrainer_250epochs__nnUNetPlans__2d/fold_0/validation/tnm_0524b7afd6d4d02101543e1ce3cef30a.png",
+            "reference_file": "/mnt/hcmus/TNMammo_v2/Segmet/workspace/nnUNet_preprocessed/Dataset501_TNMammoBreast/gt_segmentations/tnm_0524b7afd6d4d02101543e1ce3cef30a.png"
+        },
+        {
+            "metrics": {
+                "1": {
+                    "Dice": 0.9907361994752456,
+                    "FN": 1077,
+                    "FP": 7026,
+                    "IoU": 0.9816424595434063,
+                    "TN": 2896841,
+                    "TP": 433296,
+                    "n_pred": 440322,
+                    "n_ref": 434373
+                }
+            },
+            "prediction_file": "/mnt/hcmus/TNMammo_v2/Segmet/workspace/nnUNet_results/Dataset501_TNMammoBreast/nnUNetTrainer_250epochs__nnUNetPlans__2d/fold_0/validation/tnm_053463a152fc77e38a81ca0928a54aaf.png",
+            "reference_file": "/mnt/hcmus/TNMammo_v2/Segmet/workspace/nnUNet_preprocessed/Dataset501_TNMammoBreast/gt_segmentations/tnm_053463a152fc77e38a81ca0928a54aaf.png"
+        },
+        {
+            "metrics": {
+                "1": {
+                    "Dice": 0.9866364428308849,
+                    "FN": 383,
+                    "FP": 11337,
+                    "IoU": 0.9736253448733702,
+                    "TN": 2893874,
+                    "TP": 432646,
+                    "n_pred": 443983,
+                    "n_ref": 433029
+                }
+            },
+            "prediction_file": "/mnt/hcmus/TNMammo_v2/Segmet/workspace/nnUNet_results/Dataset501_TNMammoBreast/nnUNetTrainer_250epochs__nnUNetPlans__2d/fold_0/validation/tnm_0543622022e1d1c54a8971fd87bcf597.png",
+            "reference_file": "/mnt/hcmus/TNMammo_v2/Segmet/workspace/nnUNet_preprocessed/Dataset501_TNMammoBreast/gt_segmentations/tnm_0543622022e1d1c54a8971fd87bcf597.png"
+        },
+        {
+            "metrics": {
+                "1": {
+                    "Dice": 0.9814871449833833,
+                    "FN": 575,
+                    "FP": 13953,
+                    "IoU": 0.9636472825542989,
+                    "TN": 2938600,
+                    "TP": 385112,
+                    "n_pred": 399065,
+                    "n_ref": 385687
+                }
+            },
+            "prediction_file": "/mnt/hcmus/TNMammo_v2/Segmet/workspace/nnUNet_results/Dataset501_TNMammoBreast/nnUNetTrainer_250epochs__nnUNetPlans__2d/fold_0/validation/tnm_054cea8996f6a13e684a59bf46c0471c.png",
+            "reference_file": "/mnt/hcmus/TNMammo_v2/Segmet/workspace/nnUNet_preprocessed/Dataset501_TNMammoBreast/gt_segmentations/tnm_054cea8996f6a13e684a59bf46c0471c.png"
+        },
+        {
+            "metrics": {
+                "1": {
+                    "Dice": 0.988217055290731,
+                    "FN": 9664,
+                    "FP": 4564,
+                    "IoU": 0.9767085524204902,
+                    "TN": 2727372,
+                    "TP": 596640,
+                    "n_pred": 601204,
+                    "n_ref": 606304
+                }
+            },
+            "prediction_file": "/mnt/hcmus/TNMammo_v2/Segmet/workspace/nnUNet_results/Dataset501_TNMammoBreast/nnUNetTrainer_250epochs__nnUNetPlans__2d/fold_0/validation/tnm_0556a632ea75ca3c643f89bd399b91ec.png",
+            "reference_file": "/mnt/hcmus/TNMammo_v2/Segmet/workspace/nnUNet_preprocessed/Dataset501_TNMammoBreast/gt_segmentations/tnm_0556a632ea75ca3c643f89bd399b91ec.png"
+        },
+        {
+            "metrics": {
+                "1": {
+                    "Dice": 0.9787959507454883,
+                    "FN": 9100,
+                    "FP": 9718,
+                    "IoU": 0.9584724536296328,
+                    "TN": 2885095,
+                    "TP": 434327,
+                    "n_pred": 444045,
+                    "n_ref": 443427
+                }
+            },
+            "prediction_file": "/mnt/hcmus/TNMammo_v2/Segmet/workspace/nnUNet_results/Dataset501_TNMammoBreast/nnUNetTrainer_250epochs__nnUNetPlans__2d/fold_0/validation/tnm_05acda977fdbb2a792964958c62aab0c.png",
+            "reference_file": "/mnt/hcmus/TNMammo_v2/Segmet/workspace/nnUNet_preprocessed/Dataset501_TNMammoBreast/gt_segmentations/tnm_05acda977fdbb2a792964958c62aab0c.png"
+        },
+        {
+            "metrics": {
+                "1": {
+                    "Dice": 0.992423496143661,
+                    "FN": 6599,
+                    "FP": 3861,
+                    "IoU": 0.9849609358151145,
+                    "TN": 2642718,
+                    "TP": 685062,
+                    "n_pred": 688923,
+                    "n_ref": 691661
+                }
+            },
+            "prediction_file": "/mnt/hcmus/TNMammo_v2/Segmet/workspace/nnUNet_results/Dataset501_TNMammoBreast/nnUNetTrainer_250epochs__nnUNetPlans__2d/fold_0/validation/tnm_05d12de5d5b4298f0317d5799170e8af.png",
+            "reference_file": "/mnt/hcmus/TNMammo_v2/Segmet/workspace/nnUNet_preprocessed/Dataset501_TNMammoBreast/gt_segmentations/tnm_05d12de5d5b4298f0317d5799170e8af.png"
+        },
+        {
+            "metrics": {
+                "1": {
+                    "Dice": 0.9902527111525756,
+                    "FN": 5714,
+                    "FP": 7095,
+                    "IoU": 0.9806936072914829,
+                    "TN": 2674781,
+                    "TP": 650650,
+                    "n_pred": 657745,
+                    "n_ref": 656364
+                }
+            },
+            "prediction_file": "/mnt/hcmus/TNMammo_v2/Segmet/workspace/nnUNet_results/Dataset501_TNMammoBreast/nnUNetTrainer_250epochs__nnUNetPlans__2d/fold_0/validation/tnm_05fc4caaf313e4fed72c0f239735ceba.png",
+            "reference_file": "/mnt/hcmus/TNMammo_v2/Segmet/workspace/nnUNet_preprocessed/Dataset501_TNMammoBreast/gt_segmentations/tnm_05fc4caaf313e4fed72c0f239735ceba.png"
+        },
+        {
+            "metrics": {
+                "1": {
+                    "Dice": 0.9878281781767037,
+                    "FN": 5068,
+                    "FP": 6087,
+                    "IoU": 0.975949099627432,
+                    "TN": 2874432,
+                    "TP": 452653,
+                    "n_pred": 458740,
+                    "n_ref": 457721
+                }
+            },
+            "prediction_file": "/mnt/hcmus/TNMammo_v2/Segmet/workspace/nnUNet_results/Dataset501_TNMammoBreast/nnUNetTrainer_250epochs__nnUNetPlans__2d/fold_0/validation/tnm_05fdb16c86e8734788ed2989f5c92671.png",
+            "reference_file": "/mnt/hcmus/TNMammo_v2/Segmet/workspace/nnUNet_preprocessed/Dataset501_TNMammoBreast/gt_segmentations/tnm_05fdb16c86e8734788ed2989f5c92671.png"
+        },
+        {
+            "metrics": {
+                "1": {
+                    "Dice": 0.996561764165437,
+                    "FN": 1129,
+                    "FP": 2501,
+                    "IoU": 0.9931470902507448,
+                    "TN": 2765530,
+                    "TP": 526072,
+                    "n_pred": 528573,
+                    "n_ref": 527201
+                }
+            },
+            "prediction_file": "/mnt/hcmus/TNMammo_v2/Segmet/workspace/nnUNet_results/Dataset501_TNMammoBreast/nnUNetTrainer_250epochs__nnUNetPlans__2d/fold_0/validation/tnm_0602173c47d1b21fe548b2d852433a03.png",
+            "reference_file": "/mnt/hcmus/TNMammo_v2/Segmet/workspace/nnUNet_preprocessed/Dataset501_TNMammoBreast/gt_segmentations/tnm_0602173c47d1b21fe548b2d852433a03.png"
+        },
+        {
+            "metrics": {
+                "1": {
+                    "Dice": 0.9863144217484293,
+                    "FN": 3147,
+                    "FP": 11820,
+                    "IoU": 0.9729983763305069,
+                    "TN": 2783940,
+                    "TP": 539333,
+                    "n_pred": 551153,
+                    "n_ref": 542480
+                }
+            },
+            "prediction_file": "/mnt/hcmus/TNMammo_v2/Segmet/workspace/nnUNet_results/Dataset501_TNMammoBreast/nnUNetTrainer_250epochs__nnUNetPlans__2d/fold_0/validation/tnm_061ffe1efe42d2421bb913b5f0cd6d0a.png",
+            "reference_file": "/mnt/hcmus/TNMammo_v2/Segmet/workspace/nnUNet_preprocessed/Dataset501_TNMammoBreast/gt_segmentations/tnm_061ffe1efe42d2421bb913b5f0cd6d0a.png"
+        },
+        {
+            "metrics": {
+                "1": {
+                    "Dice": 0.9794400922213634,
+                    "FN": 3482,
+                    "FP": 11892,
+                    "IoU": 0.9597085724768719,
+                    "TN": 2956670,
+                    "TP": 366196,
+                    "n_pred": 378088,
+                    "n_ref": 369678
+                }
+            },
+            "prediction_file": "/mnt/hcmus/TNMammo_v2/Segmet/workspace/nnUNet_results/Dataset501_TNMammoBreast/nnUNetTrainer_250epochs__nnUNetPlans__2d/fold_0/validation/tnm_063d53b6325ddfdbb7062b4a972186d1.png",
+            "reference_file": "/mnt/hcmus/TNMammo_v2/Segmet/workspace/nnUNet_preprocessed/Dataset501_TNMammoBreast/gt_segmentations/tnm_063d53b6325ddfdbb7062b4a972186d1.png"
+        },
+        {
+            "metrics": {
+                "1": {
+                    "Dice": 0.9811661050685683,
+                    "FN": 18,
+                    "FP": 16711,
+                    "IoU": 0.9630285269755394,
+                    "TN": 2885756,
+                    "TP": 435755,
+                    "n_pred": 452466,
+                    "n_ref": 435773
+                }
+            },
+            "prediction_file": "/mnt/hcmus/TNMammo_v2/Segmet/workspace/nnUNet_results/Dataset501_TNMammoBreast/nnUNetTrainer_250epochs__nnUNetPlans__2d/fold_0/validation/tnm_0640632f74e635db1a56cd7037b4296b.png",
+            "reference_file": "/mnt/hcmus/TNMammo_v2/Segmet/workspace/nnUNet_preprocessed/Dataset501_TNMammoBreast/gt_segmentations/tnm_0640632f74e635db1a56cd7037b4296b.png"
+        },
+        {
+            "metrics": {
+                "1": {
+                    "Dice": 0.9761448066118038,
+                    "FN": 3640,
+                    "FP": 22017,
+                    "IoU": 0.9534012357562923,
+                    "TN": 2787646,
+                    "TP": 524937,
+                    "n_pred": 546954,
+                    "n_ref": 528577
+                }
+            },
+            "prediction_file": "/mnt/hcmus/TNMammo_v2/Segmet/workspace/nnUNet_results/Dataset501_TNMammoBreast/nnUNetTrainer_250epochs__nnUNetPlans__2d/fold_0/validation/tnm_064307eabb314cb6dfc440b58a2dc650.png",
+            "reference_file": "/mnt/hcmus/TNMammo_v2/Segmet/workspace/nnUNet_preprocessed/Dataset501_TNMammoBreast/gt_segmentations/tnm_064307eabb314cb6dfc440b58a2dc650.png"
+        },
+        {
+            "metrics": {
+                "1": {
+                    "Dice": 0.9849830483490566,
+                    "FN": 291,
+                    "FP": 12749,
+                    "IoU": 0.9704104416650027,
+                    "TN": 2897544,
+                    "TP": 427656,
+                    "n_pred": 440405,
+                    "n_ref": 427947
+                }
+            },
+            "prediction_file": "/mnt/hcmus/TNMammo_v2/Segmet/workspace/nnUNet_results/Dataset501_TNMammoBreast/nnUNetTrainer_250epochs__nnUNetPlans__2d/fold_0/validation/tnm_064a87d91e72d953c3a916fc6e71426e.png",
+            "reference_file": "/mnt/hcmus/TNMammo_v2/Segmet/workspace/nnUNet_preprocessed/Dataset501_TNMammoBreast/gt_segmentations/tnm_064a87d91e72d953c3a916fc6e71426e.png"
+        },
+        {
+            "metrics": {
+                "1": {
+                    "Dice": 0.988218993682306,
+                    "FN": 2854,
+                    "FP": 9101,
+                    "IoU": 0.9767123394407845,
+                    "TN": 2824878,
+                    "TP": 501407,
+                    "n_pred": 510508,
+                    "n_ref": 504261
+                }
+            },
+            "prediction_file": "/mnt/hcmus/TNMammo_v2/Segmet/workspace/nnUNet_results/Dataset501_TNMammoBreast/nnUNetTrainer_250epochs__nnUNetPlans__2d/fold_0/validation/tnm_064df309f0478afc3be47ee9f222b854.png",
+            "reference_file": "/mnt/hcmus/TNMammo_v2/Segmet/workspace/nnUNet_preprocessed/Dataset501_TNMammoBreast/gt_segmentations/tnm_064df309f0478afc3be47ee9f222b854.png"
+        },
+        {
+            "metrics": {
+                "1": {
+                    "Dice": 0.9773202121002941,
+                    "FN": 12030,
+                    "FP": 17474,
+                    "IoU": 0.9556463554515265,
+                    "TN": 2673041,
+                    "TP": 635695,
+                    "n_pred": 653169,
+                    "n_ref": 647725
+                }
+            },
+            "prediction_file": "/mnt/hcmus/TNMammo_v2/Segmet/workspace/nnUNet_results/Dataset501_TNMammoBreast/nnUNetTrainer_250epochs__nnUNetPlans__2d/fold_0/validation/tnm_064f024583e9c1a7f0152f50aac1d16d.png",
+            "reference_file": "/mnt/hcmus/TNMammo_v2/Segmet/workspace/nnUNet_preprocessed/Dataset501_TNMammoBreast/gt_segmentations/tnm_064f024583e9c1a7f0152f50aac1d16d.png"
+        },
+        {
+            "metrics": {
+                "1": {
+                    "Dice": 0.9774358194485367,
+                    "FN": 22,
+                    "FP": 9474,
+                    "IoU": 0.9558674536413069,
+                    "TN": 3123070,
+                    "TP": 205674,
+                    "n_pred": 215148,
+                    "n_ref": 205696
+                }
+            },
+            "prediction_file": "/mnt/hcmus/TNMammo_v2/Segmet/workspace/nnUNet_results/Dataset501_TNMammoBreast/nnUNetTrainer_250epochs__nnUNetPlans__2d/fold_0/validation/tnm_065dff9ca03865c90dc1d89bc0d51d7a.png",
+            "reference_file": "/mnt/hcmus/TNMammo_v2/Segmet/workspace/nnUNet_preprocessed/Dataset501_TNMammoBreast/gt_segmentations/tnm_065dff9ca03865c90dc1d89bc0d51d7a.png"
+        },
+        {
+            "metrics": {
+                "1": {
+                    "Dice": 0.988725740350065,
+                    "FN": 2513,
+                    "FP": 6059,
+                    "IoU": 0.977702864396375,
+                    "TN": 2953796,
+                    "TP": 375872,
+                    "n_pred": 381931,
+                    "n_ref": 378385
+                }
+            },
+            "prediction_file": "/mnt/hcmus/TNMammo_v2/Segmet/workspace/nnUNet_results/Dataset501_TNMammoBreast/nnUNetTrainer_250epochs__nnUNetPlans__2d/fold_0/validation/tnm_068ca95564b6363ad81e32775d1be92a.png",
+            "reference_file": "/mnt/hcmus/TNMammo_v2/Segmet/workspace/nnUNet_preprocessed/Dataset501_TNMammoBreast/gt_segmentations/tnm_068ca95564b6363ad81e32775d1be92a.png"
+        },
+        {
+            "metrics": {
+                "1": {
+                    "Dice": 0.9748126414238654,
+                    "FN": 14517,
+                    "FP": 6532,
+                    "IoU": 0.9508629161968658,
+                    "TN": 2909867,
+                    "TP": 407324,
+                    "n_pred": 413856,
+                    "n_ref": 421841
+                }
+            },
+            "prediction_file": "/mnt/hcmus/TNMammo_v2/Segmet/workspace/nnUNet_results/Dataset501_TNMammoBreast/nnUNetTrainer_250epochs__nnUNetPlans__2d/fold_0/validation/tnm_06ac8adc59f0c382153d574d8bcf12e1.png",
+            "reference_file": "/mnt/hcmus/TNMammo_v2/Segmet/workspace/nnUNet_preprocessed/Dataset501_TNMammoBreast/gt_segmentations/tnm_06ac8adc59f0c382153d574d8bcf12e1.png"
+        },
+        {
+            "metrics": {
+                "1": {
+                    "Dice": 0.9903182672305104,
+                    "FN": 6714,
+                    "FP": 6471,
+                    "IoU": 0.9808222087113863,
+                    "TN": 2650726,
+                    "TP": 674329,
+                    "n_pred": 680800,
+                    "n_ref": 681043
+                }
+            },
+            "prediction_file": "/mnt/hcmus/TNMammo_v2/Segmet/workspace/nnUNet_results/Dataset501_TNMammoBreast/nnUNetTrainer_250epochs__nnUNetPlans__2d/fold_0/validation/tnm_06bb29b24d251036283df49dcd1a0651.png",
+            "reference_file": "/mnt/hcmus/TNMammo_v2/Segmet/workspace/nnUNet_preprocessed/Dataset501_TNMammoBreast/gt_segmentations/tnm_06bb29b24d251036283df49dcd1a0651.png"
+        },
+        {
+            "metrics": {
+                "1": {
+                    "Dice": 0.983200017531941,
+                    "FN": 9988,
+                    "FP": 5344,
+                    "IoU": 0.966955187337276,
+                    "TN": 2874264,
+                    "TP": 448644,
+                    "n_pred": 453988,
+                    "n_ref": 458632
+                }
+            },
+            "prediction_file": "/mnt/hcmus/TNMammo_v2/Segmet/workspace/nnUNet_results/Dataset501_TNMammoBreast/nnUNetTrainer_250epochs__nnUNetPlans__2d/fold_0/validation/tnm_06c7ba4ce2ebd96968eb73637b7aab61.png",
+            "reference_file": "/mnt/hcmus/TNMammo_v2/Segmet/workspace/nnUNet_preprocessed/Dataset501_TNMammoBreast/gt_segmentations/tnm_06c7ba4ce2ebd96968eb73637b7aab61.png"
+        },
+        {
+            "metrics": {
+                "1": {
+                    "Dice": 0.9822052923477903,
+                    "FN": 13897,
+                    "FP": 2598,
+                    "IoU": 0.9650328155208086,
+                    "TN": 2528592,
+                    "TP": 455233,
+                    "n_pred": 457831,
+                    "n_ref": 469130
+                }
+            },
+            "prediction_file": "/mnt/hcmus/TNMammo_v2/Segmet/workspace/nnUNet_results/Dataset501_TNMammoBreast/nnUNetTrainer_250epochs__nnUNetPlans__2d/fold_0/validation/tnm_06d2e10c428c637ccd7da8734884be99.png",
+            "reference_file": "/mnt/hcmus/TNMammo_v2/Segmet/workspace/nnUNet_preprocessed/Dataset501_TNMammoBreast/gt_segmentations/tnm_06d2e10c428c637ccd7da8734884be99.png"
+        },
+        {
+            "metrics": {
+                "1": {
+                    "Dice": 0.9720871471597344,
+                    "FN": 36427,
+                    "FP": 10987,
+                    "IoU": 0.9456902348031967,
+                    "TN": 2127291,
+                    "TP": 825615,
+                    "n_pred": 836602,
+                    "n_ref": 862042
+                }
+            },
+            "prediction_file": "/mnt/hcmus/TNMammo_v2/Segmet/workspace/nnUNet_results/Dataset501_TNMammoBreast/nnUNetTrainer_250epochs__nnUNetPlans__2d/fold_0/validation/tnm_06da3636e47508be7acad8039bf6f8b9.png",
+            "reference_file": "/mnt/hcmus/TNMammo_v2/Segmet/workspace/nnUNet_preprocessed/Dataset501_TNMammoBreast/gt_segmentations/tnm_06da3636e47508be7acad8039bf6f8b9.png"
+        },
+        {
+            "metrics": {
+                "1": {
+                    "Dice": 0.990122845816386,
+                    "FN": 3409,
+                    "FP": 8087,
+                    "IoU": 0.9804388996370579,
+                    "TN": 2750543,
+                    "TP": 576201,
+                    "n_pred": 584288,
+                    "n_ref": 579610
+                }
+            },
+            "prediction_file": "/mnt/hcmus/TNMammo_v2/Segmet/workspace/nnUNet_results/Dataset501_TNMammoBreast/nnUNetTrainer_250epochs__nnUNetPlans__2d/fold_0/validation/tnm_06e41ae6d876da5119d826eee7f26fd3.png",
+            "reference_file": "/mnt/hcmus/TNMammo_v2/Segmet/workspace/nnUNet_preprocessed/Dataset501_TNMammoBreast/gt_segmentations/tnm_06e41ae6d876da5119d826eee7f26fd3.png"
+        },
+        {
+            "metrics": {
+                "1": {
+                    "Dice": 0.9868496774692286,
+                    "FN": 1651,
+                    "FP": 12128,
+                    "IoU": 0.9740407277413229,
+                    "TN": 2807447,
+                    "TP": 517014,
+                    "n_pred": 529142,
+                    "n_ref": 518665
+                }
+            },
+            "prediction_file": "/mnt/hcmus/TNMammo_v2/Segmet/workspace/nnUNet_results/Dataset501_TNMammoBreast/nnUNetTrainer_250epochs__nnUNetPlans__2d/fold_0/validation/tnm_06f80e7c3144a542dd0011cc4a73f81c.png",
+            "reference_file": "/mnt/hcmus/TNMammo_v2/Segmet/workspace/nnUNet_preprocessed/Dataset501_TNMammoBreast/gt_segmentations/tnm_06f80e7c3144a542dd0011cc4a73f81c.png"
+        },
+        {
+            "metrics": {
+                "1": {
+                    "Dice": 0.9866657222291088,
+                    "FN": 2213,
+                    "FP": 6823,
+                    "IoU": 0.9736823710331329,
+                    "TN": 2994896,
+                    "TP": 334308,
+                    "n_pred": 341131,
+                    "n_ref": 336521
+                }
+            },
+            "prediction_file": "/mnt/hcmus/TNMammo_v2/Segmet/workspace/nnUNet_results/Dataset501_TNMammoBreast/nnUNetTrainer_250epochs__nnUNetPlans__2d/fold_0/validation/tnm_070673c306a0fb0ef811f8b22f96fbf1.png",
+            "reference_file": "/mnt/hcmus/TNMammo_v2/Segmet/workspace/nnUNet_preprocessed/Dataset501_TNMammoBreast/gt_segmentations/tnm_070673c306a0fb0ef811f8b22f96fbf1.png"
+        },
+        {
+            "metrics": {
+                "1": {
+                    "Dice": 0.9834595074352127,
+                    "FN": 2902,
+                    "FP": 15995,
+                    "IoU": 0.9674572873667733,
+                    "TN": 2757557,
+                    "TP": 561786,
+                    "n_pred": 577781,
+                    "n_ref": 564688
+                }
+            },
+            "prediction_file": "/mnt/hcmus/TNMammo_v2/Segmet/workspace/nnUNet_results/Dataset501_TNMammoBreast/nnUNetTrainer_250epochs__nnUNetPlans__2d/fold_0/validation/tnm_07248433b3d019f6ee268f32a9904e36.png",
+            "reference_file": "/mnt/hcmus/TNMammo_v2/Segmet/workspace/nnUNet_preprocessed/Dataset501_TNMammoBreast/gt_segmentations/tnm_07248433b3d019f6ee268f32a9904e36.png"
+        },
+        {
+            "metrics": {
+                "1": {
+                    "Dice": 0.9778462769472817,
+                    "FN": 6383,
+                    "FP": 19864,
+                    "IoU": 0.9566528545499887,
+                    "TN": 2732733,
+                    "TP": 579260,
+                    "n_pred": 599124,
+                    "n_ref": 585643
+                }
+            },
+            "prediction_file": "/mnt/hcmus/TNMammo_v2/Segmet/workspace/nnUNet_results/Dataset501_TNMammoBreast/nnUNetTrainer_250epochs__nnUNetPlans__2d/fold_0/validation/tnm_0734a9dc7d6d89e8c91458545afeef9d.png",
+            "reference_file": "/mnt/hcmus/TNMammo_v2/Segmet/workspace/nnUNet_preprocessed/Dataset501_TNMammoBreast/gt_segmentations/tnm_0734a9dc7d6d89e8c91458545afeef9d.png"
+        },
+        {
+            "metrics": {
+                "1": {
+                    "Dice": 0.9862244328726407,
+                    "FN": 6020,
+                    "FP": 12871,
+                    "IoU": 0.9728232410130108,
+                    "TN": 2643124,
+                    "TP": 676225,
+                    "n_pred": 689096,
+                    "n_ref": 682245
+                }
+            },
+            "prediction_file": "/mnt/hcmus/TNMammo_v2/Segmet/workspace/nnUNet_results/Dataset501_TNMammoBreast/nnUNetTrainer_250epochs__nnUNetPlans__2d/fold_0/validation/tnm_0740aed320baec685967452eaed4f6c8.png",
+            "reference_file": "/mnt/hcmus/TNMammo_v2/Segmet/workspace/nnUNet_preprocessed/Dataset501_TNMammoBreast/gt_segmentations/tnm_0740aed320baec685967452eaed4f6c8.png"
+        },
+        {
+            "metrics": {
+                "1": {
+                    "Dice": 0.9818070271047379,
+                    "FN": 12790,
+                    "FP": 8976,
+                    "IoU": 0.9642641947458548,
+                    "TN": 2729159,
+                    "TP": 587315,
+                    "n_pred": 596291,
+                    "n_ref": 600105
+                }
+            },
+            "prediction_file": "/mnt/hcmus/TNMammo_v2/Segmet/workspace/nnUNet_results/Dataset501_TNMammoBreast/nnUNetTrainer_250epochs__nnUNetPlans__2d/fold_0/validation/tnm_0771994d1d5cc5890fc7fbd6770e6234.png",
+            "reference_file": "/mnt/hcmus/TNMammo_v2/Segmet/workspace/nnUNet_preprocessed/Dataset501_TNMammoBreast/gt_segmentations/tnm_0771994d1d5cc5890fc7fbd6770e6234.png"
+        },
+        {
+            "metrics": {
+                "1": {
+                    "Dice": 0.9808180895502383,
+                    "FN": 16666,
+                    "FP": 44587,
+                    "IoU": 0.9623582203469511,
+                    "TN": 1373059,
+                    "TP": 1566008,
+                    "n_pred": 1610595,
+                    "n_ref": 1582674
+                }
+            },
+            "prediction_file": "/mnt/hcmus/TNMammo_v2/Segmet/workspace/nnUNet_results/Dataset501_TNMammoBreast/nnUNetTrainer_250epochs__nnUNetPlans__2d/fold_0/validation/tnm_0773132bf1cead4c008d079d22a5a62a.png",
+            "reference_file": "/mnt/hcmus/TNMammo_v2/Segmet/workspace/nnUNet_preprocessed/Dataset501_TNMammoBreast/gt_segmentations/tnm_0773132bf1cead4c008d079d22a5a62a.png"
+        },
+        {
+            "metrics": {
+                "1": {
+                    "Dice": 0.9856191797387279,
+                    "FN": 12055,
+                    "FP": 10326,
+                    "IoU": 0.9716461116495322,
+                    "TN": 2210975,
+                    "TP": 766964,
+                    "n_pred": 777290,
+                    "n_ref": 779019
+                }
+            },
+            "prediction_file": "/mnt/hcmus/TNMammo_v2/Segmet/workspace/nnUNet_results/Dataset501_TNMammoBreast/nnUNetTrainer_250epochs__nnUNetPlans__2d/fold_0/validation/tnm_0775147f75a05c8291691745d39cad4f.png",
+            "reference_file": "/mnt/hcmus/TNMammo_v2/Segmet/workspace/nnUNet_preprocessed/Dataset501_TNMammoBreast/gt_segmentations/tnm_0775147f75a05c8291691745d39cad4f.png"
+        },
+        {
+            "metrics": {
+                "1": {
+                    "Dice": 0.9849918365638213,
+                    "FN": 8891,
+                    "FP": 6883,
+                    "IoU": 0.9704275020106824,
+                    "TN": 2804839,
+                    "TP": 517627,
+                    "n_pred": 524510,
+                    "n_ref": 526518
+                }
+            },
+            "prediction_file": "/mnt/hcmus/TNMammo_v2/Segmet/workspace/nnUNet_results/Dataset501_TNMammoBreast/nnUNetTrainer_250epochs__nnUNetPlans__2d/fold_0/validation/tnm_077cd7dc6fbdf3179e8fb17f2a243b91.png",
+            "reference_file": "/mnt/hcmus/TNMammo_v2/Segmet/workspace/nnUNet_preprocessed/Dataset501_TNMammoBreast/gt_segmentations/tnm_077cd7dc6fbdf3179e8fb17f2a243b91.png"
+        },
+        {
+            "metrics": {
+                "1": {
+                    "Dice": 0.9881722059305829,
+                    "FN": 2123,
+                    "FP": 10211,
+                    "IoU": 0.9766209346318755,
+                    "TN": 2810674,
+                    "TP": 515232,
+                    "n_pred": 525443,
+                    "n_ref": 517355
+                }
+            },
+            "prediction_file": "/mnt/hcmus/TNMammo_v2/Segmet/workspace/nnUNet_results/Dataset501_TNMammoBreast/nnUNetTrainer_250epochs__nnUNetPlans__2d/fold_0/validation/tnm_07902227cde8e3f2974daf8098577bde.png",
+            "reference_file": "/mnt/hcmus/TNMammo_v2/Segmet/workspace/nnUNet_preprocessed/Dataset501_TNMammoBreast/gt_segmentations/tnm_07902227cde8e3f2974daf8098577bde.png"
+        },
+        {
+            "metrics": {
+                "1": {
+                    "Dice": 0.9943955831857965,
+                    "FN": 6838,
+                    "FP": 2570,
+                    "IoU": 0.9888536352456394,
+                    "TN": 2156278,
+                    "TP": 834634,
+                    "n_pred": 837204,
+                    "n_ref": 841472
+                }
+            },
+            "prediction_file": "/mnt/hcmus/TNMammo_v2/Segmet/workspace/nnUNet_results/Dataset501_TNMammoBreast/nnUNetTrainer_250epochs__nnUNetPlans__2d/fold_0/validation/tnm_07d72e026e292dd4f303e3e4841cb33c.png",
+            "reference_file": "/mnt/hcmus/TNMammo_v2/Segmet/workspace/nnUNet_preprocessed/Dataset501_TNMammoBreast/gt_segmentations/tnm_07d72e026e292dd4f303e3e4841cb33c.png"
+        },
+        {
+            "metrics": {
+                "1": {
+                    "Dice": 0.9935410408587787,
+                    "FN": 2582,
+                    "FP": 4690,
+                    "IoU": 0.98716498257071,
+                    "TN": 2728657,
+                    "TP": 559303,
+                    "n_pred": 563993,
+                    "n_ref": 561885
+                }
+            },
+            "prediction_file": "/mnt/hcmus/TNMammo_v2/Segmet/workspace/nnUNet_results/Dataset501_TNMammoBreast/nnUNetTrainer_250epochs__nnUNetPlans__2d/fold_0/validation/tnm_07f5863348560d0507bba86c8bba0586.png",
+            "reference_file": "/mnt/hcmus/TNMammo_v2/Segmet/workspace/nnUNet_preprocessed/Dataset501_TNMammoBreast/gt_segmentations/tnm_07f5863348560d0507bba86c8bba0586.png"
+        },
+        {
+            "metrics": {
+                "1": {
+                    "Dice": 0.852090450118808,
+                    "FN": 5524,
+                    "FP": 51370,
+                    "IoU": 0.742297553153904,
+                    "TN": 2963866,
+                    "TP": 163880,
+                    "n_pred": 215250,
+                    "n_ref": 169404
+                }
+            },
+            "prediction_file": "/mnt/hcmus/TNMammo_v2/Segmet/workspace/nnUNet_results/Dataset501_TNMammoBreast/nnUNetTrainer_250epochs__nnUNetPlans__2d/fold_0/validation/tnm_0806729f6ebeb658662051e8bdcfab3c.png",
+            "reference_file": "/mnt/hcmus/TNMammo_v2/Segmet/workspace/nnUNet_preprocessed/Dataset501_TNMammoBreast/gt_segmentations/tnm_0806729f6ebeb658662051e8bdcfab3c.png"
+        },
+        {
+            "metrics": {
+                "1": {
+                    "Dice": 0.9722031190302525,
+                    "FN": 71,
+                    "FP": 15935,
+                    "IoU": 0.945909777535965,
+                    "TN": 3042327,
+                    "TP": 279907,
+                    "n_pred": 295842,
+                    "n_ref": 279978
+                }
+            },
+            "prediction_file": "/mnt/hcmus/TNMammo_v2/Segmet/workspace/nnUNet_results/Dataset501_TNMammoBreast/nnUNetTrainer_250epochs__nnUNetPlans__2d/fold_0/validation/tnm_080a3c45a0d31439a8e3bb9e2692df0a.png",
+            "reference_file": "/mnt/hcmus/TNMammo_v2/Segmet/workspace/nnUNet_preprocessed/Dataset501_TNMammoBreast/gt_segmentations/tnm_080a3c45a0d31439a8e3bb9e2692df0a.png"
+        },
+        {
+            "metrics": {
+                "1": {
+                    "Dice": 0.986278437116977,
+                    "FN": 1650,
+                    "FP": 9825,
+                    "IoU": 0.9729283397227957,
+                    "TN": 2914365,
+                    "TP": 412400,
+                    "n_pred": 422225,
+                    "n_ref": 414050
+                }
+            },
+            "prediction_file": "/mnt/hcmus/TNMammo_v2/Segmet/workspace/nnUNet_results/Dataset501_TNMammoBreast/nnUNetTrainer_250epochs__nnUNetPlans__2d/fold_0/validation/tnm_08163257a305a3b3f16c1da1ed99eefb.png",
+            "reference_file": "/mnt/hcmus/TNMammo_v2/Segmet/workspace/nnUNet_preprocessed/Dataset501_TNMammoBreast/gt_segmentations/tnm_08163257a305a3b3f16c1da1ed99eefb.png"
+        },
+        {
+            "metrics": {
+                "1": {
+                    "Dice": 0.9945051971596334,
+                    "FN": 2673,
+                    "FP": 3013,
+                    "IoU": 0.9890704500414231,
+                    "TN": 2817999,
+                    "TP": 514555,
+                    "n_pred": 517568,
+                    "n_ref": 517228
+                }
+            },
+            "prediction_file": "/mnt/hcmus/TNMammo_v2/Segmet/workspace/nnUNet_results/Dataset501_TNMammoBreast/nnUNetTrainer_250epochs__nnUNetPlans__2d/fold_0/validation/tnm_08302998f3ab7deb519966e5c8607757.png",
+            "reference_file": "/mnt/hcmus/TNMammo_v2/Segmet/workspace/nnUNet_preprocessed/Dataset501_TNMammoBreast/gt_segmentations/tnm_08302998f3ab7deb519966e5c8607757.png"
+        },
+        {
+            "metrics": {
+                "1": {
+                    "Dice": 0.9801193352542164,
+                    "FN": 8608,
+                    "FP": 12333,
+                    "IoU": 0.96101374320938,
+                    "TN": 2801102,
+                    "TP": 516197,
+                    "n_pred": 528530,
+                    "n_ref": 524805
+                }
+            },
+            "prediction_file": "/mnt/hcmus/TNMammo_v2/Segmet/workspace/nnUNet_results/Dataset501_TNMammoBreast/nnUNetTrainer_250epochs__nnUNetPlans__2d/fold_0/validation/tnm_083f21af4e0f6b0f785dd5dffde0ed3b.png",
+            "reference_file": "/mnt/hcmus/TNMammo_v2/Segmet/workspace/nnUNet_preprocessed/Dataset501_TNMammoBreast/gt_segmentations/tnm_083f21af4e0f6b0f785dd5dffde0ed3b.png"
+        },
+        {
+            "metrics": {
+                "1": {
+                    "Dice": 0.9825730304957381,
+                    "FN": 2654,
+                    "FP": 12281,
+                    "IoU": 0.9657430557148428,
+                    "TN": 2902270,
+                    "TP": 421035,
+                    "n_pred": 433316,
+                    "n_ref": 423689
+                }
+            },
+            "prediction_file": "/mnt/hcmus/TNMammo_v2/Segmet/workspace/nnUNet_results/Dataset501_TNMammoBreast/nnUNetTrainer_250epochs__nnUNetPlans__2d/fold_0/validation/tnm_084eabd478f0c2f28dd97a35e566f993.png",
+            "reference_file": "/mnt/hcmus/TNMammo_v2/Segmet/workspace/nnUNet_preprocessed/Dataset501_TNMammoBreast/gt_segmentations/tnm_084eabd478f0c2f28dd97a35e566f993.png"
+        },
+        {
+            "metrics": {
+                "1": {
+                    "Dice": 0.9783906134227055,
+                    "FN": 2267,
+                    "FP": 11557,
+                    "IoU": 0.9576954032309891,
+                    "TN": 3011467,
+                    "TP": 312949,
+                    "n_pred": 324506,
+                    "n_ref": 315216
+                }
+            },
+            "prediction_file": "/mnt/hcmus/TNMammo_v2/Segmet/workspace/nnUNet_results/Dataset501_TNMammoBreast/nnUNetTrainer_250epochs__nnUNetPlans__2d/fold_0/validation/tnm_0862166d4618930eb232dd5c2db6a42f.png",
+            "reference_file": "/mnt/hcmus/TNMammo_v2/Segmet/workspace/nnUNet_preprocessed/Dataset501_TNMammoBreast/gt_segmentations/tnm_0862166d4618930eb232dd5c2db6a42f.png"
+        },
+        {
+            "metrics": {
+                "1": {
+                    "Dice": 0.9633822437948972,
+                    "FN": 19401,
+                    "FP": 23917,
+                    "IoU": 0.9293514779465969,
+                    "TN": 2725092,
+                    "TP": 569830,
+                    "n_pred": 593747,
+                    "n_ref": 589231
+                }
+            },
+            "prediction_file": "/mnt/hcmus/TNMammo_v2/Segmet/workspace/nnUNet_results/Dataset501_TNMammoBreast/nnUNetTrainer_250epochs__nnUNetPlans__2d/fold_0/validation/tnm_088ea051f787f41359334a0dc5298e58.png",
+            "reference_file": "/mnt/hcmus/TNMammo_v2/Segmet/workspace/nnUNet_preprocessed/Dataset501_TNMammoBreast/gt_segmentations/tnm_088ea051f787f41359334a0dc5298e58.png"
+        },
+        {
+            "metrics": {
+                "1": {
+                    "Dice": 0.9876473787852409,
+                    "FN": 5260,
+                    "FP": 6163,
+                    "IoU": 0.9755962083647558,
+                    "TN": 2870157,
+                    "TP": 456660,
+                    "n_pred": 462823,
+                    "n_ref": 461920
+                }
+            },
+            "prediction_file": "/mnt/hcmus/TNMammo_v2/Segmet/workspace/nnUNet_results/Dataset501_TNMammoBreast/nnUNetTrainer_250epochs__nnUNetPlans__2d/fold_0/validation/tnm_08eb0a7e44720acb4cbfc07005b78421.png",
+            "reference_file": "/mnt/hcmus/TNMammo_v2/Segmet/workspace/nnUNet_preprocessed/Dataset501_TNMammoBreast/gt_segmentations/tnm_08eb0a7e44720acb4cbfc07005b78421.png"
+        },
+        {
+            "metrics": {
+                "1": {
+                    "Dice": 0.968695293630468,
+                    "FN": 18611,
+                    "FP": 16617,
+                    "IoU": 0.9392910627165991,
+                    "TN": 2757963,
+                    "TP": 545049,
+                    "n_pred": 561666,
+                    "n_ref": 563660
+                }
+            },
+            "prediction_file": "/mnt/hcmus/TNMammo_v2/Segmet/workspace/nnUNet_results/Dataset501_TNMammoBreast/nnUNetTrainer_250epochs__nnUNetPlans__2d/fold_0/validation/tnm_08fba2418456d1cec5e8d502519c5a0a.png",
+            "reference_file": "/mnt/hcmus/TNMammo_v2/Segmet/workspace/nnUNet_preprocessed/Dataset501_TNMammoBreast/gt_segmentations/tnm_08fba2418456d1cec5e8d502519c5a0a.png"
+        },
+        {
+            "metrics": {
+                "1": {
+                    "Dice": 0.9744105786939332,
+                    "FN": 16695,
+                    "FP": 18347,
+                    "IoU": 0.9500981176785557,
+                    "TN": 2593014,
+                    "TP": 667176,
+                    "n_pred": 685523,
+                    "n_ref": 683871
+                }
+            },
+            "prediction_file": "/mnt/hcmus/TNMammo_v2/Segmet/workspace/nnUNet_results/Dataset501_TNMammoBreast/nnUNetTrainer_250epochs__nnUNetPlans__2d/fold_0/validation/tnm_0901685471c2fe66ed24ce41a07e8393.png",
+            "reference_file": "/mnt/hcmus/TNMammo_v2/Segmet/workspace/nnUNet_preprocessed/Dataset501_TNMammoBreast/gt_segmentations/tnm_0901685471c2fe66ed24ce41a07e8393.png"
+        },
+        {
+            "metrics": {
+                "1": {
+                    "Dice": 0.9778767321044136,
+                    "FN": 1057,
+                    "FP": 10360,
+                    "IoU": 0.9567111549253052,
+                    "TN": 3074500,
+                    "TP": 252323,
+                    "n_pred": 262683,
+                    "n_ref": 253380
+                }
+            },
+            "prediction_file": "/mnt/hcmus/TNMammo_v2/Segmet/workspace/nnUNet_results/Dataset501_TNMammoBreast/nnUNetTrainer_250epochs__nnUNetPlans__2d/fold_0/validation/tnm_0910d745587cc7fe05b07ce16e16268b.png",
+            "reference_file": "/mnt/hcmus/TNMammo_v2/Segmet/workspace/nnUNet_preprocessed/Dataset501_TNMammoBreast/gt_segmentations/tnm_0910d745587cc7fe05b07ce16e16268b.png"
+        },
+        {
+            "metrics": {
+                "1": {
+                    "Dice": 0.9821201383938044,
+                    "FN": 7111,
+                    "FP": 13028,
+                    "IoU": 0.9648684244956345,
+                    "TN": 2764995,
+                    "TP": 553106,
+                    "n_pred": 566134,
+                    "n_ref": 560217
+                }
+            },
+            "prediction_file": "/mnt/hcmus/TNMammo_v2/Segmet/workspace/nnUNet_results/Dataset501_TNMammoBreast/nnUNetTrainer_250epochs__nnUNetPlans__2d/fold_0/validation/tnm_091e8ca6357e7ba4877b5985297afffc.png",
+            "reference_file": "/mnt/hcmus/TNMammo_v2/Segmet/workspace/nnUNet_preprocessed/Dataset501_TNMammoBreast/gt_segmentations/tnm_091e8ca6357e7ba4877b5985297afffc.png"
+        },
+        {
+            "metrics": {
+                "1": {
+                    "Dice": 0.9840871074138722,
+                    "FN": 5339,
+                    "FP": 22658,
+                    "IoU": 0.9686727224307201,
+                    "TN": 2106626,
+                    "TP": 865697,
+                    "n_pred": 888355,
+                    "n_ref": 871036
+                }
+            },
+            "prediction_file": "/mnt/hcmus/TNMammo_v2/Segmet/workspace/nnUNet_results/Dataset501_TNMammoBreast/nnUNetTrainer_250epochs__nnUNetPlans__2d/fold_0/validation/tnm_09377ecf2810f1487fe54068bf724ea6.png",
+            "reference_file": "/mnt/hcmus/TNMammo_v2/Segmet/workspace/nnUNet_preprocessed/Dataset501_TNMammoBreast/gt_segmentations/tnm_09377ecf2810f1487fe54068bf724ea6.png"
+        },
+        {
+            "metrics": {
+                "1": {
+                    "Dice": 0.988852854629346,
+                    "FN": 157,
+                    "FP": 9340,
+                    "IoU": 0.9779514872356825,
+                    "TN": 2907508,
+                    "TP": 421235,
+                    "n_pred": 430575,
+                    "n_ref": 421392
+                }
+            },
+            "prediction_file": "/mnt/hcmus/TNMammo_v2/Segmet/workspace/nnUNet_results/Dataset501_TNMammoBreast/nnUNetTrainer_250epochs__nnUNetPlans__2d/fold_0/validation/tnm_0939019fd916e0748e07d9546cd8bdf5.png",
+            "reference_file": "/mnt/hcmus/TNMammo_v2/Segmet/workspace/nnUNet_preprocessed/Dataset501_TNMammoBreast/gt_segmentations/tnm_0939019fd916e0748e07d9546cd8bdf5.png"
+        },
+        {
+            "metrics": {
+                "1": {
+                    "Dice": 0.9851219249579227,
+                    "FN": 3062,
+                    "FP": 10065,
+                    "IoU": 0.9706800739754666,
+                    "TN": 2890524,
+                    "TP": 434589,
+                    "n_pred": 444654,
+                    "n_ref": 437651
+                }
+            },
+            "prediction_file": "/mnt/hcmus/TNMammo_v2/Segmet/workspace/nnUNet_results/Dataset501_TNMammoBreast/nnUNetTrainer_250epochs__nnUNetPlans__2d/fold_0/validation/tnm_097f13dee9e53dd899ae1b3b84637432.png",
+            "reference_file": "/mnt/hcmus/TNMammo_v2/Segmet/workspace/nnUNet_preprocessed/Dataset501_TNMammoBreast/gt_segmentations/tnm_097f13dee9e53dd899ae1b3b84637432.png"
+        },
+        {
+            "metrics": {
+                "1": {
+                    "Dice": 0.9859026806419351,
+                    "FN": 5257,
+                    "FP": 10798,
+                    "IoU": 0.9721973047577157,
+                    "TN": 2760778,
+                    "TP": 561407,
+                    "n_pred": 572205,
+                    "n_ref": 566664
+                }
+            },
+            "prediction_file": "/mnt/hcmus/TNMammo_v2/Segmet/workspace/nnUNet_results/Dataset501_TNMammoBreast/nnUNetTrainer_250epochs__nnUNetPlans__2d/fold_0/validation/tnm_098735637a6efd988e80ca289e0c4576.png",
+            "reference_file": "/mnt/hcmus/TNMammo_v2/Segmet/workspace/nnUNet_preprocessed/Dataset501_TNMammoBreast/gt_segmentations/tnm_098735637a6efd988e80ca289e0c4576.png"
+        },
+        {
+            "metrics": {
+                "1": {
+                    "Dice": 0.9803400413449774,
+                    "FN": 5082,
+                    "FP": 8898,
+                    "IoU": 0.9614382059663205,
+                    "TN": 2975705,
+                    "TP": 348555,
+                    "n_pred": 357453,
+                    "n_ref": 353637
+                }
+            },
+            "prediction_file": "/mnt/hcmus/TNMammo_v2/Segmet/workspace/nnUNet_results/Dataset501_TNMammoBreast/nnUNetTrainer_250epochs__nnUNetPlans__2d/fold_0/validation/tnm_09b20d9ef71a6c11ae6f440475d6db56.png",
+            "reference_file": "/mnt/hcmus/TNMammo_v2/Segmet/workspace/nnUNet_preprocessed/Dataset501_TNMammoBreast/gt_segmentations/tnm_09b20d9ef71a6c11ae6f440475d6db56.png"
+        },
+        {
+            "metrics": {
+                "1": {
+                    "Dice": 0.987753011524874,
+                    "FN": 11060,
+                    "FP": 2474,
+                    "IoU": 0.9758023711316245,
+                    "TN": 2778929,
+                    "TP": 545777,
+                    "n_pred": 548251,
+                    "n_ref": 556837
+                }
+            },
+            "prediction_file": "/mnt/hcmus/TNMammo_v2/Segmet/workspace/nnUNet_results/Dataset501_TNMammoBreast/nnUNetTrainer_250epochs__nnUNetPlans__2d/fold_0/validation/tnm_09bb44db8414ef0bea85e8da4c8d3160.png",
+            "reference_file": "/mnt/hcmus/TNMammo_v2/Segmet/workspace/nnUNet_preprocessed/Dataset501_TNMammoBreast/gt_segmentations/tnm_09bb44db8414ef0bea85e8da4c8d3160.png"
+        },
+        {
+            "metrics": {
+                "1": {
+                    "Dice": 0.9928496891242128,
+                    "FN": 5745,
+                    "FP": 7041,
+                    "IoU": 0.9858009061833689,
+                    "TN": 2437760,
+                    "TP": 887694,
+                    "n_pred": 894735,
+                    "n_ref": 893439
+                }
+            },
+            "prediction_file": "/mnt/hcmus/TNMammo_v2/Segmet/workspace/nnUNet_results/Dataset501_TNMammoBreast/nnUNetTrainer_250epochs__nnUNetPlans__2d/fold_0/validation/tnm_09c82072fb932b45003f19ec3a938972.png",
+            "reference_file": "/mnt/hcmus/TNMammo_v2/Segmet/workspace/nnUNet_preprocessed/Dataset501_TNMammoBreast/gt_segmentations/tnm_09c82072fb932b45003f19ec3a938972.png"
+        },
+        {
+            "metrics": {
+                "1": {
+                    "Dice": 0.9900117501659026,
+                    "FN": 2461,
+                    "FP": 5742,
+                    "IoU": 0.9802210573524235,
+                    "TN": 2923506,
+                    "TP": 406531,
+                    "n_pred": 412273,
+                    "n_ref": 408992
+                }
+            },
+            "prediction_file": "/mnt/hcmus/TNMammo_v2/Segmet/workspace/nnUNet_results/Dataset501_TNMammoBreast/nnUNetTrainer_250epochs__nnUNetPlans__2d/fold_0/validation/tnm_09d71ae86ca0383de5dcbcc40fa421ce.png",
+            "reference_file": "/mnt/hcmus/TNMammo_v2/Segmet/workspace/nnUNet_preprocessed/Dataset501_TNMammoBreast/gt_segmentations/tnm_09d71ae86ca0383de5dcbcc40fa421ce.png"
+        },
+        {
+            "metrics": {
+                "1": {
+                    "Dice": 0.992318114122231,
+                    "FN": 3486,
+                    "FP": 3369,
+                    "IoU": 0.9847533512601004,
+                    "TN": 2888633,
+                    "TP": 442752,
+                    "n_pred": 446121,
+                    "n_ref": 446238
+                }
+            },
+            "prediction_file": "/mnt/hcmus/TNMammo_v2/Segmet/workspace/nnUNet_results/Dataset501_TNMammoBreast/nnUNetTrainer_250epochs__nnUNetPlans__2d/fold_0/validation/tnm_09d8718dfd262792de5bf098bbd3c056.png",
+            "reference_file": "/mnt/hcmus/TNMammo_v2/Segmet/workspace/nnUNet_preprocessed/Dataset501_TNMammoBreast/gt_segmentations/tnm_09d8718dfd262792de5bf098bbd3c056.png"
+        },
+        {
+            "metrics": {
+                "1": {
+                    "Dice": 0.9895602600075669,
+                    "FN": 10558,
+                    "FP": 4425,
+                    "IoU": 0.979336244252406,
+                    "TN": 2613154,
+                    "TP": 710103,
+                    "n_pred": 714528,
+                    "n_ref": 720661
+                }
+            },
+            "prediction_file": "/mnt/hcmus/TNMammo_v2/Segmet/workspace/nnUNet_results/Dataset501_TNMammoBreast/nnUNetTrainer_250epochs__nnUNetPlans__2d/fold_0/validation/tnm_09d962380c374a20a5360d206ea4fbda.png",
+            "reference_file": "/mnt/hcmus/TNMammo_v2/Segmet/workspace/nnUNet_preprocessed/Dataset501_TNMammoBreast/gt_segmentations/tnm_09d962380c374a20a5360d206ea4fbda.png"
+        },
+        {
+            "metrics": {
+                "1": {
+                    "Dice": 0.9796348898585866,
+                    "FN": 2145,
+                    "FP": 11814,
+                    "IoU": 0.9600826999296536,
+                    "TN": 2988542,
+                    "TP": 335739,
+                    "n_pred": 347553,
+                    "n_ref": 337884
+                }
+            },
+            "prediction_file": "/mnt/hcmus/TNMammo_v2/Segmet/workspace/nnUNet_results/Dataset501_TNMammoBreast/nnUNetTrainer_250epochs__nnUNetPlans__2d/fold_0/validation/tnm_09e75ac07373f2e576fdcd909993b3bd.png",
+            "reference_file": "/mnt/hcmus/TNMammo_v2/Segmet/workspace/nnUNet_preprocessed/Dataset501_TNMammoBreast/gt_segmentations/tnm_09e75ac07373f2e576fdcd909993b3bd.png"
+        },
+        {
+            "metrics": {
+                "1": {
+                    "Dice": 0.9922535477350227,
+                    "FN": 8505,
+                    "FP": 11177,
+                    "IoU": 0.9846261879710583,
+                    "TN": 1720091,
+                    "TP": 1260547,
+                    "n_pred": 1271724,
+                    "n_ref": 1269052
+                }
+            },
+            "prediction_file": "/mnt/hcmus/TNMammo_v2/Segmet/workspace/nnUNet_results/Dataset501_TNMammoBreast/nnUNetTrainer_250epochs__nnUNetPlans__2d/fold_0/validation/tnm_0a2290abc9c03b9eb387ddbfff12092c.png",
+            "reference_file": "/mnt/hcmus/TNMammo_v2/Segmet/workspace/nnUNet_preprocessed/Dataset501_TNMammoBreast/gt_segmentations/tnm_0a2290abc9c03b9eb387ddbfff12092c.png"
+        },
+        {
+            "metrics": {
+                "1": {
+                    "Dice": 0.9549543227129318,
+                    "FN": 13450,
+                    "FP": 16076,
+                    "IoU": 0.9137919456228814,
+                    "TN": 2879007,
+                    "TP": 312971,
+                    "n_pred": 329047,
+                    "n_ref": 326421
+                }
+            },
+            "prediction_file": "/mnt/hcmus/TNMammo_v2/Segmet/workspace/nnUNet_results/Dataset501_TNMammoBreast/nnUNetTrainer_250epochs__nnUNetPlans__2d/fold_0/validation/tnm_0a3555d4b3ed49fe2dd8b48d20601f4e.png",
+            "reference_file": "/mnt/hcmus/TNMammo_v2/Segmet/workspace/nnUNet_preprocessed/Dataset501_TNMammoBreast/gt_segmentations/tnm_0a3555d4b3ed49fe2dd8b48d20601f4e.png"
+        }
+    ]
+}
