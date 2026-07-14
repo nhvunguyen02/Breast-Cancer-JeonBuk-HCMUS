@@ -37,7 +37,7 @@ def find_ckpt(p):
 def load_model(ckpt_path, device):
     ck = torch.load(ckpt_path, map_location=device, weights_only=False)
     a = ck["args"]
-    m = MultiViewModel(num_classes=4, backbone=a.get("backbone", "densenet121"),
+    m = MultiViewModel(num_classes=a.get("num_classes", 4), backbone=a.get("backbone", "densenet121"),
                        masked_pool=a.get("masked_pool", False),
                        fusion=a.get("fusion", "mean"), ordinal=a.get("ordinal", False)).to(device)
     m.load_state_dict(ck["model_state_dict"])
