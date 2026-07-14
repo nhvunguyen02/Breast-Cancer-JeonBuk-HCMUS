@@ -1,0 +1,18 @@
+{
+  "model": "MedSAM ViT-B fine-tuned",
+  "checkpoint": "/mnt/hcmus/breast_vn/outputs_week3/goal3_medsam_finetune_pilot_seed42/best_model.pt",
+  "checkpoint_epoch": 29,
+  "checkpoint_sha256": "2488717e2910fc59b523d49d9e5bd11b01cdec365d05b6a83c9fdf0215121af2",
+  "checkpoint_size_mb": 357.69,
+  "checkpoint_stored_mean_dice_noncanonical": 0.5979233321142349,
+  "final_canonical_validation_mean_dice": 0.8177937566566573,
+  "canonical_dice_by_view": {
+    "L_CC": 0.8605694384527246,
+    "L_MLO": 0.7827637928511134,
+    "R_CC": 0.8600615414559897,
+    "R_MLO": 0.77622131445338
+  },
+  "validation_images": 59,
+  "threshold": 0.5,
+  "canonical_protocol": "Right views flipped before inference and restored to original orientation"
+}
