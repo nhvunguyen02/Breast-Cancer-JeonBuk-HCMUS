@@ -55,10 +55,11 @@ Confusion matrix:
 ## Files
 
 - `train.py`: model-training entrypoint
-- `inference.py`: TN-Mammo inference and evaluation entrypoint
+- `evaluate.py`: checkpoint evaluation entrypoint
 - `config.yaml`: exact runtime configuration for the selected E1 run
 - `src/tn_mammo/`: model, dataset, loss, metrics and utility modules
 - `checkpoint/best_model.pt`: selected checkpoint
+- `README.md`: how to run and follow the fusion experiment plan
 
 ## Evaluation protocol
 

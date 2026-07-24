@@ -1,0 +1,7 @@
+model:
+  use_ordinal_head: true
+  imagenet_init: false
+  initialization_checkpoint: null
+  fusion: mean  # mean | concat_mlp | attention | hierarchical_gated
+  fusion_hidden_dim: 256
+  fusion_dropout: 0.2

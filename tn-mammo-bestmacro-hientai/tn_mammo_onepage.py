@@ -70,6 +70,7 @@ from __future__ import annotations
 import argparse
 import json
 import math
+import random
 from pathlib import Path
 
 import numpy as np
@@ -78,7 +79,7 @@ import torch
 import yaml
 from coral_pytorch.layers import CoralLayer
 from coral_pytorch.losses import coral_loss
-from PIL import Image
+from PIL import Image, ImageOps
 from sklearn.metrics import (
     accuracy_score,
     balanced_accuracy_score,
@@ -132,24 +133,92 @@ def decode_coral_logits(
 #    (adapter gốc PhaseGDatasetAdapter nằm trên server; bản này tối giản,
 #     manifest cần cột: case_id, label, L_CC, L_MLO, R_CC, R_MLO, [source])
 # ============================================================================
+class SquarePad:
+    """Pad ảnh thành hình vuông mà không làm méo tỷ lệ giải phẫu."""
+
+    def __call__(self, image: Image.Image) -> Image.Image:
+        width, height = image.size
+        side = max(width, height)
+        pad_left = (side - width) // 2
+        pad_top = (side - height) // 2
+        pad_right = side - width - pad_left
+        pad_bottom = side - height - pad_top
+        return ImageOps.expand(
+            image,
+            border=(pad_left, pad_top, pad_right, pad_bottom),
+            fill=0,
+        )
+
+
 class FourViewManifestDataset(Dataset):
     def __init__(
         self,
         manifest_path: str | Path,
         image_size: int = 224,
         training: bool = False,
+        validate_paths: bool = True,
     ) -> None:
-        self.manifest_path = Path(manifest_path)
-        self.dataframe = pd.read_csv(self.manifest_path, dtype=str)
+        self.manifest_path = Path(manifest_path).expanduser().resolve()
+        if not self.manifest_path.is_file():
+            raise FileNotFoundError(f"Không tìm thấy manifest: {self.manifest_path}")
 
-        augment = (
-            [transforms.RandomHorizontalFlip(0.5)] if training else []
+        self.dataframe = pd.read_csv(self.manifest_path, dtype=str)
+        required_columns = {"case_id", "label", *VIEW_ORDER}
+        missing_columns = sorted(required_columns - set(self.dataframe.columns))
+        if missing_columns:
+            raise ValueError(f"Manifest thiếu cột bắt buộc: {missing_columns}")
+        if self.dataframe.empty:
+            raise ValueError(f"Manifest rỗng: {self.manifest_path}")
+        if self.dataframe["case_id"].isna().any():
+            raise ValueError("Manifest có case_id bị thiếu.")
+        duplicated = self.dataframe["case_id"].duplicated(keep=False)
+        if duplicated.any():
+            examples = self.dataframe.loc[duplicated, "case_id"].head(5).tolist()
+            raise ValueError(f"Manifest có case_id trùng, ví dụ: {examples}")
+
+        labels = self.dataframe["label"].str.strip().str.upper()
+        invalid_labels = sorted(set(labels.dropna()) - set(LABEL_TO_INDEX))
+        if invalid_labels or labels.isna().any():
+            raise ValueError(f"Label không hợp lệ hoặc bị thiếu: {invalid_labels}")
+        self.dataframe["label"] = labels
+
+        manifest_dir = self.manifest_path.parent
+        for view in VIEW_ORDER:
+            if self.dataframe[view].isna().any():
+                raise ValueError(f"Manifest có đường dẫn bị thiếu ở view {view}.")
+            self.dataframe[view] = self.dataframe[view].map(
+                lambda value: str(
+                    (manifest_dir / str(value)).resolve()
+                    if not Path(str(value)).expanduser().is_absolute()
+                    else Path(str(value)).expanduser().resolve()
+                )
+            )
+
+        if validate_paths:
+            missing_paths = [
+                path
+                for view in VIEW_ORDER
+                for path in self.dataframe[view].tolist()
+                if not Path(path).is_file()
+            ]
+            if missing_paths:
+                preview = missing_paths[:5]
+                raise FileNotFoundError(
+                    f"Thiếu {len(missing_paths)} file ảnh; ví dụ: {preview}"
+                )
+
+        # Không flip/rotate độc lập từng view vì sẽ phá consistency giải phẫu.
+        photometric = (
+            [transforms.ColorJitter(brightness=0.10, contrast=0.10)]
+            if training
+            else []
         )
         self.transform = transforms.Compose([
-            transforms.Resize((image_size, image_size)),
-            *augment,
+            SquarePad(),
+            transforms.Resize((image_size, image_size), antialias=True),
+            *photometric,
             transforms.ToTensor(),
-            transforms.Normalize(  # chuẩn ImageNet, ảnh xám nhân 3 kênh
+            transforms.Normalize(
                 mean=[0.485, 0.456, 0.406],
                 std=[0.229, 0.224, 0.225],
             ),
@@ -160,19 +229,22 @@ class FourViewManifestDataset(Dataset):
 
     def __getitem__(self, index: int) -> dict:
         row = self.dataframe.iloc[index]
-
-        views = torch.stack([
-            self.transform(
-                Image.open(str(row[view])).convert("RGB")
-            )
-            for view in VIEW_ORDER
-        ])  # [4, 3, H, W]
+        image_tensors = []
+        for view in VIEW_ORDER:
+            image_path = Path(str(row[view]))
+            try:
+                with Image.open(image_path) as image:
+                    image_tensors.append(self.transform(image.convert("RGB")))
+            except Exception as exc:
+                raise RuntimeError(
+                    f"Không thể đọc case={row['case_id']} view={view}: {image_path}"
+                ) from exc
 
         return {
-            "views": views,
-            "label": LABEL_TO_INDEX[str(row["label"]).strip().upper()],
+            "views": torch.stack(image_tensors),
+            "label": LABEL_TO_INDEX[str(row["label"])],
             "case_id": str(row["case_id"]),
-            "source": str(row.get("source", "TN")),
+            "source": str(row.get("source", "TN")).strip(),
         }
 
 
@@ -186,14 +258,25 @@ def build_domain_sampler(
     generator: torch.Generator | None = None,
 ) -> WeightedRandomSampler:
     """Trọng số sao cho tổng xác suất lấy mẫu domain TN đúng bằng tn_ratio."""
-    domains_array = np.asarray(domains)
-    tn_count = int((domains_array == "TN").sum())
+    if not 0.0 < tn_ratio < 1.0:
+        raise ValueError(f"tn_ratio phải nằm trong (0, 1), nhận được {tn_ratio}")
+    if num_samples <= 0:
+        raise ValueError("num_samples phải > 0")
+
+    domains_array = np.char.upper(np.char.strip(np.asarray(domains, dtype=str)))
+    tn_mask = domains_array == "TN"
+    tn_count = int(tn_mask.sum())
     other_count = len(domains) - tn_count
+    if tn_count == 0 or other_count == 0:
+        raise ValueError(
+            f"Sampler cần cả TN và domain ngoài; tn_count={tn_count}, "
+            f"other_count={other_count}"
+        )
 
     weights = np.where(
-        domains_array == "TN",
-        tn_ratio / max(tn_count, 1),
-        (1.0 - tn_ratio) / max(other_count, 1),
+        tn_mask,
+        tn_ratio / tn_count,
+        (1.0 - tn_ratio) / other_count,
     )
 
     return WeightedRandomSampler(
@@ -374,6 +457,23 @@ def compute_metrics(y_true, y_pred) -> dict:
     }
 
 
+def seed_everything(seed: int, deterministic: bool = True) -> None:
+    random.seed(seed)
+    np.random.seed(seed)
+    torch.manual_seed(seed)
+    if torch.cuda.is_available():
+        torch.cuda.manual_seed_all(seed)
+    if deterministic:
+        torch.backends.cudnn.benchmark = False
+        torch.backends.cudnn.deterministic = True
+
+
+def seed_worker(worker_id: int) -> None:
+    worker_seed = torch.initial_seed() % (2**32)
+    np.random.seed(worker_seed)
+    random.seed(worker_seed)
+
+
 # ============================================================================
 # 8. VÒNG LẶP TRAIN / VALIDATE (chọn checkpoint theo Macro-F1 validation)
 # ============================================================================
@@ -428,7 +528,10 @@ def evaluate(model, loader, device, amp):
 
 
 def run_training(config: dict, output_dir: Path) -> None:
-    torch.manual_seed(int(config["experiment"]["seed"]))
+    seed = int(config["experiment"]["seed"])
+    deterministic = bool(config["experiment"].get("deterministic", True))
+    seed_everything(seed, deterministic=deterministic)
+    generator = torch.Generator().manual_seed(seed)
     device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
     amp = bool(config["training"].get("amp", True)) and device.type == "cuda"
     output_dir.mkdir(parents=True, exist_ok=True)
@@ -451,14 +554,23 @@ def run_training(config: dict, output_dir: Path) -> None:
         num_samples=int(
             config["training"].get("sampler_num_samples", len(combined))
         ),
+        generator=generator,
     )
 
     batch_size = int(config["training"]["batch_size"])
+    num_workers = int(config["training"].get("num_workers", 4))
+    loader_kwargs = {
+        "num_workers": num_workers,
+        "pin_memory": device.type == "cuda",
+        "worker_init_fn": seed_worker,
+        "generator": generator,
+        "persistent_workers": num_workers > 0,
+    }
     train_loader = DataLoader(
-        combined, batch_size=batch_size, sampler=sampler, num_workers=4
+        combined, batch_size=batch_size, sampler=sampler, **loader_kwargs
     )
     valid_loader = DataLoader(
-        tn_valid, batch_size=batch_size, shuffle=False, num_workers=4
+        tn_valid, batch_size=batch_size, shuffle=False, **loader_kwargs
     )
 
     model = FourViewDensityModel(
@@ -472,9 +584,17 @@ def run_training(config: dict, output_dir: Path) -> None:
         state = torch.load(
             init_checkpoint, map_location="cpu", weights_only=True
         )
-        model.load_state_dict(
+        missing_keys, unexpected_keys = model.load_state_dict(
             state.get("model_state_dict", state), strict=False
         )
+        allowed_missing = {key for key in missing_keys if key.startswith("ordinal_head.")}
+        disallowed_missing = set(missing_keys) - allowed_missing
+        if disallowed_missing or unexpected_keys:
+            raise RuntimeError(
+                "Checkpoint khởi tạo không tương thích: "
+                f"missing={sorted(disallowed_missing)}, "
+                f"unexpected={sorted(unexpected_keys)}"
+            )
 
     model = model.to(device)
     criterion = MultiTaskCriterion(
@@ -515,6 +635,9 @@ def run_training(config: dict, output_dir: Path) -> None:
                     "model_state_dict": model.state_dict(),
                     "valid_metrics": metrics,
                     "config": config,
+                    "optimizer_state_dict": optimizer.state_dict(),
+                    "scheduler_state_dict": scheduler.state_dict(),
+                    "scaler_state_dict": scaler.state_dict(),
                 },
                 output_dir / "best_checkpoint.pt",
             )
@@ -541,21 +664,34 @@ def run_training(config: dict, output_dir: Path) -> None:
 # ============================================================================
 def run_eval(checkpoint_path: Path, manifest_path: Path) -> None:
     device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
-
-    model = FourViewDensityModel(use_ordinal_head=True)
     checkpoint = torch.load(
         checkpoint_path, map_location="cpu", weights_only=True
     )
+    config = checkpoint.get("config", {})
+    model_config = config.get("model", {})
+    data_config = config.get("data", {})
+    training_config = config.get("training", {})
+
+    use_ordinal_head = bool(model_config.get("use_ordinal_head", True))
+    image_size = int(data_config.get("image_size", 224))
+    batch_size = int(training_config.get("eval_batch_size", 2))
+    num_workers = int(training_config.get("num_workers", 4))
+
+    model = FourViewDensityModel(use_ordinal_head=use_ordinal_head)
     model.load_state_dict(
         checkpoint.get("model_state_dict", checkpoint), strict=True
     )
     model = model.to(device)
 
     loader = DataLoader(
-        FourViewManifestDataset(manifest_path, training=False),
-        batch_size=2,
+        FourViewManifestDataset(
+            manifest_path, image_size=image_size, training=False
+        ),
+        batch_size=batch_size,
         shuffle=False,
-        num_workers=4,
+        num_workers=num_workers,
+        pin_memory=device.type == "cuda",
+        persistent_workers=num_workers > 0,
     )
 
     metrics = evaluate(model, loader, device, amp=device.type == "cuda")

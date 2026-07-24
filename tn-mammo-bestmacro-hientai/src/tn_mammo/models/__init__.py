@@ -1,9 +1,4 @@
-from tn_mammo.models.density_model import (
-    FourViewDensityModel,
-    ModelOptions,
-)
+# -*- coding: utf-8 -*-
+from tn_mammo.models.density_model import FourViewDensityModel
 
-__all__ = [
-    "FourViewDensityModel",
-    "ModelOptions",
-]
+__all__ = ["FourViewDensityModel"]

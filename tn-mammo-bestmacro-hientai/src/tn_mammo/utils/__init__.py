@@ -1,9 +1,4 @@
-from tn_mammo.utils.config import (
-    load_yaml_config,
-    validate_config,
-)
+# -*- coding: utf-8 -*-
+from tn_mammo.utils.seeding import seed_everything, seed_worker
 
-__all__ = [
-    "load_yaml_config",
-    "validate_config",
-]
+__all__ = ["seed_everything", "seed_worker"]
